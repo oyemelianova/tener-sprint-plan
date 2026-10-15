@@ -28,6 +28,7 @@
   button, a { font: inherit; color: inherit; }
   button { cursor: pointer; }
   a { text-decoration: none; }
+  a.doc { color: var(--teal); text-decoration: underline; }
   .app { display: grid; grid-template-columns: 220px 1fr; min-height: 100vh; }
   nav { border-right: 1px solid var(--line); padding: 18px 12px; background: #0d1114; position: sticky; top: 0; height: 100vh; }
   .brand { display: flex; gap: 8px; align-items: center; font-weight: 650; margin: 0 8px 22px; }
@@ -159,6 +160,38 @@
       <button class="case" type="button">
         <div class="top"><b>В резюме есть email и телефон</b><span class="tag open">доделать</span></div>
         <div class="detail">Забираем их из CV и сохраняем у кандидата. Сейчас этого нет.</div>
+      </button>
+
+      <h2>Случаи из проверки</h2>
+      <p class="sub">Открытые. Источник: <a class="doc" href="https://docs.google.com/document/d/1qrOFBknwl_KxK9bX5AuztL91JG3F2_dLKp8KLbbev_I/edit">документ с краевыми случаями</a>.</p>
+
+      <button class="case" type="button">
+        <div class="top"><b>Present в датах не считается текущей работой</b><span class="tag open">доделать</span></div>
+        <div class="detail">В профиле написано Oct 2023 – Present. Система записала даты как незаконченные, поставила ноль месяцев и не засчитала эту должность. Годы не определились, и агент спросил их у кандидата. В резюме при этом прямо написано «3 years of commercial experience».</div>
+      </button>
+      <button class="case" type="button">
+        <div class="top"><b>Навык есть в профиле и в резюме, а источник — догадка модели</b><span class="tag open">доделать</span></div>
+        <div class="detail">FastAPI, Celery и AWS есть в навыках профиля и в тексте резюме. Источником совпадения записана догадка модели, а не цитата. Повторилось дважды.</div>
+      </button>
+      <button class="case" type="button">
+        <div class="top"><b>Кандидат в чате поправил годы, в причине остались годы из резюме</b><span class="tag open">доделать</span></div>
+        <div class="detail">В резюме было «7+ years». Кандидат написал, что опыта около трёх лет. В причине по роли остались «7+ years». Проверено на вакансии 1000111, разговор 6778.</div>
+      </button>
+      <button class="case" type="button">
+        <div class="top"><b>В профиле больше 50 навыков, хвост отрезается</b><span class="tag open">доделать</span></div>
+        <div class="detail">В профиле 69 навыков, в выгрузке осталось 50. Среди отрезанных были обязательные: Python, SQL, English, FastAPI и AWS.</div>
+      </button>
+      <button class="case" type="button">
+        <div class="top"><b>Резюме вставлено текстом, а система считает, что пришёл файл</b><span class="tag open">доделать</span></div>
+        <div class="detail">Файла нет. Система всё равно отмечает, что вложение резюме получено. Так на всех прогонах с текстовым резюме.</div>
+      </button>
+      <button class="case" type="button">
+        <div class="top"><b>Имя в резюме не совпадает с кандидатом</b><span class="tag open">доделать</span></div>
+        <div class="detail">Резюме с другим именем прошло проверку. Риска на это нет.</div>
+      </button>
+      <button class="case" type="button">
+        <div class="top"><b>Технологии в резюме нет, а требование отмечено выполненным</b><span class="tag open">доделать</span></div>
+        <div class="detail">Python в резюме и в переписке не назван. В требованиях он отмечен как есть, с объяснением, что эндпоинты API указывают на Python.</div>
       </button>
     </section>
 
