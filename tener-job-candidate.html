@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="color-scheme" content="dark" />
+<title>Tener — job and candidate concept</title>
+<style>
+  :root {
+    --bg: #101418;
+    --panel: #171c21;
+    --panel-2: #1e252b;
+    --line: #2c343c;
+    --text: #e8e6e1;
+    --muted: #9aa3ab;
+    --faint: #6d7780;
+    --teal: #3dbe9a;
+    --teal-dim: rgba(61, 190, 154, 0.14);
+    --amber: #e3b15a;
+    --amber-dim: rgba(227, 177, 90, 0.12);
+    --red: #e15d5d;
+    --red-dim: rgba(225, 93, 93, 0.12);
+    --blue: #8eb6d9;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); }
+  body { font: 14px/1.45 "Segoe UI", Calibri, sans-serif; }
+  button, input { font: inherit; color: inherit; }
+  button { cursor: pointer; }
+  .app { display: grid; grid-template-columns: 196px 1fr; min-height: 100%; }
+  nav { border-right: 1px solid var(--line); padding: 18px 12px; background: #0d1114; }
+  .brand { display: flex; gap: 8px; align-items: center; font-weight: 650; margin: 0 8px 22px; }
+  .mark { width: 22px; height: 22px; border-radius: 6px; background: var(--teal); color: #06241c; display: grid; place-items: center; font-size: 13px; font-weight: 700; }
+  .nav-label { margin: 16px 8px 6px; color: var(--faint); font-size: 11px; letter-spacing: 0.08em; }
+  nav button { display: block; width: 100%; text-align: left; background: transparent; border: 0; border-radius: 8px; padding: 8px 10px; color: var(--muted); }
+  nav button.active { background: var(--teal); color: #06241c; font-weight: 650; }
+  main { padding: 22px 28px 48px; max-width: 1180px; }
+  .kicker { color: var(--faint); font-size: 12px; margin-bottom: 8px; }
+  h1 { font-size: 22px; font-weight: 650; margin: 0 0 4px; }
+  .sub { color: var(--muted); margin: 0 0 18px; }
+  h2 { font-size: 12px; letter-spacing: 0.08em; color: var(--faint); font-weight: 650; margin: 22px 0 8px; }
+  .row { display: flex; gap: 10px; align-items: center; }
+  .back { background: transparent; border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; color: var(--muted); }
+  .alert { display: grid; grid-template-columns: 64px 1fr auto; gap: 12px; align-items: center; background: var(--panel); border: 1px solid var(--line); border-left-width: 3px; border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; }
+  .alert.red { border-left-color: var(--red); }
+  .alert.amber { border-left-color: var(--amber); }
+  .alert b { font-size: 22px; font-weight: 650; }
+  .alert p { margin: 0; color: var(--muted); }
+  .alert strong { color: var(--text); font-weight: 600; }
+  .ghost { background: var(--panel-2); border: 1px solid var(--line); border-radius: 8px; padding: 7px 10px; }
+  .pipe { display: grid; grid-template-columns: repeat(8, 1fr); gap: 8px; }
+  .tile { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 10px; }
+  .tile b { display: block; font-size: 22px; font-weight: 650; }
+  .tile span { color: var(--muted); font-size: 12px; }
+  .note { color: var(--muted); margin: 8px 0 0; }
+  table { width: 100%; border-collapse: collapse; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+  th { color: var(--faint); font-size: 12px; font-weight: 600; }
+  tr.clickable { cursor: pointer; }
+  tr.clickable:hover { background: var(--panel-2); }
+  .pill { display: inline-block; border-radius: 999px; padding: 2px 8px; font-size: 12px; }
+  .go { background: var(--teal-dim); color: var(--teal); }
+  .ask { background: var(--amber-dim); color: var(--amber); }
+  .no { background: var(--red-dim); color: #f0a0a0; }
+  .muted { color: var(--muted); }
+  .split { display: grid; grid-template-columns: 1.4fr 0.8fr; gap: 14px; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
+  .score { font-size: 52px; font-weight: 650; letter-spacing: -0.03em; line-height: 1; }
+  .score small { font-size: 16px; color: var(--muted); font-weight: 500; }
+  .meta { color: var(--muted); font-size: 13px; }
+  .bar { position: relative; height: 8px; background: #2a3138; border-radius: 99px; margin: 12px 0 4px; }
+  .bar i { position: absolute; inset: 0 auto 0 0; width: 89%; background: var(--teal); border-radius: 99px; }
+  .bar em { position: absolute; top: -4px; bottom: -4px; left: 60%; width: 2px; background: var(--text); }
+  .chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .lead { border-left: 3px solid var(--blue); padding-left: 12px; margin: 14px 0 0; }
+  .q { background: var(--panel-2); border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; }
+  .q b { color: var(--amber); }
+  .crit { border: 1px solid var(--line); border-left-width: 3px; border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; background: var(--panel); }
+  .crit.met { border-left-color: var(--teal); }
+  .crit.partial { border-left-color: var(--amber); }
+  .crit .top { display: flex; justify-content: space-between; gap: 12px; }
+  .src { display: inline-block; font-size: 11px; border: 1px solid var(--line); border-radius: 6px; padding: 1px 6px; color: var(--blue); margin-right: 6px; }
+  .quote { margin: 6px 0 0; color: var(--muted); }
+  .lost { margin: 6px 0 0; color: var(--faint); }
+  ul.clean { margin: 6px 0 0; padding-left: 18px; }
+  ul.clean li { margin: 4px 0; }
+  .hold { background: var(--amber-dim); border: 1px solid rgba(227, 177, 90, 0.35); border-radius: 10px; padding: 10px 12px; margin-top: 10px; }
+  .hidden { display: none; }
+  .footer { color: var(--faint); font-size: 12px; margin-top: 16px; }
+  .tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); margin: 0 0 18px; }
+  .tabs button { background: transparent; border: 0; color: var(--muted); padding: 10px 12px 12px; border-bottom: 2px solid transparent; border-radius: 0; }
+  .tabs button.active { color: var(--text); border-bottom-color: var(--teal); }
+  .badge { display: inline-grid; place-items: center; min-width: 16px; height: 16px; margin-left: 6px; padding: 0 4px; border-radius: 99px; background: var(--red); color: #fff; font-size: 11px; font-weight: 650; vertical-align: 1px; }
+  .filters { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+  .filters button { background: var(--panel); border: 1px solid var(--line); border-radius: 99px; padding: 5px 10px; color: var(--muted); }
+  .filters button.active { color: var(--text); border-color: var(--teal); }
+  .defs { display: grid; grid-template-columns: 180px 1fr; gap: 8px 16px; }
+  .defs dt { color: var(--faint); }
+  .defs dd { margin: 0; }
+</style>
+</head>
+<body>
+<div class="app">
+  <nav>
+    <div class="brand"><span class="mark">T</span> Tener</div>
+    <div class="nav-label">OPERATE</div>
+    <button class="active" id="nav-job" type="button">Jobs</button>
+    <button type="button" disabled title="Not a screen in this concept">Freya</button>
+    <div class="nav-label">PLATFORM</div>
+    <button type="button" disabled>Users</button>
+    <button type="button" disabled>Settings</button>
+  </nav>
+  <main>
+    <section id="view-job">
+      <h1>Chief of Staff · Tener AI, Inc.</h1>
+      <p class="sub">Running since Sep 15 · Warsaw, remote EU · 1 hire</p>
+      <div class="tabs" id="job-tabs">
+        <button type="button" data-tab="overview" class="active">Overview</button>
+        <button type="button" data-tab="candidates">Candidates</button>
+        <button type="button" data-tab="attention">Need attention <span class="badge">3</span></button>
+        <button type="button" data-tab="activity">Agent activity</button>
+        <button type="button" data-tab="interviews">Interviews</button>
+        <button type="button" data-tab="calls">Calls</button>
+        <button type="button" data-tab="details">Job details</button>
+      </div>
+
+      <div data-panel="overview">
+        <h2>NEEDS YOUR ACTION</h2>
+        <div class="alert red">
+          <b>49</b>
+          <p><strong>Candidates waiting for a reply from you.</strong> The agent stopped replying in these threads. Nobody gets an answer until a recruiter writes.</p>
+          <button class="ghost" id="open-waiting" type="button">Open the list</button>
+        </div>
+        <div class="alert amber">
+          <b>52</b>
+          <p><strong>Outreach is stopped. LinkedIn account disconnected.</strong> 52 messages are parked. This is the account, not 52 people. Disconnected 2 days ago.</p>
+          <button class="ghost" type="button">Reconnect account</button>
+        </div>
+        <div class="alert amber">
+          <b>3</b>
+          <p><strong>Lost the chat link with 3 candidates.</strong> LinkedIn no longer returns these threads, so their replies stop arriving.</p>
+          <button class="ghost" id="open-lost" type="button">Review</button>
+        </div>
+        <p class="note">The system handled 26 other events on its own. Those sit in Agent activity, not in this pile.</p>
+        <h2>WHERE PEOPLE STAND NOW · 1,000 ON THIS JOB</h2>
+        <div class="pipe" id="pipe"></div>
+        <p class="note">These eight numbers are where people stand now. They add up to 1,000. Last 7 days: 315 sourced, 58 replies, 10 CVs, 0 interviews. Sending stopped on Sep 28, when the LinkedIn account disconnected.</p>
+      </div>
+
+      <div data-panel="candidates" class="hidden">
+        <h2>BEST MATCH FIRST</h2>
+        <table>
+          <thead>
+            <tr><th>Candidate</th><th>Stage</th><th>Score</th><th>Verdict</th><th>Last activity</th></tr>
+          </thead>
+          <tbody id="people"></tbody>
+        </table>
+        <p class="note">Józefina’s row opens the score card. The layout there matches Summary in Job Scoring.</p>
+      </div>
+
+      <div data-panel="attention" class="hidden">
+        <h2>CANDIDATES WAITING FOR A PERSON · 54</h2>
+        <div class="filters" id="attn-filters">
+          <button type="button" class="active" data-filter="all">All 54</button>
+          <button type="button" data-filter="reply">Waiting for a reply 49</button>
+          <button type="button" data-filter="lost">Chat link lost 3</button>
+          <button type="button" data-filter="nodata">No data to score 1</button>
+          <button type="button" data-filter="silent">Rejected in silence 1</button>
+        </div>
+        <table>
+          <thead><tr><th>Candidate</th><th>Stage</th><th>What is blocking</th><th>Waiting</th></tr></thead>
+          <tbody id="attn"></tbody>
+        </table>
+      </div>
+
+      <div data-panel="activity" class="hidden">
+        <h2>AGENT ACTIVITY</h2>
+        <div class="card">
+          <p style="margin:0 0 6px">08:27 Replied to Julia Czykin — asked about notice period</p>
+          <p style="margin:0 0 6px">08:19 Scored Józefina Bieżuńska — 89, CV received</p>
+          <p style="margin:0 0 6px">20:22 Saved a CV — Józefina Bieżuńska</p>
+          <p style="margin:0 0 6px">20:16 Replied to Józefina Bieżuńska</p>
+          <p style="margin:0">19:55 Messaged 3 candidates — after they accepted the connect</p>
+        </div>
+        <h2>WHAT THE SYSTEM CLEARED ON ITS OWN</h2>
+        <div class="card">
+          <p style="margin:0 0 6px">Yesterday Automation retried a stage — 4 attempts failed, then it cleared.</p>
+          <p style="margin:0 0 6px">Yesterday Rate limit on profile fetch — 12 profiles requeued, resumed after cooldown.</p>
+          <p style="margin:0">2 days ago Account disconnected — raised under Need attention. Not cleared.</p>
+        </div>
+      </div>
+
+      <div data-panel="interviews" class="hidden">
+        <h2>INTERVIEW SET-UP</h2>
+        <div class="card">
+          <p style="margin:0 0 8px">Five questions, asked in this order. Editing them does not change interviews already done.</p>
+          <ol class="clean">
+            <li>Walk me through a system you owned end to end.</li>
+            <li>How do you decide what to automate and what to leave manual?</li>
+            <li>Tell me about a release that went wrong.</li>
+            <li>What does a good week look like for you?</li>
+            <li>Anything you want to ask us?</li>
+          </ol>
+        </div>
+        <h2>INVITES · 27 SENT · 11 COMPLETED · 16 OPEN</h2>
+        <table>
+          <thead><tr><th>Candidate</th><th>Sent</th><th>Status</th><th>Interview score</th></tr></thead>
+          <tbody>
+            <tr><td>Mehdi Maatallah</td><td>Sep 29</td><td>completed</td><td>93 · not folded into the match score</td></tr>
+            <tr><td>Józefina Bieżuńska</td><td>Sep 30</td><td>completed</td><td>84 · not folded into the 89</td></tr>
+            <tr><td>Helena Kaszubowska</td><td>Oct 1</td><td>invited</td><td>—</td></tr>
+            <tr><td>Prayash Jodhani</td><td>Oct 1</td><td>no reply</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div data-panel="calls" class="hidden">
+        <h2>FREYA CALLS · 1</h2>
+        <div class="card">
+          <p style="margin:0 0 8px"><strong>Not in the score.</strong> A call can add facts for the recruiter. It does not move the number and it does not move the stage.</p>
+          <p style="margin:0 0 6px">Józefina Bieżuńska · screening call · Sep 29 · 07:42</p>
+          <p class="muted" style="margin:0">The call added a start date, and she asked twice about the reporting line. The match score stayed 89.</p>
+        </div>
+      </div>
+
+      <div data-panel="details" class="hidden">
+        <h2>JOB</h2>
+        <div class="card">
+          <dl class="defs">
+            <dt>Title</dt><dd>Chief of Staff</dd>
+            <dt>Company</dt><dd>Tener AI, Inc.</dd>
+            <dt>Locations</dt><dd>Warsaw · remote EU</dd>
+            <dt>Seniority</dt><dd>Senior</dd>
+            <dt>Salary range</dt><dd>5 000 — 10 000 USD</dd>
+            <dt>Hires</dt><dd>1</dd>
+            <dt>Must-have</dt><dd>Executive / founder support · Systems building · Strategic and operational execution · Attention to detail · High-performance track record</dd>
+            <dt>Nice to have</dt><dd>Startup background · Polish · Board reporting · Fundraising support</dd>
+            <dt>For the agent</dt><dd>Prefer an EU timezone. Product-minded. The role sits next to the CEO: run the office, close open topics, turn chaos into a working process.</dd>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section id="view-person" class="hidden">
+      <p class="kicker">Concept illustration · layout matches Job Scoring → Summary · not a live run</p>
+      <div class="row" style="margin-bottom:14px">
+        <button class="back" id="back" type="button">All candidates</button>
+        <span class="muted">Chief of Staff · CV received</span>
+      </div>
+      <h1 id="person-name">Józefina Bieżuńska</h1>
+      <p class="sub">Chief of Staff · Warsaw, Poland · 11 years</p>
+
+      <div class="split">
+        <div>
+          <div class="card">
+            <div class="row" style="justify-content:space-between; align-items:flex-end">
+              <div>
+                <div class="score">89.0 <small>/ 100</small></div>
+                <div class="meta">ceiling 96 · threshold 60 · recoverable +4.0 · lost 7.0</div>
+              </div>
+            </div>
+            <div class="bar" aria-hidden="true"><i></i><em></em></div>
+            <div class="meta" style="text-align:center">threshold 60</div>
+            <div class="chips">
+              <span class="pill go">advance · go ahead</span>
+              <span class="pill go">verified · fit</span>
+              <span class="pill go">confidence: high</span>
+            </div>
+            <p class="lead">She matches the chief-of-staff bar: direct work with a CEO, building operating systems, and a record across three scale-ups. What is still open is one concrete case of tightening a messy process. The score is 89 out of 100, above the threshold of 60. Her question about the reporting line is unanswered by us. It is not part of this number.</p>
+          </div>
+
+          <h2>OPEN QUESTIONS · 1 · UP TO +4.0</h2>
+          <div class="q">
+            <div><b>+4.0</b> · criterion K4</div>
+            <p style="margin:6px 0 0">Walk through one process you took from messy to reliable. What was breaking, what you changed, and how you checked that it held.</p>
+            <p class="muted" style="margin:6px 0 0">The materials say she is meticulous and turns plans into action. They do not show one before-and-after.</p>
+          </div>
+
+          <h2>CRITERIA · VERSION V1</h2>
+          <div id="criteria"></div>
+
+          <h2>GATES</h2>
+          <div class="crit met">
+            <div class="top"><strong>G1 · At least 5 years in operating roles</strong><span class="pill go">passed</span></div>
+            <p class="quote"><span class="src">L2</span>LinkedIn · 11 years, three scale-ups, overlapping months counted once.</p>
+          </div>
+          <div class="crit met">
+            <div class="top"><strong>G2 · EU timezone</strong><span class="pill go">passed</span></div>
+            <p class="quote"><span class="src">L1</span>LinkedIn · Warsaw, Poland.</p>
+          </div>
+
+          <h2>NICE-TO-HAVES</h2>
+          <div class="crit met">
+            <div class="top"><strong>N1 · Startup background</strong><span class="pill go">found</span></div>
+            <p class="quote"><span class="src">C4</span>CV · Three scale-ups, from first operating hire to a team of nine.</p>
+          </div>
+          <div class="crit partial">
+            <div class="top"><strong>N2 · Polish</strong><span class="pill ask">not found</span></div>
+            <p class="lost">Not in the profile, the CV, or the chat. Not a must-have, so it does not lower the 89.</p>
+          </div>
+          <div class="crit partial">
+            <div class="top"><strong>N3 · Board reporting</strong><span class="pill ask">not found</span></div>
+            <p class="lost">No quote.</p>
+          </div>
+          <div class="crit partial">
+            <div class="top"><strong>N4 · Fundraising support</strong><span class="pill ask">not found</span></div>
+            <p class="lost">No quote.</p>
+          </div>
+
+          <h2>STRENGTHS · 2</h2>
+          <div class="card">
+            <p style="margin:0 0 8px">Direct work beside a founder, not a general operations title.</p>
+            <p class="quote"><span class="src">C1</span>CV · Supported the CEO directly, ran the office and owned the weekly leadership cycle.</p>
+            <p style="margin:10px 0 8px">She has built the machinery, not only coordinated it.</p>
+            <p class="quote"><span class="src">L3</span>LinkedIn · Turning operational complexity into scalable solutions — LMS platforms, custom software, operating model design.</p>
+          </div>
+
+          <h2>RISKS · 2</h2>
+          <div class="card">
+            <p style="margin:0 0 8px">The detail standard is claimed more than shown.</p>
+            <p class="quote"><span class="src">L4</span>LinkedIn · Known for meticulous attention to detail and translating complex problems into actionable plans.</p>
+            <p style="margin:10px 0 0">Salary is 6,000 EUR a month. The band on the job is 5,000–10,000 USD. These are not compared, because the currency differs.</p>
+          </div>
+
+          <h2>EXPERIENCE</h2>
+          <div class="card">
+            <p style="margin:0 0 8px"><strong>Relevant 132 mo · 11.0 yr.</strong> Whole career 132 mo · 11.0 yr.</p>
+            <p style="margin:0 0 4px">Counted</p>
+            <ul class="clean">
+              <li>Chief of Staff, scale-up · 4 years</li>
+              <li>Head of Operations, scale-up · 4 years</li>
+              <li>Operations manager, scale-up · 3 years</li>
+            </ul>
+            <p style="margin:8px 0 4px">Not counted</p>
+            <ul class="clean">
+              <li>Internship, university office · education-adjacent, not an operating role</li>
+            </ul>
+          </div>
+
+          <h2>UNVERIFIABLE CLAIMS · 0</h2>
+          <p class="note">None.</p>
+          <h2>LINKS · 1</h2>
+          <p class="note">LinkedIn profile. The model did not open it. The quotes are from the text already stored.</p>
+          <p class="footer">Illustration of criteria_scoring.v1 on an approved scale. Threshold, ceiling, recoverable points and lost points are the same fields as Summary in the test console. This page is not a live score for this person.</p>
+        </div>
+
+        <div>
+          <div class="card">
+            <h2 style="margin-top:0">PRACTICALS</h2>
+            <p style="margin:0 0 8px"><strong>Salary expectation.</strong> 6,000 EUR gross / month. Band is USD. Not compared.</p>
+            <p style="margin:0 0 8px"><strong>Location.</strong> Warsaw. Confirmed.</p>
+            <p style="margin:0 0 8px"><strong>Work authorization.</strong> Confirmed.</p>
+            <p style="margin:0"><strong>Start.</strong> In a month. Said on the call.</p>
+            <div class="hold">
+              <strong>Waiting on us.</strong> She asked twice how this role reports. The agent stopped. The score does not include this, and the stage does not move until someone answers her.
+            </div>
+          </div>
+
+          <div class="card" style="margin-top:12px">
+            <h2 style="margin-top:0">INTERVIEW · SEPARATE FROM 89</h2>
+            <p style="margin:0 0 8px"><strong>84.</strong> This number is the interview alone. It is not folded into the 89.</p>
+            <p class="muted" style="margin:0 0 6px">Strong: she owned a release end to end and could explain the trade-offs.</p>
+            <p class="muted" style="margin:0">Weaker: vague on what she would automate. Worth a follow-up, not a new score.</p>
+          </div>
+
+          <div class="card" style="margin-top:12px">
+            <h2 style="margin-top:0">WHAT CHANGED THE STAGE</h2>
+            <p class="muted" style="margin:0">Sep 15 sourced. Sep 20 connect accepted. Sep 29 replied. Sep 29 CV received and scored 89. The Sep 29 call added the start date and her question. It did not change 89.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+<script>
+const stages = [
+  ["590", "Sourced"],
+  ["250", "Connect sent"],
+  ["100", "Responded"],
+  ["40", "CV received"],
+  ["8", "Must-have approved"],
+  ["3", "Interview"],
+  ["1", "Hired"],
+  ["8", "Rejected"]
+];
+document.getElementById("pipe").innerHTML = stages.map(([n, name]) =>
+  `<div class="tile"><b>${n}</b><span>${name}</span></div>`
+).join("");
+
+const people = [
+  ["Mehdi Maatallah", "Interview", "93", "go ahead", "go", "Oct 1 · interview done"],
+  ["Józefina Bieżuńska", "CV received", "89", "go ahead", "go", "Sep 29 · scored"],
+  ["Helena Kaszubowska", "Responded", "71", "ask first", "ask", "Oct 1 · waiting on her"],
+  ["Prayash Jodhani", "Connect sent", "64", "ask first", "ask", "Oct 1 · no reply"],
+  ["Anna Nowak", "CV received", "41", "decline", "no", "Sep 22 · below threshold"],
+  ["No profile text", "Sourced", "—", "no data to score", "ask", "Sep 18 · nothing to quote"]
+];
+const tbody = document.getElementById("people");
+tbody.innerHTML = people.map((p, i) =>
+  `<tr class="${p[0] === "Józefina Bieżuńska" ? "clickable" : ""}" data-i="${i}"><td>${p[0]}</td><td>${p[1]}</td><td>${p[2]}</td><td><span class="pill ${p[4]}">${p[3]}</span></td><td class="muted">${p[5]}</td></tr>`
+).join("");
+
+const criteria = [
+  ["met", "K1", "Executive / founder support", "met", "20 / 20",
+    "The CV shows she sat next to a CEO, ran the office and owned the weekly leadership cycle. This is the requirement, not a neighbouring operations title.",
+    [["C1", "CV", "Supported the CEO directly, ran the office and owned the weekly leadership cycle."]],
+    "The requirement is shown at the standard. Nothing is left on the table."],
+  ["met", "K2", "Systems building", "met", "18 / 20",
+    "She describes building operating machinery: an LMS, custom software, an operating model. The work is real. A few of the systems are named rather than walked through.",
+    [["L3", "LinkedIn", "Turning operational complexity into scalable solutions — LMS platforms, custom software, operating model design."]],
+    "Lost 2. The standard is met. Those two points are not recoverable by another question."],
+  ["met", "K3", "Strategic and operational execution", "met", "18 / 18",
+    "Delivery across teams is in the CV, next to the operating work above. Strategy and execution are both present.",
+    [["C2", "CV", "Managed product delivery across cross-functional teams."]],
+    "Nothing left on this line."],
+  ["partial", "K4", "Attention to detail", "partial", "14 / 18",
+    "The profile states that she is meticulous and turns problems into plans. It does not show one process she personally tightened.",
+    [["L4", "LinkedIn", "Known for meticulous attention to detail and translating complex problems into actionable plans."]],
+    "Lost 4, and those 4 are recoverable. One before-and-after would move this toward met."],
+  ["met", "K5", "High-performance track record", "met", "19 / 20",
+    "Three scale-ups, eleven years, a record that is named rather than implied.",
+    [["C4", "CV", "Proven high-performance track record across three scale-ups."]],
+    "Lost 1. The record is shown. The last point wanted a result with a number, and the CV does not give one."]
+];
+document.getElementById("criteria").innerHTML = criteria.map(c => `
+  <article class="crit ${c[0]}">
+    <div class="top"><strong>${c[1]} · ${c[2]}</strong><span>${c[3]} · ${c[4]}</span></div>
+    <p style="margin:6px 0 0">${c[5]}</p>
+    ${c[6].map(q => `<p class="quote"><span class="src">${q[0]}</span>${q[1]} · ${q[2]}</p>`).join("")}
+    <p class="lost">${c[7]}</p>
+  </article>
+`).join("");
+
+const waiting = [
+  ["Julia Czykin", "Responded", "Waiting for a reply", "3 days", "reply"],
+  ["Helena Kaszubowska", "Responded", "Waiting for a reply", "2 days", "reply"],
+  ["Józefina Bieżuńska", "CV received", "Waiting for a reply — she asked about the reporting line", "1 day", "reply"],
+  ["Lost thread A", "Connect sent", "Chat link lost", "2 days", "lost"],
+  ["Lost thread B", "Responded", "Chat link lost", "2 days", "lost"],
+  ["Lost thread C", "CV received", "Chat link lost", "4 days", "lost"],
+  ["No profile text", "Sourced", "No data to score", "Sep 18", "nodata"],
+  ["Silent reject", "Rejected", "Rejected in silence — no reason written", "6 days", "silent"]
+];
+const attnBody = document.getElementById("attn");
+function paintWaiting(filter) {
+  attnBody.innerHTML = waiting.filter(w => filter === "all" || w[4] === filter).map(w =>
+    `<tr><td>${w[0]}</td><td>${w[1]}</td><td>${w[2]}</td><td class="muted">${w[3]}</td></tr>`
+  ).join("");
+}
+paintWaiting("all");
+
+function showTab(name) {
+  document.querySelectorAll("#job-tabs button").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.tab === name);
+  });
+  document.querySelectorAll("[data-panel]").forEach(panel => {
+    panel.classList.toggle("hidden", panel.dataset.panel !== name);
+  });
+}
+function show(view) {
+  document.getElementById("view-job").classList.toggle("hidden", view !== "job");
+  document.getElementById("view-person").classList.toggle("hidden", view !== "person");
+  window.scrollTo(0, 0);
+}
+document.getElementById("job-tabs").addEventListener("click", (e) => {
+  const btn = e.target.closest("button");
+  if (!btn) return;
+  show("job");
+  showTab(btn.dataset.tab);
+});
+tbody.addEventListener("click", (e) => {
+  const tr = e.target.closest("tr");
+  if (!tr) return;
+  const person = people[Number(tr.dataset.i)];
+  if (person[0] !== "Józefina Bieżuńska") return;
+  show("person");
+});
+document.getElementById("back").addEventListener("click", () => {
+  show("job");
+  showTab("candidates");
+});
+document.getElementById("open-waiting").addEventListener("click", () => {
+  showTab("attention");
+  document.querySelector('#attn-filters button[data-filter="reply"]').click();
+});
+document.getElementById("open-lost").addEventListener("click", () => {
+  showTab("attention");
+  document.querySelector('#attn-filters button[data-filter="lost"]').click();
+});
+document.getElementById("attn-filters").addEventListener("click", (e) => {
+  const btn = e.target.closest("button");
+  if (!btn) return;
+  document.querySelectorAll("#attn-filters button").forEach(b => b.classList.toggle("active", b === btn));
+  paintWaiting(btn.dataset.filter);
+});
+document.getElementById("nav-job").addEventListener("click", () => {
+  show("job");
+  showTab("overview");
+});
+</script>
+</body>
+</html>
