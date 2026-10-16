@@ -71,7 +71,18 @@
   .bar i { position: absolute; inset: 0 auto 0 0; width: 89%; background: var(--teal); border-radius: 99px; }
   .bar em { position: absolute; top: -4px; bottom: -4px; left: 60%; width: 2px; background: var(--text); }
   .chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
-  .lead { border-left: 3px solid var(--blue); padding-left: 12px; margin: 14px 0 0; }
+  .lead { margin: 12px 0 0; }
+  .facts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 14px 0 0; padding: 0; list-style: none; }
+  .facts li { background: var(--panel-2); border-radius: 8px; padding: 8px 10px; }
+  .facts b { display: block; color: var(--faint); font-size: 11px; font-weight: 650; letter-spacing: 0.04em; }
+  .score-toggle { display: flex; align-items: center; gap: 14px; width: 100%; text-align: left; background: transparent; border: 0; padding: 0; }
+  .score-toggle .grow { flex: 1; }
+  .chev { color: var(--teal); font-size: 13px; }
+  .crit-toggle { display: flex; align-items: flex-start; gap: 10px; width: 100%; text-align: left; background: transparent; border: 0; padding: 0; color: inherit; }
+  .crit-toggle .grow { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+  .tick { width: 18px; height: 18px; border-radius: 9px; display: grid; place-items: center; font-size: 12px; flex-shrink: 0; margin-top: 1px; }
+  .crit.met .tick { background: var(--teal-dim); color: var(--teal); }
+  .crit.partial .tick { background: var(--amber-dim); color: var(--amber); }
   .q { background: var(--panel-2); border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; }
   .q b { color: var(--amber); }
   .crit { border: 1px solid var(--line); border-left-width: 3px; border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; background: var(--panel); }
@@ -284,7 +295,7 @@
     </section>
 
     <section id="view-person" class="hidden">
-      <p class="kicker">Concept illustration · layout matches Job Scoring → Summary · not a live run</p>
+      <p class="kicker">Candidate card only · the rest of the product stays as it is</p>
       <div class="row" style="margin-bottom:14px">
         <button class="back" id="back" type="button">All candidates</button>
         <span class="muted">Chief of Staff · CV received</span>
@@ -295,21 +306,32 @@
       <div class="split">
         <div>
           <div class="card">
-            <div class="row" style="justify-content:space-between; align-items:flex-end">
-              <div>
-                <div class="score">89.0 <small>/ 100</small></div>
-                <div class="meta">ceiling 96 · threshold 60 · recoverable +4.0 · lost 7.0</div>
-              </div>
+            <button class="score-toggle" id="score-toggle" type="button" aria-expanded="false" aria-controls="score-made-of">
+              <span class="score">89<small>.0</small></span>
+              <span class="grow">
+                <strong>4 of 5 criteria met</strong>
+                <span class="meta">Above the threshold of 60. Go ahead.</span>
+              </span>
+              <span class="chev" id="score-chev">What the score is made of</span>
+            </button>
+            <div id="score-made-of" class="hidden" style="margin-top:12px">
+              <div class="bar" aria-hidden="true"><i></i><em></em></div>
+              <p class="meta" style="margin:8px 0 0">89 of 100. Ceiling 96. Lost 7. One open question can still return 4 points on attention to detail. The interview score of 84 is kept separate and is not inside this 89.</p>
             </div>
-            <div class="bar" aria-hidden="true"><i></i><em></em></div>
-            <div class="meta" style="text-align:center">threshold 60</div>
-            <div class="chips">
-              <span class="pill go">advance · go ahead</span>
-              <span class="pill go">verified · fit</span>
-              <span class="pill go">confidence: high</span>
-            </div>
-            <p class="lead">She matches the chief-of-staff bar: direct work with a CEO, building operating systems, and a record across three scale-ups. What is still open is one concrete case of tightening a messy process. The score is 89 out of 100, above the threshold of 60. Her question about the reporting line is unanswered by us. It is not part of this number.</p>
+            <p class="lead">Sat next to a CEO across three scale-ups. One criterion is still open.</p>
+            <ul class="facts">
+              <li><b>LOCATION</b>Warsaw, Poland</li>
+              <li><b>EXPERIENCE</b>11 years · three scale-ups</li>
+              <li><b>STAGE</b>CV received</li>
+              <li><b>SALARY</b>6,000 EUR / month. The band is in USD, so they are not compared.</li>
+              <li><b>START</b>In a month. Said on the call.</li>
+              <li><b>OPEN IN CHAT</b>She asked about the reporting line. That question is not part of the 89.</li>
+            </ul>
           </div>
+
+          <h2>CRITERIA · 4 OF 5 MET</h2>
+          <p class="note">Each line is a signal we read, and where it came from. Open a line for the reason it got those points.</p>
+          <div id="criteria"></div>
 
           <h2>OPEN QUESTIONS · 1 · UP TO +4.0</h2>
           <div class="q">
@@ -317,9 +339,6 @@
             <p style="margin:6px 0 0">Walk through one process you took from messy to reliable. What was breaking, what you changed, and how you checked that it held.</p>
             <p class="muted" style="margin:6px 0 0">The materials say she is meticulous and turns plans into action. They do not show one before-and-after.</p>
           </div>
-
-          <h2>CRITERIA · VERSION V1</h2>
-          <div id="criteria"></div>
 
           <h2>GATES</h2>
           <div class="crit met">
@@ -466,12 +485,29 @@ const criteria = [
 ];
 document.getElementById("criteria").innerHTML = criteria.map(c => `
   <article class="crit ${c[0]}">
-    <div class="top"><strong>${c[1]} · ${c[2]}</strong><span>${c[3]} · ${c[4]}</span></div>
-    <p style="margin:6px 0 0">${c[5]}</p>
-    ${c[6].map(q => `<p class="quote"><span class="src">${q[0]}</span>${q[1]} · ${q[2]}</p>`).join("")}
-    <p class="lost">${c[7]}</p>
+    <button type="button" class="crit-toggle" aria-expanded="false">
+      <span class="tick">${c[0] === "met" ? "✓" : "!"}</span>
+      <span class="grow">
+        <strong>${c[2]}</strong>
+        <span class="muted">${c[6].map(q => q[1] + " · " + q[2]).join(" ")}</span>
+      </span>
+      <span class="meta">${c[4]}</span>
+    </button>
+    <div class="crit-more hidden">
+      <p style="margin:8px 0 0">${c[5]}</p>
+      ${c[6].map(q => `<p class="quote"><span class="src">${q[0]}</span>${q[1]} · ${q[2]}</p>`).join("")}
+      <p class="lost">${c[7]}</p>
+    </div>
   </article>
 `).join("");
+document.getElementById("criteria").addEventListener("click", (e) => {
+  const btn = e.target.closest(".crit-toggle");
+  if (!btn) return;
+  const more = btn.nextElementSibling;
+  const open = btn.getAttribute("aria-expanded") !== "true";
+  btn.setAttribute("aria-expanded", open ? "true" : "false");
+  more.classList.toggle("hidden", !open);
+});
 
 const waiting = [
   ["Julia Czykin", "Responded", "Waiting for a reply", "3 days", "reply"],
@@ -551,6 +587,13 @@ document.getElementById("open-transcript").addEventListener("click", () => {
   document.getElementById("call-transcript").classList.toggle("hidden");
 });
 document.getElementById("open-call-candidate").addEventListener("click", () => show("person"));
+document.getElementById("score-toggle").addEventListener("click", () => {
+  const btn = document.getElementById("score-toggle");
+  const open = btn.getAttribute("aria-expanded") !== "true";
+  btn.setAttribute("aria-expanded", open ? "true" : "false");
+  document.getElementById("score-made-of").classList.toggle("hidden", !open);
+  document.getElementById("score-chev").textContent = open ? "Hide the breakdown" : "What the score is made of";
+});
 </script>
 </body>
 </html>
