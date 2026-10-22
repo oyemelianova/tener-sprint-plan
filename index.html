@@ -90,7 +90,7 @@
     <button type="button" class="active" data-view="home">План</button>
     <button type="button" data-view="dialogue">Переписка <small>Орест</small></button>
     <button type="button" data-view="sourcing">Сорсинг <small>Леонид</small></button>
-    <button type="button" data-view="speed">Стейдж <small>Влад</small></button>
+    <button type="button" data-view="speed">Self-onboarding <small>Влад</small></button>
     <button type="button" data-view="qa">QA <small>Владимир</small></button>
     <button type="button" data-view="front">Фронтенд <small>Вадим</small></button>
   </nav>
@@ -111,8 +111,8 @@
           <em>Открыть</em>
         </button>
         <button class="block" type="button" data-view="speed">
-          <b>Стейдж</b>
-          <span>Влад. Тест стейджа 26 и 27 октября. Статус документа и стратегии уточнить.</span>
+          <b>Self-onboarding</b>
+          <span>Влад. Self-onboarding Фреи на бэкенде. Объём и статус уточняются.</span>
           <em>Открыть</em>
         </button>
         <button class="block" type="button" data-view="qa">
@@ -138,7 +138,7 @@
       <div class="item"><div class="top"><strong>Под оценкой критерия видно, откуда она взялась</strong><span class="tag keep">20.10</span></div><p>PR 57.</p></div>
       <div class="item"><div class="top"><strong>Стаж считается по датам резюме, ответ про зарплату после напоминания</strong><span class="tag keep">16.10</span></div><p>PR 49.</p></div>
       <div class="item"><div class="top"><strong>Вакансию можно завершить и открыть снова</strong><span class="tag keep">15.10</span></div><p>PR 45.</p></div>
-      <div class="item"><div class="top"><strong>Фрея не называет Digis, анонимный режим воркспейса</strong><span class="tag keep">22.10</span></div><p>PR 54 и 62.</p></div>
+      <div class="item"><div class="top"><strong>Фрея не называет Digis, анонимный режим воркспейса</strong><span class="tag keep">22.10</span></div><p>PR 54 и 62. В выбранном Slack-воркспейсе Фрея не называет ни клиента, ни Tener, а описывает компанию нейтральной фразой. Для Digis: «стартап, который занимается обработкой видео». Включает глобальный админ.</p></div>
 
       <h2>На ревью</h2>
       <div class="item"><div class="top"><strong>Напоминания раз в 2 дня, представление без «AI»</strong><span class="tag open">PR 68</span></div><p>До 4 напоминаний на этапе до резюме и 5 после приглашения на интервью, раз в 48 часов. Первое сообщение: помогаю агентству Tener закрыть позицию для клиента. На прямой вопрос «ты бот?» честно отвечает, что AI-ассистент. Там же замеры времени Intake v2 и ранний ответ с полями и процентом, nice to have без лимита.</p></div>
@@ -162,23 +162,22 @@
       <div class="item"><div class="top"><strong>Не открывать профиль, если по карточке роль не та</strong><span class="tag drop">снято</span></div><p>Проверка по карточке намеренно мягкая, чтобы не терять людей с короткой карточкой. Не делаем.</p></div>
 
       <h2>Дальше</h2>
-      <div class="item"><div class="top"><strong>Коннекты на полный лимит</strong><span class="tag plan">в работу</span></div><p>Сейчас уходит 30 до 39 коннектов из 45. Причина: в очереди есть кандидаты без идентификатора LinkedIn, система пробует их каждые полчаса и после каждой неудачи ставит аккаунт на паузу. За 2 дня около 480 пустых попыток. Таких кандидатов пропускать и брать следующего, аккаунт на паузу не ставить. Результат: 15 коннектов с каждого аккаунта 3 рабочих дня подряд на проде.</p></div>
+      <div class="item"><div class="top"><strong>Коннекты на полный лимит</strong><span class="tag open">в работе</span></div><p>Ветка fix/skip-connect-without-attendee-id от 22.10. Сейчас уходит 30 до 39 коннектов из 45. Причина: в очереди есть кандидаты без идентификатора LinkedIn, система пробует их каждые полчаса и после каждой неудачи ставит аккаунт на паузу. За 2 дня около 480 пустых попыток. Таких кандидатов пропускать и брать следующего, аккаунт на паузу не ставить. Результат: 15 коннектов с каждого аккаунта 3 рабочих дня подряд на проде.</p></div>
       <div class="item"><div class="top"><strong>Отзыв инвайтов, которые висят больше 21 дня</strong><span class="tag plan">в работу</span></div><p>Отзываем в рабочее время и с паузами, повторно такому человеку инвайт не уходит. Срок в настройке.</p></div>
       <div class="item"><div class="top"><strong>Выборка из базы по похожести на вакансию</strong><span class="tag plan">до включения</span></div><p>Сейчас из базы берутся первые 4N профилей по порядку, а не похожие на вакансию. Нужно до того, как включать поиск по базе на проде.</p></div>
     </section>
 
     <section id="view-speed" class="hidden">
-      <div class="kicker">Стейдж</div>
+      <div class="kicker">Self-onboarding</div>
       <div class="who">Влад</div>
-      <h1>Улучшение работы стейджа</h1>
+      <h1>Влад, self-onboarding</h1>
 
       <h2>Сделано, в develop</h2>
       <div class="item"><div class="top"><strong>Битые имена из CSV не уходят в аутрич</strong><span class="tag keep">19.10</span></div><p>PR 56.</p></div>
       <div class="item"><div class="top"><strong>Рекомендация и чужое резюме уходят рекрутеру, на карточке видно Need attention</strong><span class="tag keep">21.10</span></div><p>PR 61.</p></div>
 
-      <h2>По стейджу</h2>
-      <div class="item"><div class="top"><strong>Документ и выбранная стратегия</strong><span class="tag open">уточнить</span></div><p>По плану документ 16 октября и стратегия 20 октября. Изменений конфигурации стейджа в репозитории нет. Нужен статус от Влада.</p></div>
-      <div class="item"><div class="top"><strong>Тест стейджа</strong><span class="tag plan">26 и 27.10</span></div><p>Прогон джобы без ручной чистки логов. Результат: стейдж не падает на полном прогоне.</p></div>
+      <h2>Self-onboarding</h2>
+      <div class="item"><div class="top"><strong>Self-onboarding Фреи, бэкенд</strong><span class="tag open">уточнить</span></div><p>Задача в работе у Влада. В GitHub веток и PR по ней пока нет, объём и сроки уточняются.</p></div>
     </section>
 
     <section id="view-qa" class="hidden">
@@ -206,6 +205,7 @@
       <div class="item"><div class="top"><strong>Исправления создания и редактирования вакансии</strong><span class="tag open">PR 15</span></div></div>
 
       <h2>Дальше</h2>
+      <div class="item"><div class="top"><strong>Self-onboarding Фреи, фронтенд</strong><span class="tag open">уточнить</span></div><p>В паре с бэкендом Влада. В GitHub веток по нему пока нет.</p></div>
       <div class="item"><div class="top"><strong>Intake v2: процент без старого числа и с разбивкой</strong><span class="tag plan">план</span></div><p>Пока идёт пересчёт, показывать «считаем», а не прошлый процент. Под процентом выводить, что добавило и что отняло баллы. Данные уже приходят с бэкенда.</p></div>
       <div class="item"><div class="top"><strong>Intake v2: быстрый ответ</strong><span class="tag plan">после PR 68</span></div><p>Поля и процент показывать сразу, подсказки подгружать следом.</p></div>
       <div class="item"><div class="top"><strong>Новый визуал по концепту</strong><span class="tag plan">идёт</span></div><p>Вакансия, кандидат и оценка. Концепт ниже.</p></div>
