@@ -98,31 +98,31 @@
     <section id="view-home">
       <div class="kicker">Обновлено 22 октября</div>
       <h1>План на 22 по 30 октября</h1>
-      <p class="sub">Последний релиз на прод был 15 октября. Всё, что сделано после, лежит в develop и на стейдже.</p>
+      <p class="sub">Последний релиз на прод был 15 октября. Всё, что сделано после, лежит в develop и на стейдже. Даты ниже это старт задачи, если не написано иначе.</p>
       <div class="grid">
         <button class="block" type="button" data-view="dialogue">
           <b>Переписка</b>
-          <span>Орест. На ревью напоминания раз в 2 дня, представление без «AI», сообщения днём по времени кандидата. С 22.10 ответ про формат работы, с 23.10 понятный прогноз закрытия вакансии в Freya Intake. Правки от QA идут всё это время.</span>
+          <span>Орест. 22.10 ответ про формат работы. 23.10 понятный прогноз закрытия вакансии в Freya Intake. 26.10 поиск кандидатов внутри вакансии. Правки от QA всё время.</span>
           <em>Открыть</em>
         </button>
         <button class="block" type="button" data-view="sourcing">
           <b>Сорсинг</b>
-          <span>Леонид. Коннекты на полный лимит готовы 22.10. С 22.10 отзыв инвайтов старше 30 дней, с 23.10 выборка из базы по похожести на вакансию.</span>
+          <span>Леонид. 22.10 коннекты на полный лимит готовы, старт отзыва инвайтов старше 30 дней. 23.10 выборка из базы по похожести. С 26.10 голосовой агент.</span>
           <em>Открыть</em>
         </button>
         <button class="block" type="button" data-view="speed">
           <b>Self-onboarding</b>
-          <span>Влад. Self-onboarding Фреи, бэкенд. В работе, предварительный срок сдачи 23.10.</span>
+          <span>Влад. 23.10 сдача бэкенда self-onboarding и закрыть открытую ссылку активации подписки. 25.10 правки после проверки.</span>
           <em>Открыть</em>
         </button>
         <button class="block" type="button" data-view="qa">
           <b>QA</b>
-          <span>Владимир. 22.10 переписка и оценка. 23.10 напоминания, представление и часы кандидата в консоли. 23.10 коннекты на проде.</span>
+          <span>Владимир. 22.10 переписка и оценка. 23.10 напоминания, представление, часы кандидата и коннекты на проде. 25.10 Freya Intake. 26.10 контакты на карточке.</span>
           <em>Открыть</em>
         </button>
         <button class="block" type="button" data-view="front">
           <b>Фронтенд</b>
-          <span>Вадим. Исправления создания вакансии на ревью. С 23.10 ускорение Freya Intake и подключение self-onboarding к бэкенду.</span>
+          <span>Вадим. 22.10 источники под оценкой. 23.10 контакты на карточке, ускорение Freya Intake, подключение self-onboarding к бэкенду.</span>
           <em>Открыть</em>
         </button>
       </div>
@@ -146,7 +146,7 @@
       <h1>Орест, переписка и Фрея</h1>
 
       <h2>Сделано, в develop</h2>
-      <div class="item"><div class="top"><strong>Контакты из резюме на карточке, ответы про вилку и резюме</strong><span class="tag keep">19.10</span></div><p>PR 52.</p></div>
+      <div class="item"><div class="top"><strong>Контакты из резюме сохраняются у кандидата, ответы про вилку и резюме</strong><span class="tag keep">19.10</span></div><p>PR 52.</p></div>
       <div class="item"><div class="top"><strong>Под оценкой критерия видно, откуда она взялась</strong><span class="tag keep">20.10</span></div><p>PR 57.</p></div>
       <div class="item"><div class="top"><strong>Стаж считается по датам резюме, ответ про зарплату после напоминания</strong><span class="tag keep">16.10</span></div><p>PR 49.</p></div>
       <div class="item"><div class="top"><strong>Вакансию можно завершить и открыть снова</strong><span class="tag keep">15.10</span></div><p>PR 45.</p></div>
@@ -156,9 +156,10 @@
       <div class="item"><div class="top"><strong>Напоминания раз в 2 дня, представление без «AI»</strong><span class="tag open">PR 68</span></div><p>До 4 напоминаний на этапе до резюме и 5 после приглашения на интервью, раз в 48 часов. Первое сообщение: помогаю агентству Tener закрыть позицию для клиента. На прямой вопрос «ты бот?» честно отвечает, что AI-ассистент.</p></div>
       <div class="item"><div class="top"><strong>Сообщения днём по времени кандидата, запрос резюме в более человеческом формате</strong><span class="tag open">PR 67</span></div><p>Сами пишем кандидату только с 8:00 до 21:00 по его часовому поясу. Запрос резюме переформулирован: звучит как обычная просьба рекрутера, без списка способов отправки. Способы называем, только если кандидат спросил или файл не дошёл.</p></div>
 
-      <h2>Дальше</h2>
+      <h2>План</h2>
       <div class="item"><div class="top"><strong>Ответ про формат работы</strong><span class="tag plan">старт 22.10</span></div><p>Удалёнка, офис или гибрид и тип занятости берутся из вакансии на любом языке.</p></div>
       <div class="item"><div class="top"><strong>Freya Intake: понятный прогноз закрытия вакансии</strong><span class="tag plan">старт 23.10</span></div><p>Freya показывает процент, с каким шансом закроется вакансия. Сейчас он непонятен: не видно, из чего он сложился, и даже при нехватке данных показывается уверенное число. Нужно, чтобы процент честно отражал шансы закрыть вакансию на этих условиях и было видно, что на него влияет.</p></div>
+      <div class="item"><div class="top"><strong>Поиск кандидатов внутри вакансии</strong><span class="tag plan">старт 26.10, срок уточняется</span></div><p>Поиск по колонкам вакансии: Sourced, Connect sent и дальше по воронке. Когда кандидатов много, можно быстро найти конкретного человека или того, кого уже смотрел. Сейчас поиск есть только по списку вакансий. Экран подключает Вадим после бэкенда.</p></div>
       <div class="item"><div class="top"><strong>Правки от QA</strong><span class="tag open">всё время</span></div><p>По результатам проверок Владимира правки идут параллельно с задачами выше.</p></div>
     </section>
 
@@ -172,23 +173,27 @@
       <div class="item"><div class="top"><strong>Следующий коннект уходит кандидату с самым высоким баллом</strong><span class="tag keep">готово</span></div><p>PR 51.</p></div>
       <div class="item"><div class="top"><strong>Поиск по своей базе перед LinkedIn</strong><span class="tag keep">готово</span></div><p>PR 59 и 63. Те же фильтры, что для LinkedIn, удалённые с вакансии не возвращаются, в журнале видно источник. База общая на всех клиентов.</p></div>
 
-      <h2>Дальше</h2>
-      <div class="item"><div class="top"><strong>Коннекты на полный лимит</strong><span class="tag open">в работе, готово 22.10</span></div><p>PR 69 и 70. Кандидаты, которым нельзя отправить инвайт, больше не занимают очередь, коннект сразу уходит следующему. Результат: 15 коннектов с каждого аккаунта в рабочий день.</p></div>
+      <h2>План</h2>
+      <div class="item"><div class="top"><strong>Коннекты на полный лимит</strong><span class="tag open">готово 22.10</span></div><p>PR 69 и 70. Кандидаты, которым нельзя отправить инвайт, больше не занимают очередь, коннект сразу уходит следующему. Результат: 15 коннектов с каждого аккаунта в рабочий день.</p></div>
       <div class="item"><div class="top"><strong>Отзыв инвайтов, которые висят больше 30 дней</strong><span class="tag plan">старт 22.10</span></div><p>Отзываем в рабочее время и с паузами, повторно такому человеку инвайт не уходит. Срок в настройке.</p></div>
       <div class="item"><div class="top"><strong>Выборка из базы по похожести на вакансию</strong><span class="tag plan">старт 23.10</span></div><p>Сейчас из базы берутся первые профили по порядку, а не похожие на вакансию.</p></div>
+      <div class="item"><div class="top"><strong>Интеграция голосового агента</strong><span class="tag plan">старт 26.10, объём уточняется</span></div><p>После закрытия задач по коннектам и базе Леонид переходит на голосового агента.</p></div>
     </section>
 
     <section id="view-speed" class="hidden">
       <div class="kicker">Self-onboarding</div>
       <div class="who">Влад</div>
       <h1>Влад, self-onboarding</h1>
+      <p class="sub">Влад работает part-time.</p>
 
       <h2>Сделано, в develop</h2>
       <div class="item"><div class="top"><strong>Битые имена из CSV не уходят в аутрич</strong><span class="tag keep">19.10</span></div><p>PR 56.</p></div>
       <div class="item"><div class="top"><strong>Рекомендация и чужое резюме уходят рекрутеру, на карточке видно Need attention</strong><span class="tag keep">21.10</span></div><p>PR 61.</p></div>
 
-      <h2>В работе</h2>
-      <div class="item"><div class="top"><strong>Self-onboarding Фреи, бэкенд</strong><span class="tag open">сдача 23.10, предварительно</span></div><p>Задача в работе у Влада. Срок предварительный.</p></div>
+      <h2>План</h2>
+      <div class="item"><div class="top"><strong>Self-onboarding Фреи, бэкенд</strong><span class="tag open">сдача 23.10, предварительно</span></div><p>Задача в работе у Влада.</p></div>
+      <div class="item"><div class="top"><strong>Закрыть открытую ссылку активации подписки Фреи</strong><span class="tag plan">23.10</span></div><p>Сейчас по ссылке активации без входа в систему можно бесплатно включить подписку любой организации. Доступ только глобальному админу, на проде ссылка не работает.</p></div>
+      <div class="item"><div class="top"><strong>Правки self-onboarding после проверки</strong><span class="tag plan">25.10</span></div></div>
     </section>
 
     <section id="view-qa" class="hidden">
@@ -199,6 +204,8 @@
       <div class="item"><div class="top"><strong>Переписка и оценка</strong><span class="tag plan">22.10</span></div><p>В тестовой консоли стейджа. Вопрос оценки есть в чате, контакты из резюме на карточке, пойманные ранее случаи.</p></div>
       <div class="item"><div class="top"><strong>Напоминания, представление, часы кандидата</strong><span class="tag plan">23.10</span></div><p>Только в тестовой консоли. Расписание напоминаний раз в 2 дня, первое сообщение без «AI» на трёх языках, ответ на «ты бот?», сообщения не уходят кандидату ночью.</p></div>
       <div class="item"><div class="top"><strong>Коннекты на проде</strong><span class="tag plan">23.10</span></div><p>Сколько коннектов ушло с каждого аккаунта за день и причина, если меньше 15.</p></div>
+      <div class="item"><div class="top"><strong>Freya Intake после ускорения</strong><span class="tag plan">25.10</span></div><p>Время заполнения полей и понятность процента на тех же вакансиях, что мерил Орест.</p></div>
+      <div class="item"><div class="top"><strong>Контакты из резюме на карточке кандидата</strong><span class="tag plan">26.10</span></div><p>Телефон, Telegram, GitHub и ссылки из резюме видны на карточке.</p></div>
     </section>
 
     <section id="view-front" class="hidden">
@@ -214,10 +221,13 @@
       <h2>На ревью</h2>
       <div class="item"><div class="top"><strong>Исправления создания и редактирования вакансии</strong><span class="tag open">PR 15</span></div></div>
 
-      <h2>Дальше</h2>
+      <h2>План</h2>
+      <div class="item"><div class="top"><strong>Источники под оценкой критерия</strong><span class="tag plan">старт 22.10</span></div><p>Бэкенд отдаёт с 20.10. Под оценкой каждого критерия показать, на что она опирается.</p></div>
+      <div class="item"><div class="top"><strong>Контакты из резюме на карточке кандидата</strong><span class="tag plan">старт 23.10</span></div><p>Бэкенд отдаёт телефоны, Telegram, GitHub и ссылки из резюме с 19.10, на карточке их пока нет.</p></div>
       <div class="item"><div class="top"><strong>Freya Intake: ускорить заполнение полей</strong><span class="tag plan">23.10</span></div><p>Клиент вставляет описание вакансии, Freya разбирает его и сама заполняет поля. Сейчас на это уходит около 11 секунд. Поля и процент показываем сразу после разбора текста, а подсказки по улучшению вакансии догружаем следом. Цель: около 5 секунд.</p></div>
       <div class="item"><div class="top"><strong>Freya Intake: понятный процент на экране</strong><span class="tag open">под вопросом, 23.10</span></div><p>Когда клиент меняет текст вакансии, Freya пересчитывает процент, но на экране пока висит старое число, и непонятно, актуально ли оно. Нужно показывать, что идёт пересчёт, а под процентом объяснять, что его повысило и что понизило.</p></div>
-      <div class="item"><div class="top"><strong>Self-onboarding Фреи: подключение фронтенда к бэкенду</strong><span class="tag plan">с 23.10</span></div><p>Подключаем экраны self-onboarding к бэкенду Влада.</p></div>
+      <div class="item"><div class="top"><strong>Self-onboarding Фреи: подключение фронтенда к бэкенду</strong><span class="tag plan">23.10</span></div><p>Подключаем экраны self-onboarding к бэкенду Влада.</p></div>
+      <div class="item"><div class="top"><strong>Поиск кандидатов внутри вакансии, экран</strong><span class="tag plan">после бэкенда Ореста</span></div><p>Поле поиска в колонках вакансии.</p></div>
     </section>
   </main>
 </div>
