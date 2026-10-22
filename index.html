@@ -97,32 +97,32 @@
   <main>
     <section id="view-home">
       <div class="kicker">Обновлено 22 октября</div>
-      <h1>План на 23 по 30 октября</h1>
-      <p class="sub">Последний релиз на прод был 15 октября. Всё, что сделано после, лежит в develop и на стейдже. Следующий релиз бэкенда и фронта делаем после проверки Владимира 23 октября.</p>
+      <h1>План на 22 по 30 октября</h1>
+      <p class="sub">Последний релиз на прод был 15 октября. Всё, что сделано после, лежит в develop и на стейдже.</p>
       <div class="grid">
         <button class="block" type="button" data-view="dialogue">
           <b>Переписка</b>
-          <span>Орест. На ревью напоминания раз в 2 дня, представление без «AI», сообщения днём по времени кандидата. Дальше ответ про формат работы.</span>
+          <span>Орест. На ревью напоминания раз в 2 дня, представление без «AI», сообщения днём по времени кандидата. С 22.10 ответ про формат работы, с 23.10 понятный процент в Intake v2. Правки от QA идут всё это время.</span>
           <em>Открыть</em>
         </button>
         <button class="block" type="button" data-view="sourcing">
           <b>Сорсинг</b>
-          <span>Леонид. Своя база влита. Дальше коннекты на полный лимит 15 с аккаунта и отзыв старых инвайтов.</span>
+          <span>Леонид. Коннекты на полный лимит готовы 22.10. С 22.10 отзыв инвайтов старше 30 дней, с 23.10 выборка из базы по похожести на вакансию.</span>
           <em>Открыть</em>
         </button>
         <button class="block" type="button" data-view="speed">
           <b>Self-onboarding</b>
-          <span>Влад. Self-onboarding Фреи на бэкенде. Объём и статус уточняются.</span>
+          <span>Влад. Self-onboarding Фреи, бэкенд. В работе, предварительный срок сдачи 23.10.</span>
           <em>Открыть</em>
         </button>
         <button class="block" type="button" data-view="qa">
           <b>QA</b>
-          <span>Владимир. 23 октября переписка и оценка. Потом напоминания и представление, после этого цифры коннектов на проде.</span>
+          <span>Владимир. 22.10 переписка и оценка. 23.10 напоминания, представление и часы кандидата в консоли. Затем коннекты на проде.</span>
           <em>Открыть</em>
         </button>
         <button class="block" type="button" data-view="front">
           <b>Фронтенд</b>
-          <span>Вадим. Исправления создания вакансии на ревью. Дальше Intake v2: понятный процент и быстрый ответ.</span>
+          <span>Вадим. Исправления создания вакансии на ревью. С 23.10 Intake v2 и self-onboarding Фреи после бэкенда.</span>
           <em>Открыть</em>
         </button>
       </div>
@@ -130,7 +130,7 @@
       <p class="sub">Всё, что исправлялось после релиза 15 октября, по PR в GitHub. Карточка Trello указана, если она есть в PR.</p>
       <div class="item"><div class="top"><strong>Прод падал при открытии большой вакансии</strong><span class="tag keep">Орест · 16.10</span></div><p>PR 48. Страница вакансии 81 (1201 кандидат) роняла api на проде: 10 перезапусков и 118 ошибок за 1 час 20 минут. Подняли лимит памяти api, падения прекратились. Облегчить список кандидатов осталось отдельной задачей.</p></div>
       <div class="item"><div class="top"><strong>Второй круг правок по переписке после 41 и 43</strong><span class="tag keep">Орест · 16.10</span></div><p>PR 49. Напоминание обещало ссылку на интервью, когда её ещё нельзя отправить. Ответ про зарплату терялся, если между вопросом и ответом ушло напоминание. Стаж не учитывал даты из резюме, «Present» не считался текущей работой.</p></div>
-      <div class="item"><div class="top"><strong>Кандидат пропадал из сорсинга из-за кривой цитаты модели</strong><span class="tag keep">Леонид · 16.10</span></div><p>PR 50. Теперь остаётся с пометкой «мало данных», без отказа.</p></div>
+      <div class="item"><div class="top"><strong>Кандидаты с неполными данными терялись в сорсинге</strong><span class="tag keep">Леонид · 16.10</span></div><p>PR 50. Теперь такой человек остаётся в воронке с пометкой «мало данных» и не получает отказ.</p></div>
       <div class="item"><div class="top"><strong>Правки по проверке переписки и оценки</strong><span class="tag keep">Орест · 19.10</span></div><p>PR 52, карточки wk6QEmn7, j7B3TOdR, KnswUhgt, fVA1zZvt. «Я уже говорил» проверяется по чату и резюме. Вилка уходит только на прямой вопрос. Ответ на резюме ждёт его прочтения. Два сообщения подряд больше не теряются. Оценка берёт меньшую цифру лет от кандидата и засчитывает требование только по строке, где оно названо.</p></div>
       <div class="item"><div class="top"><strong>Битые имена из CSV уходили в аутрич</strong><span class="tag keep">Влад · 19.10</span></div><p>PR 56, карточка 81VvUPb5. Первая версия, PR 55, закрыта без слияния.</p></div>
       <div class="item"><div class="top"><strong>Рекомендация и чужое резюме не уходили рекрутеру</strong><span class="tag keep">Влад · 21.10</span></div><p>PR 61, карточка IodHeJzh. Теперь такие чаты попадают в Need attention, и это видно на карточке. Та же область, что передача чата рекрутеру (карточка vW1oMeRJ), которую уже правили в PR 26, 37 и 38.</p></div>
@@ -146,20 +146,20 @@
       <h1>Орест, переписка и Фрея</h1>
 
       <h2>Сделано, в develop</h2>
-      <div class="item"><div class="top"><strong>Контакты из резюме на карточке, ответы про вилку и резюме</strong><span class="tag keep">19.10</span></div><p>PR 52. План на 20 октября по контактам закрыт.</p></div>
+      <div class="item"><div class="top"><strong>Контакты из резюме на карточке, ответы про вилку и резюме</strong><span class="tag keep">19.10</span></div><p>PR 52.</p></div>
       <div class="item"><div class="top"><strong>Под оценкой критерия видно, откуда она взялась</strong><span class="tag keep">20.10</span></div><p>PR 57.</p></div>
       <div class="item"><div class="top"><strong>Стаж считается по датам резюме, ответ про зарплату после напоминания</strong><span class="tag keep">16.10</span></div><p>PR 49.</p></div>
       <div class="item"><div class="top"><strong>Вакансию можно завершить и открыть снова</strong><span class="tag keep">15.10</span></div><p>PR 45.</p></div>
-      <div class="item"><div class="top"><strong>Фрея не называет Digis, анонимный режим воркспейса</strong><span class="tag keep">22.10</span></div><p>PR 54 и 62. В выбранном Slack-воркспейсе Фрея не называет ни клиента, ни Tener, а описывает компанию нейтральной фразой. Для Digis: «стартап, который занимается обработкой видео». Включает глобальный админ.</p></div>
+      <div class="item"><div class="top"><strong>Фрея не называет Digis, анонимный режим воркспейса</strong><span class="tag keep">22.10</span></div><p>PR 54 и 62. В выбранном Slack-воркспейсе Фрея не называет ни клиента, ни Tener, а описывает компанию нейтральной фразой. Включает глобальный админ.</p></div>
 
       <h2>На ревью</h2>
-      <div class="item"><div class="top"><strong>Напоминания раз в 2 дня, представление без «AI»</strong><span class="tag open">PR 68</span></div><p>До 4 напоминаний на этапе до резюме и 5 после приглашения на интервью, раз в 48 часов. Первое сообщение: помогаю агентству Tener закрыть позицию для клиента. На прямой вопрос «ты бот?» честно отвечает, что AI-ассистент. Там же замеры времени Intake v2 и ранний ответ с полями и процентом, nice to have без лимита.</p></div>
-      <div class="item"><div class="top"><strong>Сообщения днём по времени кандидата, простой запрос резюме</strong><span class="tag open">PR 67</span></div><p>Сами пишем кандидату только с 8:00 до 21:00 по его часовому поясу. Ответ на его сообщение уходит через 2 до 6 минут.</p></div>
+      <div class="item"><div class="top"><strong>Напоминания раз в 2 дня, представление без «AI»</strong><span class="tag open">PR 68</span></div><p>До 4 напоминаний на этапе до резюме и 5 после приглашения на интервью, раз в 48 часов. Первое сообщение: помогаю агентству Tener закрыть позицию для клиента. На прямой вопрос «ты бот?» честно отвечает, что AI-ассистент.</p></div>
+      <div class="item"><div class="top"><strong>Сообщения днём по времени кандидата, простой запрос резюме</strong><span class="tag open">PR 67</span></div><p>Сами пишем кандидату только с 8:00 до 21:00 по его часовому поясу. Резюме просим одной простой фразой.</p></div>
 
       <h2>Дальше</h2>
-      <div class="item"><div class="top"><strong>Ответ про формат работы</strong><span class="tag plan">план</span></div><p>Удалёнка, офис или гибрид и тип занятости берутся из вакансии на любом языке. Сейчас агент на такой вопрос отвечает только про город, а занятость считает full-time по умолчанию.</p></div>
-      <div class="item"><div class="top"><strong>Intake v2: понятный процент</strong><span class="tag plan">план</span></div><p>Когда данных мало, не показывать уверенное число. Делаем после того, как соберём у клиента примеры «неверных процентов».</p></div>
-      <div class="item"><div class="top"><strong>Правки по проверке Владимира 23 октября</strong><span class="tag plan">план</span></div><p>По списку случаев из файла и четырём новым.</p></div>
+      <div class="item"><div class="top"><strong>Ответ про формат работы</strong><span class="tag plan">старт 22.10</span></div><p>Удалёнка, офис или гибрид и тип занятости берутся из вакансии на любом языке.</p></div>
+      <div class="item"><div class="top"><strong>Intake v2: понятный процент</strong><span class="tag plan">старт 23.10</span></div><p>Когда данных мало, не показывать уверенное число.</p></div>
+      <div class="item"><div class="top"><strong>Правки от QA</strong><span class="tag open">всё время</span></div><p>По результатам проверок Владимира правки идут параллельно с задачами выше.</p></div>
     </section>
 
     <section id="view-sourcing" class="hidden">
@@ -168,15 +168,14 @@
       <h1>Сорсинг и коннекты</h1>
 
       <h2>Сделано, в develop</h2>
-      <div class="item"><div class="top"><strong>Кривая цитата больше не выкидывает человека</strong><span class="tag keep">16.10</span></div><p>PR 50. Человек остаётся с пометкой «мало данных», без отказа.</p></div>
-      <div class="item"><div class="top"><strong>Следующий коннект уходит кандидату с самым высоким баллом</strong><span class="tag keep">16.10</span></div><p>PR 51.</p></div>
-      <div class="item"><div class="top"><strong>Поиск по своей базе перед LinkedIn</strong><span class="tag keep">22.10</span></div><p>PR 59 и 63. Те же фильтры, что для LinkedIn, удалённые с вакансии не возвращаются, профиль свежий 180 дней, в журнале видно источник. База общая на всех клиентов. По умолчанию выключено.</p></div>
-      <div class="item"><div class="top"><strong>Не открывать профиль, если по карточке роль не та</strong><span class="tag drop">снято</span></div><p>Проверка по карточке намеренно мягкая, чтобы не терять людей с короткой карточкой. Не делаем.</p></div>
+      <div class="item"><div class="top"><strong>Кандидаты с неполными данными больше не теряются</strong><span class="tag keep">16.10</span></div><p>PR 50. Если по профилю не хватило данных для решения, человек остаётся в воронке с пометкой «мало данных» и не получает отказ.</p></div>
+      <div class="item"><div class="top"><strong>Следующий коннект уходит кандидату с самым высоким баллом</strong><span class="tag keep">готово</span></div><p>PR 51.</p></div>
+      <div class="item"><div class="top"><strong>Поиск по своей базе перед LinkedIn</strong><span class="tag keep">готово</span></div><p>PR 59 и 63. Те же фильтры, что для LinkedIn, удалённые с вакансии не возвращаются, в журнале видно источник. База общая на всех клиентов.</p></div>
 
       <h2>Дальше</h2>
-      <div class="item"><div class="top"><strong>Коннекты на полный лимит</strong><span class="tag open">в работе</span></div><p>PR 69 и 70 на ревью. Сейчас уходит 30 до 39 коннектов из 45. Причина: в очереди есть кандидаты без идентификатора LinkedIn, система пробует их каждые полчаса и после каждой неудачи ставит аккаунт на паузу. За 2 дня около 480 пустых попыток. Таких кандидатов пропускать и брать следующего, аккаунт на паузу не ставить. Результат: 15 коннектов с каждого аккаунта 3 рабочих дня подряд на проде.</p></div>
-      <div class="item"><div class="top"><strong>Отзыв инвайтов, которые висят больше 21 дня</strong><span class="tag plan">в работу</span></div><p>Отзываем в рабочее время и с паузами, повторно такому человеку инвайт не уходит. Срок в настройке.</p></div>
-      <div class="item"><div class="top"><strong>Выборка из базы по похожести на вакансию</strong><span class="tag plan">до включения</span></div><p>Сейчас из базы берутся первые 4N профилей по порядку, а не похожие на вакансию. Нужно до того, как включать поиск по базе на проде.</p></div>
+      <div class="item"><div class="top"><strong>Коннекты на полный лимит</strong><span class="tag open">в работе, готово 22.10</span></div><p>PR 69 и 70. Кандидаты, которым нельзя отправить инвайт, больше не занимают очередь, коннект сразу уходит следующему. Результат: 15 коннектов с каждого аккаунта в рабочий день.</p></div>
+      <div class="item"><div class="top"><strong>Отзыв инвайтов, которые висят больше 30 дней</strong><span class="tag plan">старт 22.10</span></div><p>Отзываем в рабочее время и с паузами, повторно такому человеку инвайт не уходит. Срок в настройке.</p></div>
+      <div class="item"><div class="top"><strong>Выборка из базы по похожести на вакансию</strong><span class="tag open">под вопросом, с 23.10</span></div><p>Сейчас из базы берутся первые профили по порядку, а не похожие на вакансию.</p></div>
     </section>
 
     <section id="view-speed" class="hidden">
@@ -188,19 +187,18 @@
       <div class="item"><div class="top"><strong>Битые имена из CSV не уходят в аутрич</strong><span class="tag keep">19.10</span></div><p>PR 56.</p></div>
       <div class="item"><div class="top"><strong>Рекомендация и чужое резюме уходят рекрутеру, на карточке видно Need attention</strong><span class="tag keep">21.10</span></div><p>PR 61.</p></div>
 
-      <h2>Self-onboarding</h2>
-      <div class="item"><div class="top"><strong>Self-onboarding Фреи, бэкенд</strong><span class="tag open">уточнить</span></div><p>Задача в работе у Влада. В GitHub веток и PR по ней пока нет, объём и сроки уточняются.</p></div>
+      <h2>В работе</h2>
+      <div class="item"><div class="top"><strong>Self-onboarding Фреи, бэкенд</strong><span class="tag open">сдача 23.10, предварительно</span></div><p>Задача в работе у Влада. Срок предварительный.</p></div>
     </section>
 
     <section id="view-qa" class="hidden">
       <div class="kicker">QA</div>
       <div class="who">Владимир</div>
       <h1>Проверка</h1>
-      <p class="sub">Сам ничего не чинит. Каждая проверка заканчивается списком: прошло или нет.</p>
-      <div class="item"><div class="top"><strong>Переписка и оценка</strong><span class="tag plan">23.10</span></div><p>В тестовой консоли стейджа. Вопрос оценки есть в чате, контакты из резюме на карточке, четыре пойманных случая и четыре новых.</p></div>
-      <div class="item"><div class="top"><strong>Напоминания, представление, часы кандидата</strong><span class="tag plan">после PR 67 и 68</span></div><p>Расписание напоминаний раз в 2 дня, первое сообщение без «AI» на трёх языках, ответ на «ты бот?», сообщения не уходят кандидату ночью.</p></div>
-      <div class="item"><div class="top"><strong>Коннекты на проде</strong><span class="tag plan">после правки Леонида</span></div><p>3 рабочих дня подряд: сколько ушло с каждого аккаунта и причина, если меньше 15.</p></div>
-      <div class="item"><div class="top"><strong>Решение по релизу</strong><span class="tag plan">после 23.10</span></div><p>По итогам проверки выкатываем develop на прод.</p></div>
+      <p class="sub">Каждая проверка заканчивается списком: прошло или нет.</p>
+      <div class="item"><div class="top"><strong>Переписка и оценка</strong><span class="tag plan">22.10</span></div><p>В тестовой консоли стейджа. Вопрос оценки есть в чате, контакты из резюме на карточке, пойманные ранее случаи.</p></div>
+      <div class="item"><div class="top"><strong>Напоминания, представление, часы кандидата</strong><span class="tag plan">23.10</span></div><p>Только в тестовой консоли. Расписание напоминаний раз в 2 дня, первое сообщение без «AI» на трёх языках, ответ на «ты бот?», сообщения не уходят кандидату ночью.</p></div>
+      <div class="item"><div class="top"><strong>Коннекты на проде</strong><span class="tag plan">после выкладки PR 69</span></div><p>Сколько коннектов ушло с каждого аккаунта за день и причина, если меньше 15.</p></div>
     </section>
 
     <section id="view-front" class="hidden">
@@ -217,14 +215,9 @@
       <div class="item"><div class="top"><strong>Исправления создания и редактирования вакансии</strong><span class="tag open">PR 15</span></div></div>
 
       <h2>Дальше</h2>
-      <div class="item"><div class="top"><strong>Self-onboarding Фреи, фронтенд</strong><span class="tag open">уточнить</span></div><p>В паре с бэкендом Влада. В GitHub веток по нему пока нет.</p></div>
-      <div class="item"><div class="top"><strong>Intake v2: процент без старого числа и с разбивкой</strong><span class="tag plan">план</span></div><p>Пока идёт пересчёт, показывать «считаем», а не прошлый процент. Под процентом выводить, что добавило и что отняло баллы. Данные уже приходят с бэкенда.</p></div>
-      <div class="item"><div class="top"><strong>Intake v2: быстрый ответ</strong><span class="tag plan">после PR 68</span></div><p>Поля и процент показывать сразу, подсказки подгружать следом.</p></div>
-      <div class="item"><div class="top"><strong>Новый визуал по концепту</strong><span class="tag plan">идёт</span></div><p>Вакансия, кандидат и оценка. Концепт ниже.</p></div>
-      <div class="concept-frame">
-        <iframe src="tener-job-candidate.html?v=4a3dbac" title="Концепт вакансии, кандидата и новой оценки"></iframe>
-      </div>
-      <p class="footer"><a class="doc" href="tener-job-candidate.html">Открыть концепт на всю страницу</a></p>
+      <div class="item"><div class="top"><strong>Intake v2: быстрый ответ</strong><span class="tag plan">23.10</span></div><p>Поля и процент показывать сразу, подсказки подгружать следом.</p></div>
+      <div class="item"><div class="top"><strong>Intake v2: процент без старого числа и с разбивкой</strong><span class="tag plan">23.10</span></div><p>Пока идёт пересчёт, показывать «считаем», а не прошлый процент. Под процентом выводить, что добавило и что отняло баллы.</p></div>
+      <div class="item"><div class="top"><strong>Self-onboarding Фреи, фронтенд</strong><span class="tag plan">с 23.10, после бэкенда</span></div><p>Ориентировочно, ждём бэкенд Влада.</p></div>
     </section>
   </main>
 </div>
