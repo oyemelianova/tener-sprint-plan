@@ -9,52 +9,56 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap">
 <style>
-  /* Layout: sticky top bar with two features, each feature has "Логика" and "Прототип"; Tener product tokens. */
+  /* Layout: page bar with two features x (Логика | Прототип). Prototype screens copy Tener frontend markup and Tailwind tokens. */
   :root {
-    --bg: #fafaf8; --surface: #f6f5f1; --card: #ffffff; --muted: #e5e7eb; --divider: #d1d5db; --border: #e6e3da;
-    --ink: #16161a; --ink-2: #3d3d45; --ink-3: #6b6b74; --ink-4: #9a9aa1;
-    --teal: #0d9488; --teal-strong: #00786f; --teal-soft: #cbfbf1; --teal-tint: #f0fdfa; --on-teal: #ffffff;
-    --amber: #b45309; --amber-soft: #fef3c7; --red: #b91c1c; --red-soft: #fee2e2; --violet-soft: #ede9fe;
-    --scrim: rgba(22, 22, 26, .35); --shadow: rgba(0, 0, 0, .14); --toast-bg: #16161a; --toast-fg: #ffffff;
+    --bg: #fafaf8; --surface: #f6f5f1; --card: #ffffff; --muted: #e5e7eb; --divider: #d1d5db; --track: #e5e7eb; --border: #e6e3da;
+    --ink-500: #16161a; --ink-400: #3d3d45; --ink-300: #6b6b74; --ink-200: #9a9aa1;
+    --teal-600: #0d9488; --teal-700: #00786f; --teal-100: #cbfbf1; --teal-50: #f0fdfa; --teal-200: rgba(153, 246, 228, .5); --teal-300: #5eead4;
+    --amber-50: #fffbeb; --amber-100: #fef3c7; --amber-200: #fde68a; --amber-600: #d97706; --amber-800: #92400e;
+    --red-100: #fee2e2; --red-600: #dc2626; --indigo-500: #6366f1; --indigo-600: #4f46e5; --sky-600: #0284c7; --sky-bg: rgba(56, 189, 248, .12);
+    --slate-400: #94a3b8; --sky-300: #7dd3fc; --sky-400: #38bdf8; --purple-600: rgba(147, 51, 234, .8); --green-600: #16a34a; --linkedin: #1d4ed8;
+    --scrim: rgba(0, 0, 0, .5); --shadow: rgba(0, 0, 0, .08); --toast-bg: #16161a; --toast-fg: #ffffff; --hover-border: #2dd4bf; --adminv-border: #99f6e4;
     --font-sans: "Geist", "Helvetica Neue", Helvetica, Arial, sans-serif;
     --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
   }
   @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
-    --bg: #111113; --surface: #1a1a1e; --card: #1f1f23; --muted: #27272a; --divider: #3f3f46; --border: #2e2e33;
-    --ink: #f1f1f5; --ink-2: #c9c9d1; --ink-3: #9a9aa3; --ink-4: #707078;
-    --teal: #14b8a6; --teal-strong: #2dd4bf; --teal-soft: #134e4a; --teal-tint: #0f2e2b; --on-teal: #04201d;
-    --amber: #fbbf24; --amber-soft: #3a2a0a; --red: #fca5a5; --red-soft: #3b1414; --violet-soft: #2a2140;
-    --scrim: rgba(0, 0, 0, .55); --shadow: rgba(0, 0, 0, .5); --toast-bg: #f1f1f5; --toast-fg: #16161a; color-scheme: dark; } }
+    --bg: #111113; --surface: #1a1a1e; --card: #1f1f23; --muted: #27272a; --divider: #3f3f46; --track: #3f3f46; --border: #2e2e33;
+    --ink-500: #f1f1f5; --ink-400: #a1a1aa; --ink-300: #8b8b93; --ink-200: #6b6b73;
+    --teal-700: #5eead4; --teal-100: #134e4a; --teal-50: #0f2a28; --teal-200: rgba(20, 184, 166, .18); --teal-300: #0f766e;
+    --amber-50: #2a210c; --amber-100: #3a2a0a; --amber-200: #5a4310; --amber-600: #f59e0b; --amber-800: #fcd34d;
+    --red-100: #3b1414; --red-600: #ef4444; --indigo-600: #6366f1; --sky-600: #7dd3fc; --sky-bg: rgba(56, 189, 248, .16);
+    --scrim: rgba(0, 0, 0, .6); --shadow: rgba(0, 0, 0, .35); --toast-bg: #f1f1f5; --toast-fg: #16161a; --hover-border: #0f766e; --adminv-border: #134e4a; color-scheme: dark; } }
   :root[data-theme="dark"] {
-    --bg: #111113; --surface: #1a1a1e; --card: #1f1f23; --muted: #27272a; --divider: #3f3f46; --border: #2e2e33;
-    --ink: #f1f1f5; --ink-2: #c9c9d1; --ink-3: #9a9aa3; --ink-4: #707078;
-    --teal: #14b8a6; --teal-strong: #2dd4bf; --teal-soft: #134e4a; --teal-tint: #0f2e2b; --on-teal: #04201d;
-    --amber: #fbbf24; --amber-soft: #3a2a0a; --red: #fca5a5; --red-soft: #3b1414; --violet-soft: #2a2140;
-    --scrim: rgba(0, 0, 0, .55); --shadow: rgba(0, 0, 0, .5); --toast-bg: #f1f1f5; --toast-fg: #16161a; color-scheme: dark; }
+    --bg: #111113; --surface: #1a1a1e; --card: #1f1f23; --muted: #27272a; --divider: #3f3f46; --track: #3f3f46; --border: #2e2e33;
+    --ink-500: #f1f1f5; --ink-400: #a1a1aa; --ink-300: #8b8b93; --ink-200: #6b6b73;
+    --teal-700: #5eead4; --teal-100: #134e4a; --teal-50: #0f2a28; --teal-200: rgba(20, 184, 166, .18); --teal-300: #0f766e;
+    --amber-50: #2a210c; --amber-100: #3a2a0a; --amber-200: #5a4310; --amber-600: #f59e0b; --amber-800: #fcd34d;
+    --red-100: #3b1414; --red-600: #ef4444; --indigo-600: #6366f1; --sky-600: #7dd3fc; --sky-bg: rgba(56, 189, 248, .16);
+    --scrim: rgba(0, 0, 0, .6); --shadow: rgba(0, 0, 0, .35); --toast-bg: #f1f1f5; --toast-fg: #16161a; --hover-border: #0f766e; --adminv-border: #134e4a; color-scheme: dark; }
 
   * { box-sizing: border-box; }
   body { margin: 0; } [hidden] { display: none !important; }
-  body { background: var(--bg); color: var(--ink); font: 14px/1.55 var(--font-sans); }
+  body { background: var(--bg); color: var(--ink-500); font: 14px/1.5 var(--font-sans); }
   body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--card); }
-  .label { font-family: var(--font-mono); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-2); }
-  .meta { color: var(--ink-3); font-size: 13px; }
-  button, input, select { font: inherit; color: inherit; }
-  :focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+  button, input, select, textarea { font: inherit; color: inherit; }
+  :focus-visible { outline: 2px solid var(--teal-600); outline-offset: 2px; }
+  .mono { font-family: var(--font-mono); }
+  .overline { font-family: var(--font-mono); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-400); }
+  .field-label { font-family: var(--font-mono); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-400); }
+  .t-300 { color: var(--ink-300); } .t-400 { color: var(--ink-400); }
+  .xs { font-size: 12px; } .sm { font-size: 13px; }
 
   .bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 8; background: var(--card); border-bottom: 1px solid var(--border);
     padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 10px;
-    display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; }
-  .bar .brand { display: flex; gap: 8px; align-items: center; font-weight: 700; margin-right: 8px; }
-  .logo { width: 22px; height: 22px; border-radius: 6px; background: var(--teal); color: var(--on-teal); display: grid; place-items: center; font-size: 12px; font-weight: 700; }
-  .seg { display: inline-flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
-  .seg button { border: 0; border-right: 1px solid var(--border); background: var(--card); padding: 6px 12px; font-size: 13px; cursor: pointer; color: var(--ink-2); }
-  .seg button:last-child { border-right: 0; }
-  .seg button.on { background: var(--teal); color: var(--on-teal); font-weight: 600; }
+    display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; }
+  .seg { display: inline-flex; border: 1px solid var(--border); border-radius: 8px; background: var(--card); padding: 2px; gap: 2px; }
+  .seg button { border: 0; background: transparent; border-radius: 6px; padding: 5px 12px; font-size: 13px; cursor: pointer; color: var(--ink-400); }
+  .seg button.on { background: var(--teal-600); color: #fff; font-weight: 600; }
 
   .doc { max-width: 860px; margin: 0 auto; padding-block: 28px 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
   .doc h1 { font-size: 26px; line-height: 1.2; margin: 6px 0 8px; letter-spacing: -.01em; text-wrap: balance; }
   .doc h2 { font-size: 18px; margin: 28px 0 8px; text-wrap: balance; }
-  .doc p, .doc li { color: var(--ink-2); max-width: 70ch; }
+  .doc p, .doc li { color: var(--ink-400); max-width: 70ch; }
   .doc ol { padding-left: 20px; display: grid; gap: 4px; }
   .tablewrap { overflow-x: auto; }
   .doc table { border-collapse: collapse; width: 100%; margin: 10px 0; background: var(--card); min-width: 520px; }
@@ -63,123 +67,184 @@
   .doc code { font-family: var(--font-mono); background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 0 4px; font-size: 12px; word-break: break-word; }
   .note { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
 
+  /* Tener shell: Sidebar.tsx (w-64, bg-surface, Operate / Platform), Header.tsx (h-14, date on the right) */
   .proto { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 16px 40px; }
-  .app { display: grid; grid-template-columns: 200px minmax(0, 1fr); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: var(--bg); position: relative; }
-  .side { border-right: 1px solid var(--border); background: var(--card); padding: 14px 10px; display: flex; flex-direction: column; gap: 2px; }
-  .side .brand { display: flex; justify-content: space-between; align-items: center; font-weight: 700; margin: 0 6px 14px; }
-  .side .brand span { display: flex; gap: 8px; align-items: center; }
-  .side a { display: flex; justify-content: space-between; align-items: center; padding: 7px 10px; border-radius: 8px; color: var(--ink-2); text-decoration: none; cursor: pointer; }
-  .side a.on { background: var(--surface); color: var(--ink); font-weight: 600; }
-  .badge { background: var(--teal); color: var(--on-teal); border-radius: 999px; font-size: 11px; padding: 0 7px; font-weight: 600; }
-  .main { padding: 18px 22px; min-width: 0; }
-  .head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
-  .head h2 { margin: 0; font-size: 20px; }
-  .crumb { color: var(--ink-3); font-size: 12px; }
-  .btn { border: 1px solid var(--border); background: var(--card); color: var(--ink); border-radius: 8px; padding: 6px 12px; font-size: 13px; cursor: pointer; }
-  .btn:hover { background: var(--surface); }
-  .btn.primary { background: var(--teal); border-color: var(--teal); color: var(--on-teal); font-weight: 600; }
-  .btn.primary:hover { background: var(--teal-strong); border-color: var(--teal-strong); }
-  .btn[disabled] { opacity: .45; cursor: not-allowed; }
-  .board { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
-  .col { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px; min-height: 200px; }
-  .col .label { display: flex; justify-content: space-between; margin-bottom: 8px; }
-  .cand { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; margin-bottom: 8px; }
-  .cand b { display: block; font-size: 13px; }
-  .cand span { color: var(--ink-3); font-size: 12px; }
-  .pill { display: inline-block; font-family: var(--font-mono); font-size: 10.5px; border-radius: 999px; padding: 1px 7px; white-space: nowrap; margin-top: 4px; }
-  .pill.ok { background: var(--teal-soft); color: var(--teal-strong); }
-  .pill.me { background: var(--amber-soft); color: var(--amber); }
-  .pill.late { background: var(--red-soft); color: var(--red); }
-  .pill.them { background: var(--muted); color: var(--ink-2); }
-  .hint { margin-top: 14px; border: 1px dashed var(--divider); border-radius: 8px; padding: 10px 12px; color: var(--ink-3); font-size: 12.5px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .app { display: grid; grid-template-columns: 220px minmax(0, 1fr); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: var(--bg); position: relative; min-height: 640px; }
+  .side { background: var(--surface); border-right: 1px solid var(--border); padding: 16px; display: flex; flex-direction: column; }
+  .side header { display: flex; align-items: center; gap: 8px; padding: 8px; margin-bottom: 8px; }
+  .logo { width: 28px; height: 28px; border-radius: 6px; background: var(--teal-600); color: #fff; display: grid; place-items: center; font-size: 14px; font-weight: 700; }
+  .role { margin-left: auto; font-family: var(--font-mono); font-size: 12px; text-transform: uppercase; color: var(--ink-300); }
+  .side section { border-block: 1px solid var(--divider); padding-block: 24px; display: grid; gap: 24px; flex: 1; align-content: start; }
+  .navg p { margin: 0 0 12px; padding-left: 8px; font-family: var(--font-mono); font-size: 12px; text-transform: uppercase; color: var(--ink-300); }
+  .navg nav { display: grid; gap: 6px; }
+  .navg a { display: flex; align-items: center; gap: 8px; border-radius: 3px; padding: 6px 8px; font-size: 14px; color: var(--ink-500); cursor: pointer; text-decoration: none; }
+  .navg a:hover { background: var(--track); }
+  .navg a.on { background: var(--teal-600); color: #fff; font-weight: 500; }
+  .navg a svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.8; opacity: .7; flex-shrink: 0; }
+  .shell { min-width: 0; display: flex; flex-direction: column; }
+  .topbar { height: 56px; background: var(--card); border-bottom: 1px solid var(--surface); display: flex; align-items: center; justify-content: flex-end; gap: 16px; padding: 0 24px; position: relative; }
+  .date { font-family: var(--font-mono); font-size: 12px; color: var(--ink-300); }
+  .main { padding: 0 24px 24px; min-width: 0; }
 
-  .backdrop { position: fixed; inset: 0; background: var(--scrim); display: grid; place-items: center; z-index: 20; padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
-  .modal { width: min(500px, 100%); max-height: 100%; display: flex; flex-direction: column; background: var(--card); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 20px 50px var(--shadow); }
-  .modal header { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-bottom: 1px solid var(--border); }
-  .modal header h3 { margin: 0; font-size: 16px; }
-  .modal .body { padding: 12px 16px; overflow-y: auto; min-height: 0; }
-  .modal footer { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; padding: 12px 16px; border-top: 1px solid var(--border); }
-  .opt { display: flex; align-items: center; gap: 10px; padding: 7px 10px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 6px; cursor: pointer; }
-  .opt:hover { background: var(--surface); }
-  .opt.on { border-color: var(--teal); background: var(--teal-tint); }
-  .opt small { color: var(--ink-3); margin-left: auto; font-size: 12px; font-variant-numeric: tabular-nums; }
-  .range { display: flex; gap: 10px; flex-wrap: wrap; margin: 2px 0 8px 28px; }
-  .range input { border: 1px solid var(--border); background: var(--card); border-radius: 6px; padding: 4px 8px; }
-  .count { display: flex; gap: 10px; align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; margin-top: 8px; }
-  .count b { font-size: 20px; font-variant-numeric: tabular-nums; }
-  .count.empty { background: var(--amber-soft); color: var(--amber); border-color: var(--amber-soft); }
+  /* Subheader.tsx */
+  .crumbs { margin-top: 20px; font-family: var(--font-mono); font-size: 12px; color: var(--ink-300); }
+  .subhead { margin: 14px 0 18px; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 14px; }
+  .subhead h1 { margin: 0; font-size: 24px; font-weight: 600; }
+  .actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .status { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; border-radius: 999px; padding: 1px 8px; font-family: var(--font-mono); font-size: 10px; font-weight: 600; text-transform: uppercase; background: var(--teal-50); color: var(--teal-700); }
+  .status::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--teal-600); }
 
-  .split { display: grid; grid-template-columns: minmax(0, 380px) minmax(0, 1fr); gap: 12px; }
-  .list { background: var(--card); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; align-self: start; }
-  .row { padding: 10px 12px; border-bottom: 1px solid var(--border); cursor: pointer; }
-  .row:last-child { border-bottom: 0; }
-  .row:hover, .row.on { background: var(--surface); }
-  .row .top { display: flex; justify-content: space-between; gap: 8px; align-items: center; }
-  .row b { font-size: 13.5px; }
-  .snip { color: var(--ink-3); font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--teal); margin-right: 6px; }
-  .empty-s { padding: 24px; text-align: center; color: var(--ink-3); }
-  .chat { background: var(--card); border: 1px solid var(--border); border-radius: 10px; display: flex; flex-direction: column; min-height: 420px; min-width: 0; }
-  .chat header { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; padding: 12px 14px; border-bottom: 1px solid var(--border); }
-  .msgs { flex: 1; padding: 14px; display: flex; flex-direction: column; gap: 8px; }
-  .msg { max-width: 82%; padding: 8px 11px; border-radius: 10px; font-size: 13px; }
-  .msg.in { background: var(--surface); border: 1px solid var(--border); align-self: flex-start; }
-  .msg.out { background: var(--teal-soft); align-self: flex-end; }
-  .msg.agent { background: var(--violet-soft); align-self: flex-end; }
-  .msg small { display: block; color: var(--ink-3); font-size: 11px; margin-top: 3px; }
-  .compose { display: flex; gap: 8px; padding: 10px; border-top: 1px solid var(--border); }
-  .compose input { flex: 1; min-width: 0; border: 1px solid var(--border); background: var(--card); border-radius: 8px; padding: 7px 10px; }
-  .suggest { margin: 0 14px 10px; background: var(--amber-soft); color: var(--amber); border-radius: 8px; padding: 8px 10px; font-size: 12.5px; display: flex; justify-content: space-between; gap: 8px; align-items: center; flex-wrap: wrap; }
-  .bell { position: relative; border: 1px solid var(--border); background: var(--card); border-radius: 8px; width: 30px; height: 30px; cursor: pointer; display: grid; place-items: center; }
-  .bell svg { width: 15px; height: 15px; fill: none; stroke: var(--ink-2); stroke-width: 1.8; }
-  .bell i { position: absolute; top: -6px; right: -6px; background: var(--red); color: var(--card); font-style: normal; font-size: 10px; border-radius: 999px; padding: 0 5px; font-weight: 700; }
-  .pop { position: absolute; left: 12px; top: 54px; width: min(340px, calc(100% - 24px)); background: var(--card); border: 1px solid var(--border); border-radius: 10px; box-shadow: 0 16px 40px var(--shadow); z-index: 5; }
+  /* uiButtonClassName variants and sizes */
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border-radius: 6px; font-weight: 500; cursor: pointer; border: 1px solid transparent; box-shadow: 0 1px 2px var(--shadow); white-space: nowrap; }
+  .btn.outline { border-color: var(--border); background: var(--card); color: var(--ink-500); }
+  .btn.outline:hover { background: var(--surface); }
+  .btn.secondary { border-color: var(--border); background: var(--surface); color: var(--ink-500); }
+  .btn.primary { background: var(--teal-600); color: #fff; }
+  .btn.primary:hover { filter: brightness(.93); }
+  .btn.compact { padding: 4px 16px; font-size: 14px; }
+  .btn.sm { padding: 4px 12px; font-size: 12px; }
+  .btn.md { padding: 8px 16px; font-size: 14px; }
+  .btn[disabled] { opacity: .5; pointer-events: none; }
+  .x { border: 0; background: transparent; border-radius: 4px; padding: 2px 8px; font-size: 22px; line-height: 1; color: var(--ink-400); cursor: pointer; }
+  .x:hover { background: var(--surface); }
+
+  /* JobDetailSectionCard, KPI strip, Needs attention */
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 1px 2px var(--shadow); margin-bottom: 20px; min-width: 0; }
+  .card-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--border); background: color-mix(in srgb, var(--surface) 40%, var(--card)); }
+  .card-head .ttl { font-size: 18px; font-weight: 600; }
+  .card-head .sub { display: block; font-size: 12px; color: var(--ink-300); margin-top: 2px; }
+  .card-head .right { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+  .card-body { padding: 12px; }
+  .vtoggle { display: inline-flex; border: 1px solid var(--border); border-radius: 8px; background: var(--card); padding: 2px; font-size: 11px; text-transform: uppercase; letter-spacing: .04em; }
+  .vtoggle button { border: 0; background: transparent; border-radius: 6px; padding: 3px 8px; cursor: pointer; color: var(--ink-400); }
+  .vtoggle button.on { background: var(--teal-600); color: #fff; font-weight: 600; }
+  .kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 20px; }
+  .kpi { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; box-shadow: 0 1px 2px var(--shadow); }
+  .kpi b { display: block; font-size: 28px; font-weight: 600; line-height: 1.2; font-variant-numeric: tabular-nums; }
+  .att-head { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+  .att-head .ttl { font-weight: 600; }
+  .att-list { padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+  .att { display: flex; align-items: flex-start; gap: 12px; border-radius: 6px; border: 1px solid var(--amber-100); background: var(--amber-50); padding: 10px 12px; }
+  .att.reply { border-color: var(--teal-100); background: var(--teal-50); }
+  .att.wait { border-color: var(--border); background: var(--surface); }
+  .att .ic { width: 28px; height: 28px; border-radius: 999px; flex-shrink: 0; display: grid; place-items: center; font-size: 10px; font-weight: 600; color: #fff; background: var(--amber-600); font-family: var(--font-mono); }
+  .att.reply .ic { background: var(--teal-600); } .att.wait .ic { background: var(--ink-400); }
+  .att .bd { min-width: 0; flex: 1; }
+  .att .t { font-weight: 500; font-size: 14px; }
+  .att time { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-300); margin-left: 8px; }
+  .att .m { color: var(--ink-300); font-size: 12px; margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .empty { border: 1px solid var(--border); background: var(--surface); border-radius: 6px; padding: 20px 12px; text-align: center; font-size: 13px; color: var(--ink-300); }
+  .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--teal-600); margin-right: 6px; vertical-align: middle; }
+
+  /* JobDetailKanbanBoard + JobDetailCandidateKanbanCard */
+  .kanban { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 4px; }
+  .kcol { min-width: 230px; flex: 1; border: 1px solid var(--border); border-radius: 8px; background: color-mix(in srgb, var(--surface) 80%, transparent); display: flex; flex-direction: column; }
+  .kcol-h { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-bottom: 1px solid var(--border); }
+  .kcol-h i { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+  .kcol-h span { font-size: 13px; font-weight: 500; }
+  .kcol-h em { margin-left: auto; font-style: normal; font-family: var(--font-mono); font-size: 12px; color: var(--ink-400); border: 1px solid var(--border); background: var(--card); border-radius: 12px; min-width: 24px; height: 20px; display: grid; place-items: center; padding: 0 4px; }
+  .kcol-b { padding: 8px; display: flex; flex-direction: column; gap: 8px; min-height: 120px; }
+  .kempty { border: 1px dashed var(--border); border-radius: 6px; padding: 20px 12px; text-align: center; font-size: 12px; color: var(--ink-300); }
+  .kc { display: block; border: 1px solid var(--border); border-radius: 8px; background: var(--card); padding: 10px; box-shadow: 0 1px 2px var(--shadow); cursor: pointer; }
+  .kc:hover { border-color: var(--hover-border); }
+  .kc .top { display: flex; gap: 8px; align-items: flex-start; }
+  .av { width: 28px; height: 28px; border-radius: 999px; background: var(--ink-400); color: #fff; font-family: var(--font-mono); font-size: 10px; font-weight: 600; display: grid; place-items: center; flex-shrink: 0; }
+  .kc .nm { font-weight: 500; font-size: 13px; line-height: 1.2; }
+  .kc .id { font-family: var(--font-mono); font-size: 10px; color: var(--ink-400); margin-top: 2px; }
+  .score { margin-left: auto; height: 28px; min-width: 48px; border-radius: 6px; background: var(--teal-100); color: var(--teal-700); font-family: var(--font-mono); font-weight: 700; font-size: 13px; display: grid; place-items: center; padding: 0 6px; }
+  .kc .dates { margin-top: 8px; font-size: 11px; color: var(--ink-300); display: flex; justify-content: space-between; }
+  .kc .foot { margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border); display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+  .badge { display: inline-flex; align-items: center; gap: 5px; border-radius: 999px; padding: 1px 7px; font-family: var(--font-mono); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .03em; background: var(--sky-bg); color: var(--sky-600); }
+  .badge::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+  .tchip { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: .03em; border-radius: 4px; padding: 1px 6px; }
+  .tchip.me { background: var(--amber-100); color: var(--amber-800); }
+  .tchip.late { background: var(--red-100); color: var(--red-600); }
+  .tchip.them { background: var(--muted); color: var(--ink-400); }
+  .tchip.new { background: var(--teal-100); color: var(--teal-700); }
+  .fchip { border: 1px solid var(--border); background: var(--card); border-radius: 8px; padding: 3px 10px; font-size: 11px; text-transform: uppercase; letter-spacing: .04em; cursor: pointer; color: var(--ink-400); }
+  .fchip.on { background: var(--teal-600); border-color: var(--teal-600); color: #fff; font-weight: 600; }
+
+  /* CandidateProfilePage, Rail, Conversation history */
+  .ph { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 20px 0; }
+  .ph .l { display: flex; gap: 14px; }
+  .ph h1 { margin: 0; font-size: 24px; font-weight: 600; }
+  .backarrow { border: 0; background: transparent; cursor: pointer; color: var(--ink-400); font-size: 22px; line-height: 1; padding: 0; }
+  .adminv { border: 1px solid var(--adminv-border); background: var(--teal-50); color: var(--teal-700); border-radius: 999px; padding: 3px 12px; font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; }
+  .pgrid { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 16px; align-items: start; }
+  .rail { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 18px 14px; text-align: center; box-shadow: 0 1px 2px var(--shadow); }
+  .rail .bigav { width: 64px; height: 64px; border-radius: 50%; background: var(--indigo-600); color: #fff; font-family: var(--font-mono); font-size: 18px; font-weight: 600; display: grid; place-items: center; margin: 0 auto 12px; }
+  .rail .nm { font-size: 17px; font-weight: 600; }
+  .rail dl { text-align: left; margin: 14px 0 0; display: grid; gap: 2px; font-size: 12px; }
+  .rail dt { color: var(--ink-300); } .rail dd { margin: 0 0 6px; }
+  .psec { background: var(--card); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 1px 2px var(--shadow); padding: 14px 16px; margin-bottom: 14px; min-width: 0; }
+  .psec h3 { margin: 0 0 10px; font-size: 15px; font-weight: 600; }
+  .tbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; border: 1px solid var(--border); background: var(--surface); border-radius: 6px; padding: 8px 10px; margin: 10px 0; }
+  .tbar .txt { font-size: 12px; color: var(--ink-400); }
+  .chan { display: flex; align-items: center; gap: 8px; margin: 10px 0 4px; }
+  .chan .in { width: 16px; height: 16px; border-radius: 3px; background: var(--linkedin); color: #fff; font-size: 9px; display: grid; place-items: center; }
+  .chan span { font-family: var(--font-mono); font-size: 9px; text-transform: uppercase; color: var(--ink-300); }
+  .chan hr { flex: 1; border: 0; border-top: 1px solid var(--divider); margin: 0; }
+  .msgs { max-height: 320px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding: 4px 0 8px 12px; }
+  .bub { display: flex; justify-content: flex-end; }
+  .bub .col { display: flex; flex-direction: column; gap: 4px; align-items: flex-end; max-width: 85%; min-width: 0; }
+  .bub .who { font-family: var(--font-mono); font-size: 10px; color: var(--ink-500); }
+  .bub .who span { color: var(--ink-200); }
+  .bub .tx { border-radius: 12px 4px 12px 12px; padding: 8px 12px; font-size: 12px; border: 1px solid var(--border); background: var(--card); overflow-wrap: anywhere; }
+  .bub.out .tx { background: var(--teal-200); border-color: var(--teal-300); }
+  .bub.mine .tx { background: var(--amber-50); border-color: var(--amber-200); }
+  .bub .ini { width: 28px; height: 28px; min-width: 28px; border-radius: 50%; margin: 4px 0 0 8px; display: grid; place-items: center; font-size: 9px; color: #fff; background: var(--teal-600); }
+  .bub.out .ini { background: var(--indigo-500); } .bub.mine .ini { background: var(--amber-600); }
+  .reply { border-top: 1px solid var(--border); padding-top: 12px; margin-top: 4px; display: grid; gap: 8px; }
+  .reply textarea { width: 100%; border: 1px solid var(--border); background: var(--card); border-radius: 6px; padding: 6px 10px; font-size: 13px; resize: vertical; box-shadow: 0 1px 2px var(--shadow); }
+  .reply .row { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .suggest { border: 1px solid var(--amber-200); background: var(--amber-50); color: var(--amber-800); border-radius: 6px; padding: 8px 10px; font-size: 13px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+
+  /* ModalBackdrop + CandidateProfileExportModal */
+  .backdrop { position: fixed; inset: 0; z-index: 50; display: flex; align-items: center; justify-content: center; background: var(--scrim); backdrop-filter: blur(4px); padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+  .modal { width: 100%; max-width: 448px; max-height: 100%; display: flex; flex-direction: column; overflow: hidden; background: var(--card); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 10px 30px var(--shadow); }
+  .mhead { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding: 18px 20px 14px; border-bottom: 1px solid var(--border); }
+  .mhead h2 { margin: 2px 0 0; font-size: 18px; font-weight: 600; }
+  .mhead p { margin: 4px 0 0; font-size: 13px; color: var(--ink-300); }
+  .mbody { padding: 16px 20px; display: grid; gap: 14px; overflow-y: auto; min-height: 0; }
+  .fld { display: grid; gap: 4px; }
+  .control { width: 100%; border: 1px solid var(--border); background: var(--card); border-radius: 6px; padding: 6px 10px; font-size: 14px; box-shadow: 0 1px 2px var(--shadow); }
+  .dates2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .info { border: 1px solid var(--border); background: var(--surface); border-radius: 6px; padding: 8px 12px; font-size: 13px; color: var(--ink-400); }
+  .info b { color: var(--ink-500); font-variant-numeric: tabular-nums; }
+  .warn { border: 1px solid var(--amber-200); background: var(--amber-50); color: var(--amber-800); border-radius: 6px; padding: 8px 12px; font-size: 13px; }
+  .mfoot { display: flex; justify-content: flex-end; gap: 8px; padding: 12px 20px 16px; }
+
+  .bell { position: relative; border: 0; background: transparent; width: 32px; height: 32px; border-radius: 6px; cursor: pointer; display: grid; place-items: center; }
+  .bell:hover { background: var(--surface); }
+  .bell svg { width: 17px; height: 17px; fill: none; stroke: var(--ink-400); stroke-width: 1.8; }
+  .bell i { position: absolute; top: 0; right: 0; background: var(--red-600); color: #fff; font-style: normal; font-size: 10px; border-radius: 999px; padding: 0 5px; font-weight: 700; }
+  .pop { position: absolute; right: 24px; top: 52px; width: min(340px, calc(100% - 32px)); background: var(--card); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 10px 30px var(--shadow); z-index: 5; overflow: hidden; }
+  .pop .ph2 { padding: 10px 12px; border-bottom: 1px solid var(--border); font-weight: 600; font-size: 13px; }
   .pop .it { padding: 10px 12px; border-bottom: 1px solid var(--border); font-size: 13px; cursor: pointer; }
   .pop .it:last-child { border-bottom: 0; }
   .pop .it:hover { background: var(--surface); }
-  .digest { max-width: 620px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; }
-  .digest h3 { margin: 4px 0; }
-  .digest ul { padding-left: 18px; margin: 6px 0 14px; }
-  .toast { position: fixed; right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); background: var(--toast-bg); color: var(--toast-fg); border-radius: 10px; padding: 10px 14px; z-index: 30; font-size: 13px; max-width: min(380px, calc(100vw - 32px)); }
+  .demo { margin-top: 12px; border: 1px dashed var(--divider); border-radius: 8px; padding: 10px 12px; color: var(--ink-300); font-size: 12.5px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .mail { margin-top: 18px; display: grid; gap: 8px; max-width: 640px; }
+  .digest { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 16px 18px; }
+  .digest h3 { margin: 6px 0; font-size: 16px; }
+  .digest ul { padding-left: 18px; margin: 6px 0 12px; font-size: 13px; }
+  .toast { position: fixed; right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); background: var(--toast-bg); color: var(--toast-fg); border-radius: 8px; padding: 10px 14px; z-index: 60; font-size: 13px; max-width: min(380px, calc(100vw - 32px)); }
 
-  .kpis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-bottom: 14px; }
-  .kpis > div { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; display: grid; gap: 2px; }
-  .kpis b { font-size: 22px; font-variant-numeric: tabular-nums; }
-  .widget { background: var(--card); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
-  .widget-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; padding: 10px 12px; border-bottom: 1px solid var(--border); }
-  .list.flat { border: 0; border-radius: 0; }
-  .chipf { border: 1px solid var(--border); background: var(--card); border-radius: 999px; padding: 5px 12px; font-size: 13px; cursor: pointer; color: var(--ink-2); }
-  .chipf.on { background: var(--teal); border-color: var(--teal); color: var(--on-teal); font-weight: 600; }
-  .cand.click { cursor: pointer; }
-  .cand.click:hover { border-color: var(--teal); }
-  .back { color: var(--teal-strong); cursor: pointer; text-decoration: none; }
-  .profile { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 14px; margin-top: 8px; }
-  .pcol { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px; text-align: center; align-self: start; }
-  .pcol h2 { font-size: 17px; margin: 8px 0 2px; }
-  .avatar { width: 52px; height: 52px; border-radius: 50%; background: var(--teal-soft); color: var(--teal-strong); display: grid; place-items: center; font-weight: 700; margin: 0 auto; }
-  .score { font-size: 22px; font-variant-numeric: tabular-nums; }
-  .pmain { min-width: 0; display: grid; gap: 8px; align-content: start; }
-  .statusbar { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
-  .mail { margin-top: 18px; display: grid; gap: 8px; }
-  .fakebtn { display: inline-block; background: var(--teal); color: var(--on-teal); border-radius: 8px; padding: 6px 12px; font-weight: 600; font-size: 13px; }
-  @media (max-width: 860px) {
-    .profile, .kpis { grid-template-columns: 1fr; }
+  @media (max-width: 900px) {
     .app { grid-template-columns: 1fr; }
-    .side { flex-direction: row; flex-wrap: wrap; align-items: center; border-right: 0; border-bottom: 1px solid var(--border); }
-    .side .brand { margin: 0 10px 0 0; gap: 10px; }
-    .board { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .split { grid-template-columns: 1fr; }
-    .main { padding: 14px; }
-    .pop { top: 100px; }
+    .side { border-right: 0; border-bottom: 1px solid var(--border); }
+    .side section { grid-template-columns: 1fr 1fr; padding-block: 12px; }
+    .kpis { grid-template-columns: 1fr 1fr; }
+    .pgrid { grid-template-columns: 1fr; }
+    .main { padding: 0 14px 16px; }
+    .topbar { padding: 0 14px; }
   }
-  @media (max-width: 480px) { .board { grid-template-columns: 1fr; } }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 </head>
 <body>
 
 <div class="bar">
-  <div class="brand"><span class="logo">T</span> Tener</div>
   <div class="seg" role="tablist" aria-label="Задача">
     <button id="f-cv" class="on" data-feature="cv">Выгрузка CV за период</button>
     <button id="f-tracking" data-feature="tracking">Трекинг ответов кандидатов</button>
@@ -192,24 +257,29 @@
 
 <!-- ============ CV EXPORT: LOGIC ============ -->
 <section id="cv-doc" class="doc">
-  <div class="label">Задача · бэкенд Влад, фронтенд Вадим</div>
+  <div class="overline">Задача · бэкенд Влад, фронтенд Вадим</div>
   <h1>Выгрузка CV за выбранный период</h1>
   <p>Рекрутер выгружает CV кандидатов вакансии не всеми сразу, а за нужный период или только новые с прошлой выгрузки, поэтому ему не нужно вспоминать, какие CV уже скачаны.</p>
 
   <h2>Как сейчас</h2>
-  <p>На странице вакансии кнопка «Export available CVs» скачивает архив сразу со всеми CV вакансии. Файлы CV попадают в архив, CV-ссылки перечисляются в файле <code>cvs_links.txt</code>. Отбора по дате нет, хотя дата получения CV в системе хранится (<code>resume_assets.observed_at</code>).</p>
+  <p>На странице вакансии в блоке «Candidates», рядом с переключателем Kanban и Table, есть кнопка «Export available CVs». Она сразу скачивает архив со всеми CV вакансии: файлы CV попадают в архив, CV-ссылки перечисляются в файле <code>cvs_links.txt</code>. Отбора по дате нет, хотя дата получения CV в системе хранится (<code>resume_assets.observed_at</code>).</p>
 
   <h2>Как должно работать</h2>
-  <p>Кнопка выгрузки открывает окно, в котором рекрутер выбирает период.</p>
+  <p>Кнопка остаётся на том же месте, но теперь открывает окно выгрузки. Окно сделано так же, как уже существующее окно «Export candidate data» в карточке кандидата: заголовок, поле выбора в выпадающем списке, кнопки «Cancel» и «Export». В списке «Period» рекрутер выбирает период.</p>
   <div class="tablewrap"><table>
     <tr><th>Вариант</th><th>Что попадает в архив</th></tr>
-    <tr><td>Новые с прошлой выгрузки</td><td>CV, полученные после последней выгрузки этого пользователя по этой вакансии. Вариант по умолчанию, если пользователь уже выгружал CV.</td></tr>
-    <tr><td>Сегодня, вчера</td><td>CV, полученные в этот день по часовому поясу пользователя.</td></tr>
-    <tr><td>Последние 7 дней, 30 дней, 12 месяцев</td><td>CV за период, включая сегодня.</td></tr>
-    <tr><td>Свой период</td><td>С даты по дату, обе даты включительно.</td></tr>
-    <tr><td>Все CV вакансии</td><td>Как сейчас. Вариант по умолчанию при первой выгрузке.</td></tr>
+    <tr><td>New since last export</td><td>CV, полученные после последней выгрузки этого пользователя по этой вакансии. Вариант по умолчанию, если пользователь уже выгружал CV.</td></tr>
+    <tr><td>Today, Yesterday</td><td>CV, полученные в этот день по часовому поясу пользователя.</td></tr>
+    <tr><td>Last 7 days, Last 30 days, Last 12 months</td><td>CV за период, включая сегодня.</td></tr>
+    <tr><td>Custom range</td><td>С даты по дату, обе даты включительно. Под списком появляются два поля даты.</td></tr>
+    <tr><td>All CVs</td><td>Как сейчас. Вариант по умолчанию при первой выгрузке.</td></tr>
   </table></div>
-  <p>До скачивания в окне видно, сколько CV попадёт в архив, отдельно файлы и ссылки, и дата прошлой выгрузки. Если за выбранный период CV нет, окно сообщает об этом, и кнопка скачивания неактивна. Если кандидат прислал несколько версий CV, в архив попадает последняя из полученных в периоде. Имя архива содержит вакансию и период.</p>
+  <p>Рядом с каждым вариантом в списке видно количество CV. Под списком серым блоком написано, сколько CV попадёт в архив, отдельно файлы и ссылки, и когда была прошлая выгрузка. Если за выбранный период CV нет, вместо этого блока жёлтое предупреждение, и кнопка «Export» неактивна. Если кандидат прислал несколько версий CV, в архив попадает последняя из полученных в периоде. Имя архива содержит вакансию и период.</p>
+
+  <h2>Хранение CV и выгрузка по неактивным вакансиям</h2>
+  <p>Сейчас в системе нет срока хранения CV: файлы и записи о них хранятся, пока существует вакансия, и автоматически не удаляются. Выгрузка не зависит от состояния вакансии, поэтому CV можно выгрузить и по вакансии на паузе, и по завершённой, и по архивной, даже если она закрыта пять месяцев назад. Это и закрепляем: выгрузка доступна по вакансии в любом состоянии, пока вакансия есть в системе.</p>
+  <p>Кандидат, которого убрали с вакансии, сейчас тоже попадает в архив, потому что его CV не удаляется. Предлагаем такого кандидата в выгрузку не включать, а в окне выгрузки показывать, что такие CV пропущены.</p>
+  <p>Срок хранения CV нужно согласовать с клиентом отдельно. Если он появится, например 12 месяцев после закрытия вакансии, то после этого срока CV удаляются, а окно выгрузки по такой вакансии сообщает, что CV больше не хранятся.</p>
 
   <h2>Бэкенд</h2>
   <ol>
@@ -221,77 +291,76 @@
 
   <h2>Фронтенд</h2>
   <ol>
-    <li>Кнопка «Export available CVs» открывает окно выбора периода.</li>
-    <li>При смене варианта окно запрашивает количество и показывает его вместе с датой прошлой выгрузки.</li>
-    <li>«Download» скачивает архив с выбранными параметрами и часовым поясом браузера, после чего дата прошлой выгрузки обновляется.</li>
+    <li><code>JobDetailExportCvsButton</code> открывает окно вместо прямого скачивания. Окно собирается из тех же частей, что <code>CandidateProfileExportModal</code>: <code>ModalBackdrop</code>, поле с <code>UI_FIELD_LABEL</code>, кнопки <code>outline</code> и <code>primary</code>.</li>
+    <li>При смене периода окно запрашивает количество и показывает его вместе с датой прошлой выгрузки.</li>
+    <li>«Export» скачивает архив с выбранными параметрами и часовым поясом браузера, после чего окно закрывается с уведомлением, как сейчас.</li>
   </ol>
-
-  <h2>Хранение CV и выгрузка по неактивным вакансиям</h2>
-  <p>Сейчас в системе нет срока хранения CV: файлы и записи о них хранятся, пока существует вакансия, и автоматически не удаляются. Выгрузка не зависит от состояния вакансии, поэтому CV можно выгрузить и по вакансии на паузе, и по завершённой, и по архивной, даже если она закрыта пять месяцев назад. Это и закрепляем: выгрузка доступна по вакансии в любом состоянии, пока вакансия есть в системе.</p>
-  <p>Кандидат, которого убрали с вакансии, сейчас тоже попадает в архив, потому что его CV не удаляется. Предлагаем такого кандидата в выгрузку не включать, а в окне выгрузки показывать, что такие CV пропущены.</p>
-  <p>Срок хранения CV нужно согласовать с клиентом отдельно. Если он появится, например 12 месяцев после закрытия вакансии, то после этого срока CV удаляются, а окно выгрузки по такой вакансии сообщает, что CV больше не хранятся.</p>
 
   <h2>Критерии приёмки</h2>
   <ol>
-    <li>Выгрузка за «Сегодня» содержит только CV, полученные сегодня по часовому поясу пользователя.</li>
+    <li>Выгрузка за «Today» содержит только CV, полученные сегодня по часовому поясу пользователя.</li>
     <li>Свой период с 21 по 28 октября включает CV и 21-го, и 28-го числа.</li>
-    <li>Две выгрузки подряд в режиме «Новые с прошлой выгрузки»: вторая показывает 0 и не скачивается, пока не пришло новое CV.</li>
+    <li>Две выгрузки подряд в режиме «New since last export»: вторая показывает 0, и кнопка «Export» неактивна, пока не пришло новое CV.</li>
     <li>У разных пользователей одной вакансии прошлая выгрузка считается отдельно.</li>
-    <li>Выгрузка «Все CV вакансии» совпадает с текущим поведением.</li>
+    <li>Выгрузка «All CVs» совпадает с текущим поведением.</li>
     <li>Количество в окне совпадает с содержимым архива.</li>
     <li>CV выгружаются по вакансии на паузе, завершённой и архивной.</li>
     <li>Кандидаты, убранные с вакансии, в архив не попадают.</li>
   </ol>
-  <div class="note"><span>Прототип показывает окно выбора периода на демо-данных: 14 CV вакансии за три недели, последняя выгрузка 21 октября, сегодня 28 октября.</span><button class="btn primary" data-goto="cv-proto">Открыть прототип</button></div>
+  <div class="note"><span>Прототип: страница вакансии на демо-данных, 14 CV за три недели, прошлая выгрузка 21 октября, сегодня 28 октября.</span><button class="btn primary sm" data-goto>Открыть прототип</button></div>
 </section>
 
 <!-- ============ CV EXPORT: PROTOTYPE ============ -->
 <section id="cv-proto" class="proto" hidden>
-  <div class="app" id="cv-app">
-    <aside class="side">
-      <div class="brand"><span><span class="logo">T</span> Tener</span></div>
-      <a>Control Room</a><a class="on">Jobs</a><a>Freya</a><a>Freya intake v2</a><a>Users</a><a>Settings</a>
-    </aside>
-    <div class="main">
-      <div class="crumb">Jobs / Senior Paid Media Specialist</div>
-      <div class="head">
-        <div><h2>Senior Paid Media Specialist</h2><div class="meta">Acme Cloud · Remote, Ukraine · active</div></div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="cv-open">Export available CVs</button><button class="btn">Edit job</button></div>
-      </div>
-      <div class="board">
-        <div class="col"><div class="label"><span>Connect sent</span><span>57</span></div><div class="cand"><b>Olena Shevchuk</b><span>Paid media lead · Kyiv</span></div><div class="cand"><b>Andrii Kovalenko</b><span>PPC specialist · Lviv</span></div></div>
-        <div class="col"><div class="label"><span>In dialogue</span><span>23</span></div><div class="cand"><b>Maksym Hrytsenko</b><span>Performance marketer</span></div><div class="cand"><b>Yulia Kravets</b><span>Google Ads specialist</span></div></div>
-        <div class="col"><div class="label"><span>CV received</span><span>14</span></div><div class="cand"><b>Nadiia Lysenko</b><span>CV 24.10</span><br><span class="pill ok">CV</span></div><div class="cand"><b>Oksana Bondar</b><span>CV 26.10</span><br><span class="pill ok">CV</span></div></div>
-        <div class="col"><div class="label"><span>Interview</span><span>3</span></div><div class="cand"><b>Roman Tkachuk</b><span>Head of paid media</span></div></div>
-      </div>
-      <div class="hint">Нажмите «Export available CVs», чтобы открыть окно выбора периода.</div>
-    </div>
-    <div class="backdrop" id="cv-modal" hidden>
-      <div class="modal" role="dialog" aria-labelledby="cv-title">
-        <header><h3 id="cv-title">Export CVs</h3><button class="btn" id="cv-close" aria-label="Close">✕</button></header>
-        <div class="body">
-          <div class="label" style="margin-bottom:8px">Period</div>
-          <div id="cv-opts"></div>
-          <div class="range" id="cv-range" hidden><label>From <input type="date" id="cv-from" value="2026-10-21"></label><label>To <input type="date" id="cv-to" value="2026-10-28"></label></div>
-          <div class="count" id="cv-count"></div>
+  <div class="app">
+    <aside class="side" data-nav="Jobs"></aside>
+    <div class="shell">
+      <div class="topbar"><span class="date">Tue, 28 Oct 2026</span></div>
+      <div class="main">
+        <div class="crumbs">Jobs / 84</div>
+        <div class="subhead">
+          <div><h1>Senior Paid Media Specialist</h1><div class="t-300 sm" style="margin-top:6px">Acme Cloud</div><span class="status">Active</span></div>
+          <div class="actions"><button class="btn outline compact">Scoring criteria</button><button class="btn outline compact">Finish</button><button class="btn outline compact">Import candidates</button><button class="btn primary compact">Run sourcing manually</button></div>
         </div>
-        <footer><span class="meta" id="cv-last"></span><div style="display:flex;gap:8px"><button class="btn" id="cv-cancel">Cancel</button><button class="btn primary" id="cv-download">Download</button></div></footer>
+        <div class="card">
+          <div class="card-head">
+            <div><span class="ttl">Candidates</span><span class="sub">96 · current stage counts · not today’s events</span></div>
+            <div class="right"><button class="btn outline compact" id="cv-open">Export available CVs</button><div class="vtoggle"><button class="on">Kanban</button><button>Table</button></div></div>
+          </div>
+          <div class="card-body"><div class="kanban" id="cv-kanban"></div></div>
+        </div>
+        <div class="demo">Нажмите «Export available CVs» в блоке «Candidates».</div>
       </div>
+    </div>
+  </div>
+  <div class="backdrop" id="cv-modal" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="cv-title">
+      <div class="mhead"><div><div class="overline">Export</div><h2 id="cv-title">Export CVs</h2><p>Senior Paid Media Specialist · CVs received in the selected period.</p></div><button class="x" id="cv-close" aria-label="Close">×</button></div>
+      <div class="mbody">
+        <div class="fld"><label class="field-label" for="cv-period">Period</label><select class="control" id="cv-period"></select></div>
+        <div class="dates2" id="cv-range" hidden>
+          <div class="fld"><label class="field-label" for="cv-from">From</label><input class="control" type="date" id="cv-from" value="2026-10-21"></div>
+          <div class="fld"><label class="field-label" for="cv-to">To</label><input class="control" type="date" id="cv-to" value="2026-10-28"></div>
+        </div>
+        <div id="cv-count"></div>
+      </div>
+      <div class="mfoot"><button class="btn outline md" id="cv-cancel">Cancel</button><button class="btn primary md" id="cv-download">Export</button></div>
     </div>
   </div>
 </section>
 
 <!-- ============ TRACKING: LOGIC ============ -->
 <section id="tr-doc" class="doc" hidden>
-  <div class="label">Задача · бэкенд Влад, фронтенд Вадим</div>
+  <div class="overline">Задача · бэкенд Влад, фронтенд Вадим</div>
   <h1>Трекинг кандидатов и их ответов</h1>
-  <p>Рекрутер пишет кандидатам сам, например из Need attention, и после этого должен видеть, кто ему ответил, кому ответить должен он и от кого ответа пока нет, а когда кандидат отвечает, узнавать об этом без поиска по доскам.</p>
+  <p>Рекрутер пишет кандидатам сам, например из Needs attention, и после этого должен видеть, кто ему ответил, кому ответить должен он и от кого ответа пока нет, а когда кандидат отвечает, узнавать об этом без поиска по доскам.</p>
 
   <h2>Что уже есть в системе</h2>
-  <p>В карточке кандидата есть блок переписки: все сообщения с кандидатом и поле, в котором рекрутер отвечает вручную. У переписки хранится направление и время последнего сообщения (<code>last_message_direction</code>, <code>last_message_at</code>). Переписки, которые агент передал человеку, видны в Need attention на доске вакансии. Не хватает признака «эту переписку ведёт рекрутер», отметки о прочтении и уведомлений.</p>
+  <p>В карточке кандидата есть раздел «Conversation history»: все сообщения с кандидатом и поле «Write a manual LinkedIn reply…» с кнопкой «Send message». В Control Room есть блок «Needs attention» с элементами, у каждого кнопка «Open». У переписки хранится направление и время последнего сообщения (<code>last_message_direction</code>, <code>last_message_at</code>). Не хватает признака «эту переписку ведёт рекрутер», отметки о прочтении и уведомлений.</p>
+  <p>Сейчас в переписке все исходящие сообщения подписаны «Reed AI · Talent Scout», даже если их написал рекрутер вручную. Для трекинга сообщения рекрутера нужно подписывать отдельно, например «You», иначе непонятно, кто ведёт переписку.</p>
 
   <h2>Переписка остаётся в карточке кандидата</h2>
-  <p>Переписка с кандидатом одна, и она по-прежнему живёт в карточке кандидата. Трекинг ничего из карточки не забирает и не создаёт отдельного чата: он только показывает рекрутеру, в каких переписках ход за ним. Ответить можно и из списка в Control Room, и из карточки кандидата, это одна и та же переписка, и статус обновляется в обоих местах. Если рекрутер открыл карточку и увидел новый ответ, ответ считается прочитанным и в Control Room.</p>
+  <p>Переписка с кандидатом одна, и она остаётся в разделе «Conversation history» карточки кандидата. Трекинг ничего из карточки не забирает и не создаёт отдельного чата: он показывает, в каких переписках ход за рекрутером, и ведёт в карточку. Ответ рекрутер пишет в карточке, в том же поле, что и сейчас. Если рекрутер открыл карточку и увидел новый ответ, ответ считается прочитанным везде.</p>
 
   <h2>Переписка рекрутера</h2>
   <p>Переписка становится перепиской рекрутера, когда агент передал её человеку, когда рекрутер написал кандидату сам или когда рекрутер выключил в ней агента. Она перестаёт ею быть, когда рекрутер нажимает «Return to agent» или закрывает переписку решением по кандидату. Переписки, которые ведёт агент, в трекинг не попадают.</p>
@@ -299,23 +368,23 @@
   <h2>Чей ход</h2>
   <div class="tablewrap"><table>
     <tr><th>Статус</th><th>Когда</th><th>Что видит рекрутер</th></tr>
-    <tr><td>Waiting for your reply</td><td>Последнее сообщение от кандидата</td><td>Сколько кандидат ждёт. Больше суток подсвечивается и поднимается наверх.</td></tr>
-    <tr><td>New reply</td><td>Кандидат ответил, а рекрутер ещё не открывал переписку ни в Control Room, ни в карточке</td><td>Точка у строки и число на колокольчике.</td></tr>
-    <tr><td>Waiting for candidate</td><td>Последнее сообщение от рекрутера</td><td>Сколько уже ждём. Через 3 дня тишины предложение отправить напоминание или вернуть переписку агенту.</td></tr>
+    <tr><td>New reply</td><td>Кандидат ответил, а рекрутер ещё не открывал карточку</td><td>Бирюзовая метка, точка у имени и число на колокольчике.</td></tr>
+    <tr><td>Waiting for your reply</td><td>Последнее сообщение от кандидата, рекрутер его уже видел</td><td>Сколько кандидат ждёт. Больше суток метка красная.</td></tr>
+    <tr><td>Waiting for candidate</td><td>Последнее сообщение от рекрутера</td><td>Сколько уже ждём. Через 3 дня тишины в карточке предложение отправить напоминание или вернуть переписку агенту.</td></tr>
   </table></div>
 
   <h2>Где это видно</h2>
-  <p>Новых разделов в меню не добавляем, меню остаётся как на проде.</p>
+  <p>Меню не меняется. Новое добавляется в существующие экраны и выглядит так же, как соседние элементы.</p>
   <ol>
-    <li><b>Control Room:</b> блок «Your conversations» со вкладками «Waiting for your reply» и «Waiting for candidate» по всем вакансиям. Из строки можно ответить сразу или открыть карточку кандидата.</li>
-    <li><b>Доска вакансии:</b> на карточке кандидата метка «Waiting for your reply · 1d» или «You wrote · 2d ago», над доской фильтр «Waiting for my reply».</li>
-    <li><b>Карточка кандидата:</b> над перепиской тот же статус и кнопка «Return to agent». Ответ из карточки переводит переписку в «Waiting for candidate».</li>
-    <li><b>Колокольчик</b> в шапке: новые ответы кандидатов. Это новый элемент интерфейса.</li>
+    <li><b>Control Room</b>, под блоком «Needs attention»: блок «Your conversations» с тем же оформлением строк и кнопкой «Open», переключатель «Waiting for your reply» и «Waiting for candidate» в стиле переключателя Kanban и Table.</li>
+    <li><b>Доска вакансии</b>, блок «Candidates»: внизу карточки кандидата, рядом с этапом, метка «Waiting for your reply · 1d» или «You wrote · 2d ago», в шапке блока фильтр «Waiting for my reply».</li>
+    <li><b>Карточка кандидата</b>, раздел «Conversation history»: над перепиской строка со статусом и кнопкой «Return to agent», сообщения рекрутера подписаны «You».</li>
+    <li><b>Колокольчик</b> в верхней панели рядом с датой: новые ответы кандидатов. Это новый элемент, сейчас в верхней панели только дата.</li>
   </ol>
 
   <h2>Как рекрутер узнаёт об ответе</h2>
   <ol>
-    <li>Уведомление в колокольчике: имя, вакансия, начало сообщения, ссылка на карточку кандидата.</li>
+    <li>Колокольчик в верхней панели: имя, вакансия, начало сообщения, ссылка на карточку кандидата.</li>
     <li>Письмо на почту или сообщение в Slack по выбору в настройках: сразу при ответе или только утренней сводкой.</li>
     <li>Утренняя сводка приходит письмом, в интерфейсе Tener её нет: кто ждёт ответа рекрутера и от кого нет ответа больше 3 дней. Пример письма показан под прототипом.</li>
     <li>Для клиентов с Фреей сводка приходит сообщением Фреи в Slack.</li>
@@ -323,8 +392,8 @@
 
   <h2>Как делать по шагам</h2>
   <ol>
-    <li>Признак переписки рекрутера, отметка о прочтении, статус «чей ход» в карточке кандидата и на доске, фильтр на доске, блок в Control Room.</li>
-    <li>Колокольчик с уведомлениями и утреннее письмо.</li>
+    <li>Признак переписки рекрутера, отметка о прочтении, подпись «You», строка статуса в карточке, метки и фильтр на доске, блок в Control Room.</li>
+    <li>Колокольчик и утреннее письмо.</li>
     <li>Сводка во Фрее в Slack, подсказки про напоминание и возврат агенту.</li>
   </ol>
 
@@ -334,61 +403,66 @@
     <li>Если в организации несколько рекрутеров, закрепляется ли переписка за тем, кто её взял.</li>
     <li>Через сколько дней молчания кандидата предлагать напоминание или возврат агенту.</li>
   </ol>
-  <div class="note"><span>Прототип показывает Control Room, доску вакансии, карточку кандидата с перепиской и колокольчик, а под ним пример утреннего письма. Кнопка «Simulate candidate reply» показывает, как приходит ответ кандидата.</span><button class="btn primary" data-goto="tr-proto">Открыть прототип</button></div>
+  <div class="note"><span>Прототип: Control Room, доска вакансии и карточка кандидата, под ним пример утреннего письма. Кнопка «Simulate candidate reply» показывает, как приходит ответ кандидата.</span><button class="btn primary sm" data-goto>Открыть прототип</button></div>
 </section>
 
 <!-- ============ TRACKING: PROTOTYPE ============ -->
 <section id="tr-proto" class="proto" hidden>
   <div class="app" id="tr-app">
-    <aside class="side">
-      <div class="brand"><span><span class="logo">T</span> Tener</span>
-        <button class="bell" id="tr-bell" aria-label="Notifications"><svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><i id="tr-bellN"></i></button></div>
-      <a data-view="control" class="on">Control Room</a>
-      <a data-view="board">Jobs</a>
-      <a>Freya</a>
-      <a>Freya intake v2</a>
-      <a>Users</a>
-      <a>Settings</a>
-    </aside>
-    <div class="main">
-      <div id="tr-v-control">
-        <div class="head"><div><h2>Control Room</h2><div class="meta">Overview of your jobs</div></div></div>
-        <div class="kpis"><div><span class="label">Active jobs</span><b>3</b></div><div><span class="label">Replies today</span><b id="tr-kReplies">4</b></div><div><span class="label">CVs this week</span><b>9</b></div></div>
-        <div class="widget">
-          <div class="widget-head"><b>Your conversations</b>
-            <div class="seg" id="tr-seg"><button data-tab="me" class="on">Waiting for your reply <span id="tr-cMe"></span></button><button data-tab="them">Waiting for candidate <span id="tr-cThem"></span></button></div></div>
-          <div class="list flat" id="tr-list"></div>
-        </div>
+    <aside class="side" data-nav="Control Room"></aside>
+    <div class="shell">
+      <div class="topbar">
+        <button class="bell" id="tr-bell" aria-label="Notifications"><svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><i id="tr-bellN"></i></button>
+        <span class="date">Tue, 28 Oct 2026</span>
+        <div class="pop" id="tr-pop" hidden></div>
       </div>
-      <div id="tr-v-board" hidden>
-        <div class="crumb">Jobs / Senior Paid Media Specialist</div>
-        <div class="head"><div><h2>Senior Paid Media Specialist</h2><div class="meta">Acme Cloud · board</div></div>
-          <button class="chipf" id="tr-filter" aria-pressed="false">Waiting for my reply <span id="tr-fN"></span></button></div>
-        <div class="board" id="tr-board"></div>
-      </div>
-      <div id="tr-v-card" hidden>
-        <div class="crumb"><a class="back" id="tr-back">← Back</a></div>
-        <div class="profile">
-          <div class="pcol">
-            <div class="avatar" id="tr-av"></div>
-            <h2 id="tr-pName"></h2><div class="meta" id="tr-pMeta"></div>
-            <div class="label" style="margin-top:14px">Score</div><b class="score">82</b>
-            <div class="label" style="margin-top:14px">Must-have coverage</div><div class="meta">4 of 5 confirmed</div>
+      <div class="main">
+        <div id="tr-v-control">
+          <div class="subhead"><div><h1>Control Room</h1></div></div>
+          <div class="kpis">
+            <div class="kpi"><span class="t-300 xs">Active jobs</span><b>3</b></div>
+            <div class="kpi"><span class="t-300 xs">Blocked</span><b style="color:var(--red-600)">0</b></div>
+            <div class="kpi"><span class="t-300 xs">Pending review</span><b style="color:var(--amber-600)">1</b></div>
+            <div class="kpi"><span class="t-300 xs">Candidates in pipeline</span><b>214</b></div>
           </div>
-          <div class="pmain">
-            <div class="label">Conversation</div>
-            <div id="tr-status"></div>
-            <div class="chat" id="tr-chat"></div>
+          <div class="card">
+            <div class="att-head"><span class="ttl">Needs attention</span><span class="t-300 sm">1 item</span></div>
+            <div class="att-list"><div class="att"><div class="ic">·</div><div class="bd"><div><span class="t">Senior Paid Media Specialist</span><time>2h ago</time></div><div class="m">Candidate asked about the employer: legal form of cooperation in Ukraine.</div></div><button class="btn outline sm" data-open="1">Open</button></div></div>
+          </div>
+          <div class="card">
+            <div class="att-head"><span class="ttl">Your conversations</span><span class="t-300 sm" id="tr-cnt"></span>
+              <div class="vtoggle" style="margin-left:auto" id="tr-seg"><button data-tab="me" class="on">Waiting for your reply</button><button data-tab="them">Waiting for candidate</button></div></div>
+            <div class="att-list" id="tr-list"></div>
           </div>
         </div>
+        <div id="tr-v-board" hidden>
+          <div class="crumbs">Jobs / 84</div>
+          <div class="subhead"><div><h1>Senior Paid Media Specialist</h1><div class="t-300 sm" style="margin-top:6px">Acme Cloud</div><span class="status">Active</span></div>
+            <div class="actions"><button class="btn outline compact">Scoring criteria</button><button class="btn outline compact">Import candidates</button></div></div>
+          <div class="card">
+            <div class="card-head"><div><span class="ttl">Candidates</span><span class="sub">current stage counts · not today’s events</span></div>
+              <div class="right"><button class="fchip" id="tr-filter" aria-pressed="false">Waiting for my reply <span id="tr-fN"></span></button><button class="btn outline compact">Export available CVs</button><div class="vtoggle"><button class="on">Kanban</button><button>Table</button></div></div></div>
+            <div class="card-body"><div class="kanban" id="tr-board"></div></div>
+          </div>
+        </div>
+        <div id="tr-v-card" hidden>
+          <div class="ph"><div class="l"><button class="backarrow" id="tr-back" aria-label="Back">←</button><div><h1 id="tr-pName"></h1><div class="t-400 sm" id="tr-pJob"></div></div></div>
+            <div class="actions"><span class="adminv">Admin view</span><button class="btn secondary sm">Export data</button></div></div>
+          <div class="pgrid">
+            <div class="rail"><div class="bigav" id="tr-av"></div><div class="nm" id="tr-rName"></div><div class="t-300 xs" id="tr-rHead" style="margin-top:6px"></div>
+              <dl><dt>Status updated</dt><dd id="tr-rUpd"></dd><dt>Stage</dt><dd id="tr-rStage"></dd></dl></div>
+            <div style="min-width:0">
+              <div class="psec"><h3>Conversation history</h3><div id="tr-conv"></div></div>
+              <div class="psec"><h3>How we proceed with this candidate</h3><div class="t-300 sm">Must-have coverage 4 of 5 · interview not started</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="demo">Демо: <button class="btn outline sm" id="tr-sim">Simulate candidate reply</button> отвечает следующий кандидат из «Waiting for candidate».</div>
       </div>
-      <div class="hint">Демо: <button class="btn" id="tr-sim">Simulate candidate reply</button> отвечает следующий кандидат из «Waiting for candidate».</div>
     </div>
-    <div class="pop" id="tr-pop" hidden></div>
   </div>
-
   <div class="mail">
-    <div class="label">Пример утреннего письма рекрутеру · вне интерфейса Tener</div>
+    <div class="overline">Пример утреннего письма рекрутеру · вне интерфейса Tener</div>
     <div class="digest" id="tr-digest"></div>
   </div>
 </section>
@@ -399,8 +473,23 @@
 (function () {
   const $ = id => document.getElementById(id);
   function toast(t) { const el = $('toast'); el.textContent = t; el.hidden = false; clearTimeout(el._t); el._t = setTimeout(() => { el.hidden = true; }, 3500); }
+  const icons = {
+    'Control Room': '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>',
+    'Jobs': '<svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>',
+    'Freya': '<svg viewBox="0 0 24 24"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/></svg>',
+    'Freya intake v2': '<svg viewBox="0 0 24 24"><path d="M14 3H6v18h12V7z"/><path d="M9 15l6-6 2 2-6 6H9z"/></svg>',
+    'Users': '<svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3 3-5 6-5s6 2 6 5"/><path d="M16 4a3 3 0 0 1 0 6M21 20c0-2-1-4-3-5"/></svg>',
+    'Settings': '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/></svg>',
+  };
+  const link = (l, on) => `<a class="${on ? 'on' : ''}" data-link="${l}">${icons[l]}<span>${l}</span></a>`;
+  document.querySelectorAll('.side[data-nav]').forEach(s => {
+    const a = s.dataset.nav;
+    s.innerHTML = `<header><span class="logo">T</span><b>Tener</b><span class="role">admin</span></header><section>
+      <div class="navg"><p>Operate</p><nav>${['Control Room', 'Jobs', 'Freya', 'Freya intake v2'].map(l => link(l, l === a)).join('')}</nav></div>
+      <div class="navg"><p>Platform</p><nav>${['Users', 'Settings'].map(l => link(l, l === a)).join('')}</nav></div></section>`;
+  });
 
-  // ---------- navigation ----------
+  // ---------- page navigation ----------
   let feature = 'cv', mode = 'doc';
   function show() {
     $('cv-doc').hidden = !(feature === 'cv' && mode === 'doc');
@@ -418,12 +507,21 @@
   if (h === 'tracking') feature = 'tracking';
   if (h === 'cv' || h === 'tracking') show();
 
-  // ---------- CV export prototype ----------
+  const ini = n => n.split(' ').map(s => s[0]).join('').slice(0, 2).toUpperCase();
+  const COLS = [['sourced', 'Sourced', 'var(--slate-400)'], ['connect_sent', 'Connect Sent', 'var(--sky-300)'], ['responded', 'Responded', 'var(--sky-400)'],
+    ['interview_pending', 'Pending Interview', 'var(--purple-600)'], ['interview_completed', 'Interview Completed', 'var(--green-600)']];
+
+  // ---------- CV export ----------
+  const cvBoard = { sourced: [['Olena Shevchuk', 64]], connect_sent: [['Andrii Kovalenko', 71]], responded: [['Nadiia Lysenko', 88, '24.10'], ['Oksana Bondar', 82, '26.10']], interview_pending: [['Roman Tkachuk', 90, '22.10']], interview_completed: [] };
+  const counts0 = { sourced: 41, connect_sent: 31, responded: 20, interview_pending: 3, interview_completed: 1 };
+  $('cv-kanban').innerHTML = COLS.map(([k, l, c]) => `<div class="kcol"><div class="kcol-h"><i style="background:${c}"></i><span>${l}</span><em>${counts0[k]}</em></div><div class="kcol-b">${
+    cvBoard[k].length ? cvBoard[k].map(([n, s, d], i) => `<div class="kc"><div class="top"><span class="av">${ini(n)}</span><div><div class="nm">${n}</div><div class="id">C-${3100 + s * 7 + i}</div></div><span class="score">${s}</span></div>${d ? `<div class="dates"><span>CV received</span><span>${d}</span></div>` : ''}<div class="foot"><span class="badge">${l}</span></div></div>`).join('') : '<div class="kempty">No candidates</div>'}</div></div>`).join('');
+
   const TODAY = '2026-10-28';
   const cvs = [['2026-10-08','file'],['2026-10-10','file'],['2026-10-13','link'],['2026-10-15','file'],['2026-10-17','file'],
     ['2026-10-20','file'],['2026-10-22','file'],['2026-10-24','file'],['2026-10-24','link'],['2026-10-24','file'],
     ['2026-10-26','file'],['2026-10-27','file'],['2026-10-28','file'],['2026-10-28','link']];
-  let lastExport = '2026-10-21', sel = 'new';
+  let lastExport = '2026-10-21';
   const shift = (d, n) => { const x = new Date(d + 'T00:00:00Z'); x.setUTCDate(x.getUTCDate() + n); return x.toISOString().slice(0, 10); };
   const fmt = d => d.split('-').reverse().join('.');
   const options = [
@@ -434,143 +532,159 @@
     { id: 'd30', label: 'Last 30 days', range: () => [shift(TODAY, -29), TODAY] },
     { id: 'm12', label: 'Last 12 months', range: () => [shift(TODAY, -364), TODAY] },
     { id: 'custom', label: 'Custom range', range: () => [$('cv-from').value, $('cv-to').value] },
-    { id: 'all', label: 'All CVs of the job', range: () => ['0000-01-01', '9999-12-31'] },
+    { id: 'all', label: 'All CVs', range: () => ['0000-01-01', '9999-12-31'] },
   ];
   function counts(id) {
     const [a, b] = options.find(o => o.id === id).range();
     const hit = cvs.filter(([d]) => d >= a && d <= b);
     return { files: hit.filter(x => x[1] === 'file').length, links: hit.filter(x => x[1] === 'link').length, a, b };
   }
+  let sel = 'new';
   function cvRender() {
-    $('cv-opts').innerHTML = options.map(o => {
-      const c = counts(o.id), n = c.files + c.links;
-      return `<div class="opt ${o.id === sel ? 'on' : ''}" data-id="${o.id}"><input type="radio" name="cv-period" id="cv-p-${o.id}" ${o.id === sel ? 'checked' : ''}> <label for="cv-p-${o.id}">${o.label}</label><small>${o.id === 'custom' ? '' : n + ' CV'}</small></div>`;
-    }).join('');
-    $('cv-opts').querySelectorAll('.opt').forEach(el => el.onclick = () => { sel = el.dataset.id; cvRender(); });
+    $('cv-period').innerHTML = options.map(o => { const c = counts(o.id); return `<option value="${o.id}"${o.id === sel ? ' selected' : ''}>${o.label}${o.id === 'custom' ? '' : ` (${c.files + c.links})`}</option>`; }).join('');
     $('cv-range').hidden = sel !== 'custom';
-    const c = counts(sel), n = c.files + c.links, box = $('cv-count');
-    box.classList.toggle('empty', n === 0);
-    box.innerHTML = n === 0 ? 'No new CVs for this period.'
-      : `<b>${n}</b><span>CVs will be exported: ${c.files} files, ${c.links} links${sel === 'all' ? '' : ` · ${fmt(c.a)} to ${fmt(c.b)}`}</span>`;
+    const c = counts(sel), n = c.files + c.links;
+    $('cv-count').innerHTML = n === 0
+      ? `<div class="warn">No CVs received in this period. Last export: ${fmt(lastExport)}.</div>`
+      : `<div class="info"><b>${n} CVs</b> will be exported: ${c.files} files, ${c.links} links${sel === 'all' ? '' : `, received ${fmt(c.a)} to ${fmt(c.b)}`}.<br><span class="xs t-300">Last export: ${fmt(lastExport)}</span></div>`;
     $('cv-download').disabled = n === 0;
-    $('cv-last').textContent = 'Last export: ' + fmt(lastExport);
   }
+  $('cv-period').onchange = e => { sel = e.target.value; cvRender(); };
   $('cv-open').onclick = () => { sel = 'new'; cvRender(); $('cv-modal').hidden = false; };
   ['cv-close', 'cv-cancel'].forEach(id => $(id).onclick = () => { $('cv-modal').hidden = true; });
   ['cv-from', 'cv-to'].forEach(id => $(id).onchange = cvRender);
+  $('cv-modal').onclick = e => { if (e.target === $('cv-modal')) $('cv-modal').hidden = true; };
   $('cv-download').onclick = () => {
     const c = counts(sel), n = c.files + c.links;
     const name = sel === 'all' ? 'cv_senior-paid-media.zip' : `cv_senior-paid-media_${c.a}_${c.b}.zip`;
     lastExport = TODAY; $('cv-modal').hidden = true;
-    toast(`Downloaded ${name} · ${n} CVs. Last export updated to ${fmt(TODAY)}.`);
+    toast(`${n} CVs exported · ${name}`);
   };
 
-  // ---------- Reply tracking prototype ----------
+  // ---------- Reply tracking ----------
   const PM = 'Senior Paid Media Specialist', CTO = 'Co-Founder & CTO';
   const convs = [
-    { id: 1, name: 'Taras Melnyk', job: PM, stage: 'In dialogue', unread: true, hours: 26, msgs: [
+    { id: 1, name: 'Taras Melnyk', job: PM, col: 'responded', score: 79, unread: true, hours: 26, msgs: [
       ['agent', 'Це стратегічна in-house роль: формувати paid media стратегію та оцінювати роботу агенції.'],
       ['in', 'Звучить цікаво, готовий поговорити. Підкажіть, як оформлюється співпраця в Україні: ФОП чи штат?']] },
-    { id: 2, name: 'Oksana Bondar', job: PM, stage: 'CV received', unread: true, hours: 3, msgs: [
-      ['out', 'Бюджет позиції до 3 000 EUR на місяць. Чи розглянули б ви такий рівень?'], ['in', 'Це сума net?']] },
-    { id: 3, name: 'Daniel Ortiz', job: CTO, stage: 'In dialogue', unread: false, hours: 7, msgs: [
-      ['out', 'Hi Daniel, thanks for the call notes. Could you share when you could start?'], ['in', 'Earliest would be mid December, I have a notice period.']] },
-    { id: 4, name: 'Maksym Hrytsenko', job: PM, stage: 'In dialogue', unread: false, hours: 30, msgs: [
-      ['in', 'Можете надіслати детальні обовʼязки та KPI?'], ['out', 'Основні обовʼязки: paid media стратегія, контроль агенції, бюджет. Надішлю KPI окремо.']] },
-    { id: 5, name: 'Yulia Kravets', job: PM, stage: 'In dialogue', unread: false, hours: 80, msgs: [['out', 'Чи працювали Ви з метриками CPL, CPQL, MQL або SQL?']] },
-    { id: 6, name: 'Priya Raman', job: CTO, stage: 'Interview', unread: false, hours: 20, msgs: [['out', 'Priya, the founders would like to meet on Thursday. Does 15:00 CET work?']] },
-    { id: 7, name: 'Nadiia Lysenko', job: PM, stage: 'CV received', agent: true, hours: 5, msgs: [['agent', 'Дякую за CV, передам hiring team.']] },
+    { id: 2, name: 'Oksana Bondar', job: PM, col: 'responded', score: 82, unread: true, hours: 3, msgs: [
+      ['agent', 'Дякую за CV. Які у Вас очікування щодо компенсації?'], ['in', 'Від 3 500 EUR.'],
+      ['mine', 'Бюджет позиції до 3 000 EUR на місяць. Чи розглянули б ви такий рівень?'], ['in', 'Це сума net?']] },
+    { id: 3, name: 'Daniel Ortiz', job: CTO, col: 'responded', score: 86, unread: false, hours: 7, msgs: [
+      ['mine', 'Hi Daniel, thanks for the call notes. Could you share when you could start?'], ['in', 'Earliest would be mid December, I have a notice period.']] },
+    { id: 4, name: 'Maksym Hrytsenko', job: PM, col: 'responded', score: 74, unread: false, hours: 30, msgs: [
+      ['in', 'Можете надіслати детальні обовʼязки та KPI?'], ['mine', 'Основні обовʼязки: paid media стратегія, контроль агенції, бюджет. Надішлю KPI окремо.']] },
+    { id: 5, name: 'Yulia Kravets', job: PM, col: 'responded', score: 77, unread: false, hours: 80, msgs: [['agent', 'Дякую за відповідь.'], ['mine', 'Чи працювали Ви з метриками CPL, CPQL, MQL або SQL?']] },
+    { id: 6, name: 'Priya Raman', job: CTO, col: 'interview_pending', score: 91, unread: false, hours: 20, msgs: [['mine', 'Priya, the founders would like to meet on Thursday. Does 15:00 CET work?']] },
+    { id: 7, name: 'Nadiia Lysenko', job: PM, col: 'interview_pending', score: 88, agent: true, hours: 5, msgs: [['in', 'Надсилаю CV.'], ['agent', 'Дякую за CV, передам hiring team.']] },
+    { id: 8, name: 'Andrii Kovalenko', job: PM, col: 'connect_sent', score: 71, agent: true, hours: 40, msgs: [] },
   ];
   const replies = { 4: 'Дякую, чекаю KPI.', 5: 'Так, щотижня дивилась CPQL і SQL, розподіляла бюджет за ними.', 6: 'Thursday 15:00 works for me.' };
   let tab = 'me', current = null, from = 'control', onlyMine = false;
-  const whose = c => c.msgs[c.msgs.length - 1][0] === 'in' ? 'me' : 'them';
+  const last = c => c.msgs[c.msgs.length - 1];
+  const whose = c => last(c) && last(c)[0] === 'in' ? 'me' : 'them';
   const ago = hh => hh < 1 ? 'now' : hh < 24 ? hh + 'h' : Math.floor(hh / 24) + 'd';
+  const agoTxt = hh => hh < 1 ? 'just now' : ago(hh) + ' ago';
   const mine = () => convs.filter(c => !c.agent && !c.returned);
-  const statusPill = c => {
-    if (c.agent || c.returned) return '<span class="pill them">Agent is handling</span>';
-    return whose(c) === 'me' ? `<span class="pill ${c.hours >= 24 ? 'late' : 'me'}">Waiting for your reply · ${ago(c.hours)}</span>`
-      : `<span class="pill them">You wrote · ${ago(c.hours)}${c.hours < 1 ? '' : ' ago'}</span>`;
+  const chip = c => {
+    if (c.agent || c.returned) return '';
+    if (whose(c) === 'me') return `<span class="tchip ${c.unread ? 'new' : c.hours >= 24 ? 'late' : 'me'}">${c.unread ? 'New reply' : 'Waiting for your reply'} · ${ago(c.hours)}</span>`;
+    return `<span class="tchip them">You wrote · ${agoTxt(c.hours)}</span>`;
   };
 
   function trList() {
-    const me = mine().filter(c => whose(c) === 'me').sort((a, b) => b.hours - a.hours);
+    const me = mine().filter(c => whose(c) === 'me').sort((a, b) => (b.unread - a.unread) || (b.hours - a.hours));
     const them = mine().filter(c => whose(c) === 'them').sort((a, b) => b.hours - a.hours);
-    $('tr-cMe').textContent = '(' + me.length + ')'; $('tr-cThem').textContent = '(' + them.length + ')';
     const unread = mine().filter(c => c.unread).length; $('tr-bellN').textContent = unread || ''; $('tr-bellN').hidden = !unread;
-    document.querySelectorAll('#tr-seg button').forEach(x => x.classList.toggle('on', x.dataset.tab === tab));
+    document.querySelectorAll('#tr-seg button').forEach(x => {
+      x.classList.toggle('on', x.dataset.tab === tab);
+      x.textContent = (x.dataset.tab === 'me' ? 'Waiting for your reply' : 'Waiting for candidate') + ' (' + (x.dataset.tab === 'me' ? me.length : them.length) + ')';
+    });
     const rows = tab === 'me' ? me : them;
+    $('tr-cnt').textContent = rows.length + ' item' + (rows.length === 1 ? '' : 's');
     $('tr-list').innerHTML = rows.length ? rows.map(c => {
-      const cls = tab === 'me' ? (c.hours >= 24 ? 'late' : 'me') : 'them';
-      const txt = tab === 'me' ? 'waits ' + ago(c.hours) : 'no reply ' + ago(c.hours);
-      return `<div class="row" data-id="${c.id}" tabindex="0"><div class="top"><b>${c.unread ? '<span class="dot"></span>' : ''}${c.name}</b><span class="pill ${cls}" style="margin:0">${txt}</span></div><div class="meta">${c.job} · ${c.stage}</div><div class="snip">${c.msgs[c.msgs.length - 1][1]}</div></div>`;
-    }).join('') : `<div class="empty-s">${tab === 'me' ? 'Nobody is waiting for your reply.' : 'You are not waiting for anyone.'}</div>`;
-    $('tr-list').querySelectorAll('.row').forEach(r => r.onclick = () => openCard(+r.dataset.id, 'control'));
+      const kind = tab === 'me' ? (c.unread ? 'reply' : '') : 'wait';
+      const t = tab === 'me' ? `${c.unread ? '<span class="dot"></span>' : ''}${c.name} replied` : `${c.name} has not replied yet`;
+      return `<div class="att ${kind}"><div class="ic">${ini(c.name)}</div><div class="bd"><div><span class="t">${t}</span><time>${agoTxt(c.hours)}</time></div><div class="m">${c.job} · ${last(c)[1]}</div></div><button class="btn outline sm" data-open="${c.id}">Open</button></div>`;
+    }).join('') : `<div class="empty">${tab === 'me' ? 'Nobody is waiting for your reply.' : 'You are not waiting for anyone.'}</div>`;
   }
   function trBoard() {
     const n = mine().filter(c => c.job === PM && whose(c) === 'me').length;
     $('tr-fN').textContent = '(' + n + ')';
     $('tr-filter').classList.toggle('on', onlyMine); $('tr-filter').setAttribute('aria-pressed', String(onlyMine));
-    $('tr-board').innerHTML = ['In dialogue', 'CV received', 'Interview', 'Hired'].map(col => {
-      let cs = convs.filter(c => c.job === PM && c.stage === col);
+    $('tr-board').innerHTML = COLS.map(([k, l, color]) => {
+      let cs = convs.filter(c => c.job === PM && c.col === k);
       if (onlyMine) cs = cs.filter(c => !c.agent && !c.returned && whose(c) === 'me');
-      return `<div class="col"><div class="label"><span>${col}</span><span>${cs.length}</span></div>${cs.map(c =>
-        `<div class="cand click" data-id="${c.id}" tabindex="0"><b>${c.unread ? '<span class="dot"></span>' : ''}${c.name}</b>${statusPill(c)}</div>`).join('')}</div>`;
+      return `<div class="kcol"><div class="kcol-h"><i style="background:${color}"></i><span>${l}</span><em>${cs.length}</em></div><div class="kcol-b">${cs.length ? cs.map(c =>
+        `<div class="kc" data-open="${c.id}" data-src="board" tabindex="0"><div class="top"><span class="av">${ini(c.name)}</span><div><div class="nm">${c.name}</div><div class="id">C-${2000 + c.id * 137}</div></div><span class="score">${c.score}</span></div><div class="foot"><span class="badge">${l}</span>${chip(c)}</div></div>`).join('') : '<div class="kempty">No candidates</div>'}</div></div>`;
     }).join('');
-    $('tr-board').querySelectorAll('.cand.click').forEach(el => el.onclick = () => openCard(+el.dataset.id, 'board'));
   }
   function trCard() {
     const c = convs.find(x => x.id === current); if (!c) return;
-    $('tr-av').textContent = c.name.split(' ').map(s => s[0]).join('');
-    $('tr-pName').textContent = c.name; $('tr-pMeta').textContent = c.job + ' · ' + c.stage;
+    $('tr-pName').textContent = c.name; $('tr-pJob').textContent = c.job + ' · Acme Cloud';
+    $('tr-av').textContent = ini(c.name); $('tr-rName').textContent = c.name; $('tr-rHead').textContent = c.job === PM ? 'Paid media specialist · Kyiv' : 'Engineering lead · Lisbon';
+    $('tr-rUpd').textContent = agoTxt(c.hours); $('tr-rStage').textContent = COLS.find(x => x[0] === c.col)[1];
     const handled = !c.agent && !c.returned;
-    $('tr-status').innerHTML = `<div class="statusbar">${statusPill(c)}${handled ? '<button class="btn" id="tr-ret">Return to agent</button>' : '<span class="meta">Replies here are sent by the agent. If you write, the conversation becomes yours.</span>'}</div>`;
     const late = handled && whose(c) === 'them' && c.hours >= 72;
-    $('tr-chat').innerHTML = `<div class="msgs">${c.msgs.map(([k, t]) => `<div class="msg ${k}">${t}<small>${k === 'in' ? 'Candidate' : k === 'agent' ? 'Agent' : 'You'}</small></div>`).join('')}</div>
-      ${late ? `<div class="suggest"><span>No reply for ${ago(c.hours)}.</span><span style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn" id="tr-nudge">Send a reminder</button><button class="btn" id="tr-ret2">Return to agent</button></span></div>` : ''}
-      <div class="compose"><input id="tr-txt" placeholder="Write a manual reply…" aria-label="Manual reply"><button class="btn primary" id="tr-send">Send</button></div>`;
-    if (handled) $('tr-ret').onclick = () => giveBack(c);
-    if (late) {
-      $('tr-ret2').onclick = () => giveBack(c);
-      $('tr-nudge').onclick = () => { c.msgs.push(['out', 'Нагадую про моє питання вище, буду вдячна за відповідь.']); c.hours = 0; trAll(); toast('Reminder sent to ' + c.name); };
-    }
-    $('tr-send').onclick = () => {
+    const statusTxt = !handled ? 'The agent is handling this conversation. If you send a message, it becomes yours.'
+      : whose(c) === 'me' ? `Candidate is waiting for your reply · ${ago(c.hours)}` : `You wrote · waiting for the candidate · ${ago(c.hours)}`;
+    $('tr-conv').innerHTML = `<div class="sm">Conversation #${9800 + c.id} · ${handled ? 'active · handled by you' : 'active · agent'}</div>
+      <div class="tbar"><span class="txt">${statusTxt}</span>${handled ? '<button class="btn outline sm" data-act="return">Return to agent</button>' : ''}</div>
+      ${late ? `<div class="suggest"><span>No reply for ${ago(c.hours)}.</span><span style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn outline sm" data-act="nudge">Send a reminder</button><button class="btn outline sm" data-act="return">Return to agent</button></span></div>` : ''}
+      <div class="chan"><span class="in">in</span><span>LinkedIn · Outreach &amp; Coordination</span><hr></div>
+      <div class="msgs">${c.msgs.length ? c.msgs.map(([k, t]) => {
+        const cls = k === 'in' ? '' : k === 'agent' ? 'out' : 'mine';
+        const who = k === 'in' ? c.name : k === 'agent' ? 'Reed AI · Talent Scout' : 'You';
+        const ii = k === 'in' ? ini(c.name) : k === 'agent' ? 'RD' : 'YOU';
+        return `<div class="bub ${cls}"><div class="col"><div class="who">${who} · <span>28 Oct</span></div><div class="tx">${t}</div></div><div class="ini">${ii}</div></div>`;
+      }).join('') : '<p class="t-300 sm">No messages yet</p>'}</div>
+      <div class="reply"><textarea id="tr-txt" rows="3" placeholder="Write a manual LinkedIn reply…" aria-label="Manual reply"></textarea>
+        <div class="row"><span class="mono t-300" style="font-size:10px">Ctrl/⌘ + Enter to send</span><button class="btn primary sm" data-act="send">Send message</button></div></div>`;
+  }
+  function act(a) {
+    const c = convs.find(x => x.id === current); if (!c) return;
+    if (a === 'return') { c.returned = true; c.unread = false; trAll(); toast('Returned to the agent'); }
+    if (a === 'nudge') { c.msgs.push(['mine', 'Нагадую про моє питання вище, буду вдячна за відповідь.']); c.hours = 0; trAll(); toast('Message sent'); }
+    if (a === 'send') {
       const t = $('tr-txt').value.trim() || 'Дякую, повернуся з відповіддю сьогодні.';
       const wasAgent = c.agent || c.returned; c.agent = false; c.returned = false;
-      c.msgs.push(['out', t]); c.hours = 0; c.unread = false; trAll();
-      toast(wasAgent ? c.name + ' is now your conversation: Waiting for candidate.' : c.name + ' moved to “Waiting for candidate”.');
-    };
+      c.msgs.push(['mine', t]); c.hours = 0; c.unread = false; trAll();
+      toast(wasAgent ? 'Message sent · this conversation is now yours' : 'Message sent');
+    }
   }
-  function giveBack(c) { c.returned = true; c.unread = false; trAll(); toast(c.name + ' returned to the agent. It leaves Your conversations.'); }
   function openCard(id, src) { current = id; from = src; const c = convs.find(x => x.id === id); if (c) c.unread = false; go('card'); trAll(); }
   function trDigest() {
     const me = mine().filter(c => whose(c) === 'me').sort((a, b) => b.hours - a.hours);
     const silent = mine().filter(c => whose(c) === 'them' && c.hours >= 72);
-    $('tr-digest').innerHTML = `<div class="meta">From: Tener · To: recruiter@acme.example · 28 Oct, 9:00</div><h3>${me.length} candidates are waiting for your reply</h3>
+    $('tr-digest').innerHTML = `<div class="t-300 xs">From: Tener · To: recruiter@acme.example · 28 Oct, 9:00</div><h3>${me.length} candidates are waiting for your reply</h3>
       <ul>${me.map(c => `<li><b>${c.name}</b>, ${c.job}: waits ${ago(c.hours)}</li>`).join('') || '<li>Nobody</li>'}</ul>
-      <div class="label">No reply for 3+ days</div><ul>${silent.map(c => `<li>${c.name}, ${c.job}: ${ago(c.hours)}</li>`).join('') || '<li>Nobody</li>'}</ul>
-      <span class="fakebtn">Open Control Room</span>`;
+      <div class="field-label">No reply for 3+ days</div><ul>${silent.map(c => `<li>${c.name}, ${c.job}: ${ago(c.hours)}</li>`).join('') || '<li>Nobody</li>'}</ul>
+      <span class="btn primary sm">Open Control Room</span>`;
   }
   function trPop() {
     const items = mine().filter(c => c.unread);
-    $('tr-pop').innerHTML = items.length ? items.map(c => `<div class="it" data-id="${c.id}"><b>${c.name}</b> replied · ${c.job}<div class="meta">${c.msgs[c.msgs.length - 1][1].slice(0, 70)}</div></div>`).join('') : '<div class="it">No new replies</div>';
-    $('tr-pop').querySelectorAll('[data-id]').forEach(i => i.onclick = () => { $('tr-pop').hidden = true; openCard(+i.dataset.id, 'control'); });
+    $('tr-pop').innerHTML = '<div class="ph2">Notifications</div>' + (items.length ? items.map(c => `<div class="it" data-open="${c.id}"><b>${c.name}</b> replied · ${c.job}<div class="t-300 xs">${last(c)[1].slice(0, 70)}</div></div>`).join('') : '<div class="it t-300">No new replies</div>');
   }
   function trAll() { trList(); trBoard(); trCard(); trDigest(); trPop(); }
   function go(v) {
     ['control', 'board', 'card'].forEach(x => { $('tr-v-' + x).hidden = x !== v; });
-    const nav = v === 'card' ? from : v;
-    document.querySelectorAll('#tr-app .side a[data-view]').forEach(a => a.classList.toggle('on', a.dataset.view === nav));
+    const nav = v === 'card' ? (from === 'board' ? 'Jobs' : 'Control Room') : v === 'board' ? 'Jobs' : 'Control Room';
+    document.querySelectorAll('#tr-app .side a').forEach(a => a.classList.toggle('on', a.dataset.link === nav));
   }
-  document.querySelectorAll('#tr-app .side a[data-view]').forEach(a => a.onclick = () => go(a.dataset.view));
-  document.querySelectorAll('#tr-seg button').forEach(b => b.onclick = () => { tab = b.dataset.tab; trList(); });
-  $('tr-back').onclick = () => go(from);
-  $('tr-filter').onclick = () => { onlyMine = !onlyMine; trBoard(); };
-  $('tr-bell').onclick = () => { $('tr-pop').hidden = !$('tr-pop').hidden; };
+  // One delegated handler for everything inside the tracking app.
+  $('tr-app').addEventListener('click', e => {
+    const nav = e.target.closest('.side a'); if (nav) { if (nav.dataset.link === 'Control Room') go('control'); if (nav.dataset.link === 'Jobs') go('board'); return; }
+    const op = e.target.closest('[data-open]'); if (op) { $('tr-pop').hidden = true; openCard(+op.dataset.open, op.dataset.src || 'control'); return; }
+    const a = e.target.closest('[data-act]'); if (a) { act(a.dataset.act); return; }
+    const t = e.target.closest('#tr-seg button'); if (t) { tab = t.dataset.tab; trList(); return; }
+  });
+  $('tr-back').onclick = () => go(from === 'board' ? 'board' : 'control');
+  $('tr-filter').onclick = e => { e.stopPropagation(); onlyMine = !onlyMine; trBoard(); };
+  $('tr-bell').onclick = e => { e.stopPropagation(); $('tr-pop').hidden = !$('tr-pop').hidden; };
   $('tr-sim').onclick = () => {
     const c = mine().find(x => whose(x) === 'them' && replies[x.id]);
     if (!c) { toast('Everyone has replied in this demo.'); return; }
-    c.msgs.push(['in', replies[c.id]]); c.hours = 0; c.unread = true; delete replies[c.id];
-    $('tr-kReplies').textContent = String(+$('tr-kReplies').textContent + 1); trAll();
+    c.msgs.push(['in', replies[c.id]]); c.hours = 0; c.unread = true; delete replies[c.id]; trAll();
     toast(c.name + ' replied · ' + c.job);
   };
   trAll();
