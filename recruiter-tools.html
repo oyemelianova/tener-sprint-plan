@@ -142,7 +142,28 @@
   .digest ul { padding-left: 18px; margin: 6px 0 14px; }
   .toast { position: fixed; right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); background: var(--toast-bg); color: var(--toast-fg); border-radius: 10px; padding: 10px 14px; z-index: 30; font-size: 13px; max-width: min(380px, calc(100vw - 32px)); }
 
+  .kpis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-bottom: 14px; }
+  .kpis > div { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; display: grid; gap: 2px; }
+  .kpis b { font-size: 22px; font-variant-numeric: tabular-nums; }
+  .widget { background: var(--card); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  .widget-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; padding: 10px 12px; border-bottom: 1px solid var(--border); }
+  .list.flat { border: 0; border-radius: 0; }
+  .chipf { border: 1px solid var(--border); background: var(--card); border-radius: 999px; padding: 5px 12px; font-size: 13px; cursor: pointer; color: var(--ink-2); }
+  .chipf.on { background: var(--teal); border-color: var(--teal); color: var(--on-teal); font-weight: 600; }
+  .cand.click { cursor: pointer; }
+  .cand.click:hover { border-color: var(--teal); }
+  .back { color: var(--teal-strong); cursor: pointer; text-decoration: none; }
+  .profile { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 14px; margin-top: 8px; }
+  .pcol { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px; text-align: center; align-self: start; }
+  .pcol h2 { font-size: 17px; margin: 8px 0 2px; }
+  .avatar { width: 52px; height: 52px; border-radius: 50%; background: var(--teal-soft); color: var(--teal-strong); display: grid; place-items: center; font-weight: 700; margin: 0 auto; }
+  .score { font-size: 22px; font-variant-numeric: tabular-nums; }
+  .pmain { min-width: 0; display: grid; gap: 8px; align-content: start; }
+  .statusbar { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .mail { margin-top: 18px; display: grid; gap: 8px; }
+  .fakebtn { display: inline-block; background: var(--teal); color: var(--on-teal); border-radius: 8px; padding: 6px 12px; font-weight: 600; font-size: 13px; }
   @media (max-width: 860px) {
+    .profile, .kpis { grid-template-columns: 1fr; }
     .app { grid-template-columns: 1fr; }
     .side { flex-direction: row; flex-wrap: wrap; align-items: center; border-right: 0; border-bottom: 1px solid var(--border); }
     .side .brand { margin: 0 10px 0 0; gap: 10px; }
@@ -205,6 +226,11 @@
     <li>«Download» скачивает архив с выбранными параметрами и часовым поясом браузера, после чего дата прошлой выгрузки обновляется.</li>
   </ol>
 
+  <h2>Хранение CV и выгрузка по неактивным вакансиям</h2>
+  <p>Сейчас в системе нет срока хранения CV: файлы и записи о них хранятся, пока существует вакансия, и автоматически не удаляются. Выгрузка не зависит от состояния вакансии, поэтому CV можно выгрузить и по вакансии на паузе, и по завершённой, и по архивной, даже если она закрыта пять месяцев назад. Это и закрепляем: выгрузка доступна по вакансии в любом состоянии, пока вакансия есть в системе.</p>
+  <p>Кандидат, которого убрали с вакансии, сейчас тоже попадает в архив, потому что его CV не удаляется. Предлагаем такого кандидата в выгрузку не включать, а в окне выгрузки показывать, что такие CV пропущены.</p>
+  <p>Срок хранения CV нужно согласовать с клиентом отдельно. Если он появится, например 12 месяцев после закрытия вакансии, то после этого срока CV удаляются, а окно выгрузки по такой вакансии сообщает, что CV больше не хранятся.</p>
+
   <h2>Критерии приёмки</h2>
   <ol>
     <li>Выгрузка за «Сегодня» содержит только CV, полученные сегодня по часовому поясу пользователя.</li>
@@ -213,6 +239,8 @@
     <li>У разных пользователей одной вакансии прошлая выгрузка считается отдельно.</li>
     <li>Выгрузка «Все CV вакансии» совпадает с текущим поведением.</li>
     <li>Количество в окне совпадает с содержимым архива.</li>
+    <li>CV выгружаются по вакансии на паузе, завершённой и архивной.</li>
+    <li>Кандидаты, убранные с вакансии, в архив не попадают.</li>
   </ol>
   <div class="note"><span>Прототип показывает окно выбора периода на демо-данных: 14 CV вакансии за три недели, последняя выгрузка 21 октября, сегодня 28 октября.</span><button class="btn primary" data-goto="cv-proto">Открыть прототип</button></div>
 </section>
@@ -222,7 +250,7 @@
   <div class="app" id="cv-app">
     <aside class="side">
       <div class="brand"><span><span class="logo">T</span> Tener</span></div>
-      <a class="on">Jobs</a><a>Candidates</a><a>Need attention</a><a>Settings</a>
+      <a>Control Room</a><a class="on">Jobs</a><a>Freya</a><a>Freya intake v2</a><a>Users</a><a>Settings</a>
     </aside>
     <div class="main">
       <div class="crumb">Jobs / Senior Paid Media Specialist</div>
@@ -260,7 +288,10 @@
   <p>Рекрутер пишет кандидатам сам, например из Need attention, и после этого должен видеть, кто ему ответил, кому ответить должен он и от кого ответа пока нет, а когда кандидат отвечает, узнавать об этом без поиска по доскам.</p>
 
   <h2>Что уже есть в системе</h2>
-  <p>У каждой переписки хранится направление и время последнего сообщения (<code>last_message_direction</code>, <code>last_message_at</code>) и число входящих сообщений. Переписки, которые агент передал человеку, помечены и видны в Need attention. Рекрутер может выключить агента в переписке. Не хватает признака «эту переписку ведёт рекрутер», отметки о прочтении и уведомлений.</p>
+  <p>В карточке кандидата есть блок переписки: все сообщения с кандидатом и поле, в котором рекрутер отвечает вручную. У переписки хранится направление и время последнего сообщения (<code>last_message_direction</code>, <code>last_message_at</code>). Переписки, которые агент передал человеку, видны в Need attention на доске вакансии. Не хватает признака «эту переписку ведёт рекрутер», отметки о прочтении и уведомлений.</p>
+
+  <h2>Переписка остаётся в карточке кандидата</h2>
+  <p>Переписка с кандидатом одна, и она по-прежнему живёт в карточке кандидата. Трекинг ничего из карточки не забирает и не создаёт отдельного чата: он только показывает рекрутеру, в каких переписках ход за ним. Ответить можно и из списка в Control Room, и из карточки кандидата, это одна и та же переписка, и статус обновляется в обоих местах. Если рекрутер открыл карточку и увидел новый ответ, ответ считается прочитанным и в Control Room.</p>
 
   <h2>Переписка рекрутера</h2>
   <p>Переписка становится перепиской рекрутера, когда агент передал её человеку, когда рекрутер написал кандидату сам или когда рекрутер выключил в ней агента. Она перестаёт ею быть, когда рекрутер нажимает «Return to agent» или закрывает переписку решением по кандидату. Переписки, которые ведёт агент, в трекинг не попадают.</p>
@@ -268,31 +299,33 @@
   <h2>Чей ход</h2>
   <div class="tablewrap"><table>
     <tr><th>Статус</th><th>Когда</th><th>Что видит рекрутер</th></tr>
-    <tr><td>Waiting for me</td><td>Последнее сообщение от кандидата</td><td>Сколько кандидат ждёт ответа. Больше суток подсвечивается и поднимается наверх.</td></tr>
-    <tr><td>New reply</td><td>Кандидат ответил, а рекрутер ещё не открывал переписку</td><td>Точка у строки, число на значке в меню и в колокольчике.</td></tr>
+    <tr><td>Waiting for your reply</td><td>Последнее сообщение от кандидата</td><td>Сколько кандидат ждёт. Больше суток подсвечивается и поднимается наверх.</td></tr>
+    <tr><td>New reply</td><td>Кандидат ответил, а рекрутер ещё не открывал переписку ни в Control Room, ни в карточке</td><td>Точка у строки и число на колокольчике.</td></tr>
     <tr><td>Waiting for candidate</td><td>Последнее сообщение от рекрутера</td><td>Сколько уже ждём. Через 3 дня тишины предложение отправить напоминание или вернуть переписку агенту.</td></tr>
   </table></div>
 
   <h2>Где это видно</h2>
+  <p>Новых разделов в меню не добавляем, меню остаётся как на проде.</p>
   <ol>
-    <li>Раздел «My conversations» в меню: все переписки рекрутера по всем вакансиям, вкладки «Waiting for me» и «Waiting for candidate», фильтр по вакансии.</li>
-    <li>Значок с числом переписок, где ход за рекрутером.</li>
-    <li>Метка на карточке кандидата на доске вакансии: «Waiting for your reply · 1d».</li>
+    <li><b>Control Room:</b> блок «Your conversations» со вкладками «Waiting for your reply» и «Waiting for candidate» по всем вакансиям. Из строки можно ответить сразу или открыть карточку кандидата.</li>
+    <li><b>Доска вакансии:</b> на карточке кандидата метка «Waiting for your reply · 1d» или «You wrote · 2d ago», над доской фильтр «Waiting for my reply».</li>
+    <li><b>Карточка кандидата:</b> над перепиской тот же статус и кнопка «Return to agent». Ответ из карточки переводит переписку в «Waiting for candidate».</li>
+    <li><b>Колокольчик</b> в шапке: новые ответы кандидатов. Это новый элемент интерфейса.</li>
   </ol>
 
   <h2>Как рекрутер узнаёт об ответе</h2>
   <ol>
-    <li>Уведомление в колокольчике внутри Tener: имя, вакансия, начало сообщения, ссылка на переписку.</li>
-    <li>На почту или в Slack по выбору в настройках: сразу при ответе или только утренней сводкой.</li>
-    <li>Утренняя сводка: кто ответил за сутки, кто ждёт ответа дольше всего, от кого нет ответа больше 3 дней.</li>
-    <li>Для клиентов с Фреей сводка приходит сообщением Фреи в Slack, и у неё можно спросить «кто мне ответил сегодня?».</li>
+    <li>Уведомление в колокольчике: имя, вакансия, начало сообщения, ссылка на карточку кандидата.</li>
+    <li>Письмо на почту или сообщение в Slack по выбору в настройках: сразу при ответе или только утренней сводкой.</li>
+    <li>Утренняя сводка приходит письмом, в интерфейсе Tener её нет: кто ждёт ответа рекрутера и от кого нет ответа больше 3 дней. Пример письма показан под прототипом.</li>
+    <li>Для клиентов с Фреей сводка приходит сообщением Фреи в Slack.</li>
   </ol>
 
   <h2>Как делать по шагам</h2>
   <ol>
-    <li>Признак переписки рекрутера, отметка о прочтении, раздел «My conversations», статус «чей ход», значок с числом, метка на доске.</li>
-    <li>Уведомления в Tener и утренняя сводка на почту.</li>
-    <li>Сводка и вопросы во Фрее в Slack, подсказки про напоминание и возврат агенту.</li>
+    <li>Признак переписки рекрутера, отметка о прочтении, статус «чей ход» в карточке кандидата и на доске, фильтр на доске, блок в Control Room.</li>
+    <li>Колокольчик с уведомлениями и утреннее письмо.</li>
+    <li>Сводка во Фрее в Slack, подсказки про напоминание и возврат агенту.</li>
   </ol>
 
   <h2>Что решить</h2>
@@ -301,7 +334,7 @@
     <li>Если в организации несколько рекрутеров, закрепляется ли переписка за тем, кто её взял.</li>
     <li>Через сколько дней молчания кандидата предлагать напоминание или возврат агенту.</li>
   </ol>
-  <div class="note"><span>Прототип показывает «My conversations», уведомления, метку на доске и утреннюю сводку. Кнопка «Simulate candidate reply» показывает, как приходит ответ кандидата.</span><button class="btn primary" data-goto="tr-proto">Открыть прототип</button></div>
+  <div class="note"><span>Прототип показывает Control Room, доску вакансии, карточку кандидата с перепиской и колокольчик, а под ним пример утреннего письма. Кнопка «Simulate candidate reply» показывает, как приходит ответ кандидата.</span><button class="btn primary" data-goto="tr-proto">Открыть прототип</button></div>
 </section>
 
 <!-- ============ TRACKING: PROTOTYPE ============ -->
@@ -310,29 +343,53 @@
     <aside class="side">
       <div class="brand"><span><span class="logo">T</span> Tener</span>
         <button class="bell" id="tr-bell" aria-label="Notifications"><svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><i id="tr-bellN"></i></button></div>
-      <a data-view="inbox" class="on">My conversations <span class="badge" id="tr-navN"></span></a>
+      <a data-view="control" class="on">Control Room</a>
       <a data-view="board">Jobs</a>
-      <a data-view="digest">Morning digest</a>
-      <a>Need attention</a><a>Settings</a>
+      <a>Freya</a>
+      <a>Freya intake v2</a>
+      <a>Users</a>
+      <a>Settings</a>
     </aside>
     <div class="main">
-      <div id="tr-v-inbox">
-        <div class="head"><div><h2>My conversations</h2><div class="meta">Conversations you are handling yourself, across all jobs</div></div>
-          <select class="btn" id="tr-job"><option value="">All jobs</option><option>Senior Paid Media Specialist</option><option>Co-Founder &amp; CTO</option></select></div>
-        <div class="seg" style="margin-bottom:12px"><button data-tab="me" class="on">Waiting for me <span id="tr-cMe"></span></button><button data-tab="them">Waiting for candidate <span id="tr-cThem"></span></button></div>
-        <div class="split"><div class="list" id="tr-list"></div><div class="chat" id="tr-chat"></div></div>
-        <div class="hint">Демо: <button class="btn" id="tr-sim">Simulate candidate reply</button> отвечает следующий кандидат из «Waiting for candidate».</div>
+      <div id="tr-v-control">
+        <div class="head"><div><h2>Control Room</h2><div class="meta">Overview of your jobs</div></div></div>
+        <div class="kpis"><div><span class="label">Active jobs</span><b>3</b></div><div><span class="label">Replies today</span><b id="tr-kReplies">4</b></div><div><span class="label">CVs this week</span><b>9</b></div></div>
+        <div class="widget">
+          <div class="widget-head"><b>Your conversations</b>
+            <div class="seg" id="tr-seg"><button data-tab="me" class="on">Waiting for your reply <span id="tr-cMe"></span></button><button data-tab="them">Waiting for candidate <span id="tr-cThem"></span></button></div></div>
+          <div class="list flat" id="tr-list"></div>
+        </div>
       </div>
       <div id="tr-v-board" hidden>
-        <div class="head"><div><h2>Senior Paid Media Specialist</h2><div class="meta">Acme Cloud · board</div></div></div>
+        <div class="crumb">Jobs / Senior Paid Media Specialist</div>
+        <div class="head"><div><h2>Senior Paid Media Specialist</h2><div class="meta">Acme Cloud · board</div></div>
+          <button class="chipf" id="tr-filter" aria-pressed="false">Waiting for my reply <span id="tr-fN"></span></button></div>
         <div class="board" id="tr-board"></div>
       </div>
-      <div id="tr-v-digest" hidden>
-        <div class="head"><div><h2>Morning digest</h2><div class="meta">Email or Slack, every morning at 9:00 recruiter's time</div></div></div>
-        <div class="digest" id="tr-digest"></div>
+      <div id="tr-v-card" hidden>
+        <div class="crumb"><a class="back" id="tr-back">← Back</a></div>
+        <div class="profile">
+          <div class="pcol">
+            <div class="avatar" id="tr-av"></div>
+            <h2 id="tr-pName"></h2><div class="meta" id="tr-pMeta"></div>
+            <div class="label" style="margin-top:14px">Score</div><b class="score">82</b>
+            <div class="label" style="margin-top:14px">Must-have coverage</div><div class="meta">4 of 5 confirmed</div>
+          </div>
+          <div class="pmain">
+            <div class="label">Conversation</div>
+            <div id="tr-status"></div>
+            <div class="chat" id="tr-chat"></div>
+          </div>
+        </div>
       </div>
+      <div class="hint">Демо: <button class="btn" id="tr-sim">Simulate candidate reply</button> отвечает следующий кандидат из «Waiting for candidate».</div>
     </div>
     <div class="pop" id="tr-pop" hidden></div>
+  </div>
+
+  <div class="mail">
+    <div class="label">Пример утреннего письма рекрутеру · вне интерфейса Tener</div>
+    <div class="digest" id="tr-digest"></div>
   </div>
 </section>
 
@@ -422,84 +479,98 @@
       ['in', 'Можете надіслати детальні обовʼязки та KPI?'], ['out', 'Основні обовʼязки: paid media стратегія, контроль агенції, бюджет. Надішлю KPI окремо.']] },
     { id: 5, name: 'Yulia Kravets', job: PM, stage: 'In dialogue', unread: false, hours: 80, msgs: [['out', 'Чи працювали Ви з метриками CPL, CPQL, MQL або SQL?']] },
     { id: 6, name: 'Priya Raman', job: CTO, stage: 'Interview', unread: false, hours: 20, msgs: [['out', 'Priya, the founders would like to meet on Thursday. Does 15:00 CET work?']] },
+    { id: 7, name: 'Nadiia Lysenko', job: PM, stage: 'CV received', agent: true, hours: 5, msgs: [['agent', 'Дякую за CV, передам hiring team.']] },
   ];
   const replies = { 4: 'Дякую, чекаю KPI.', 5: 'Так, щотижня дивилась CPQL і SQL, розподіляла бюджет за ними.', 6: 'Thursday 15:00 works for me.' };
-  let tab = 'me', current = 1, jobF = '';
+  let tab = 'me', current = null, from = 'control', onlyMine = false;
   const whose = c => c.msgs[c.msgs.length - 1][0] === 'in' ? 'me' : 'them';
   const ago = hh => hh < 1 ? 'now' : hh < 24 ? hh + 'h' : Math.floor(hh / 24) + 'd';
-  const live = () => convs.filter(c => !c.returned);
+  const mine = () => convs.filter(c => !c.agent && !c.returned);
+  const statusPill = c => {
+    if (c.agent || c.returned) return '<span class="pill them">Agent is handling</span>';
+    return whose(c) === 'me' ? `<span class="pill ${c.hours >= 24 ? 'late' : 'me'}">Waiting for your reply · ${ago(c.hours)}</span>`
+      : `<span class="pill them">You wrote · ${ago(c.hours)}${c.hours < 1 ? '' : ' ago'}</span>`;
+  };
 
   function trList() {
-    const all = live().filter(c => !jobF || c.job === jobF);
-    const me = all.filter(c => whose(c) === 'me').sort((a, b) => b.hours - a.hours);
-    const them = all.filter(c => whose(c) === 'them').sort((a, b) => b.hours - a.hours);
+    const me = mine().filter(c => whose(c) === 'me').sort((a, b) => b.hours - a.hours);
+    const them = mine().filter(c => whose(c) === 'them').sort((a, b) => b.hours - a.hours);
     $('tr-cMe').textContent = '(' + me.length + ')'; $('tr-cThem').textContent = '(' + them.length + ')';
-    const n = live().filter(c => whose(c) === 'me').length; $('tr-navN').textContent = n || ''; $('tr-navN').hidden = !n;
-    const unread = live().filter(c => c.unread).length; $('tr-bellN').textContent = unread || ''; $('tr-bellN').hidden = !unread;
-    document.querySelectorAll('#tr-v-inbox .seg button').forEach(x => x.classList.toggle('on', x.dataset.tab === tab));
+    const unread = mine().filter(c => c.unread).length; $('tr-bellN').textContent = unread || ''; $('tr-bellN').hidden = !unread;
+    document.querySelectorAll('#tr-seg button').forEach(x => x.classList.toggle('on', x.dataset.tab === tab));
     const rows = tab === 'me' ? me : them;
     $('tr-list').innerHTML = rows.length ? rows.map(c => {
       const cls = tab === 'me' ? (c.hours >= 24 ? 'late' : 'me') : 'them';
       const txt = tab === 'me' ? 'waits ' + ago(c.hours) : 'no reply ' + ago(c.hours);
-      return `<div class="row ${c.id === current ? 'on' : ''}" data-id="${c.id}" tabindex="0"><div class="top"><b>${c.unread ? '<span class="dot"></span>' : ''}${c.name}</b><span class="pill ${cls}" style="margin:0">${txt}</span></div><div class="meta">${c.job} · ${c.stage}</div><div class="snip">${c.msgs[c.msgs.length - 1][1]}</div></div>`;
+      return `<div class="row" data-id="${c.id}" tabindex="0"><div class="top"><b>${c.unread ? '<span class="dot"></span>' : ''}${c.name}</b><span class="pill ${cls}" style="margin:0">${txt}</span></div><div class="meta">${c.job} · ${c.stage}</div><div class="snip">${c.msgs[c.msgs.length - 1][1]}</div></div>`;
     }).join('') : `<div class="empty-s">${tab === 'me' ? 'Nobody is waiting for your reply.' : 'You are not waiting for anyone.'}</div>`;
-    $('tr-list').querySelectorAll('.row').forEach(r => r.onclick = () => openConv(+r.dataset.id));
+    $('tr-list').querySelectorAll('.row').forEach(r => r.onclick = () => openCard(+r.dataset.id, 'control'));
   }
-  function trChat() {
-    const c = live().find(x => x.id === current), box = $('tr-chat');
-    if (!c) { box.innerHTML = '<div class="empty-s">Select a conversation.</div>'; return; }
-    const late = whose(c) === 'them' && c.hours >= 72;
-    box.innerHTML = `<header><div><b>${c.name}</b><div class="meta">${c.job} · ${c.stage}</div></div><button class="btn" id="tr-ret">Return to agent</button></header>
-      <div class="msgs">${c.msgs.map(([k, t]) => `<div class="msg ${k}">${t}<small>${k === 'in' ? 'Candidate' : k === 'agent' ? 'Agent' : 'You'}</small></div>`).join('')}</div>
+  function trBoard() {
+    const n = mine().filter(c => c.job === PM && whose(c) === 'me').length;
+    $('tr-fN').textContent = '(' + n + ')';
+    $('tr-filter').classList.toggle('on', onlyMine); $('tr-filter').setAttribute('aria-pressed', String(onlyMine));
+    $('tr-board').innerHTML = ['In dialogue', 'CV received', 'Interview', 'Hired'].map(col => {
+      let cs = convs.filter(c => c.job === PM && c.stage === col);
+      if (onlyMine) cs = cs.filter(c => !c.agent && !c.returned && whose(c) === 'me');
+      return `<div class="col"><div class="label"><span>${col}</span><span>${cs.length}</span></div>${cs.map(c =>
+        `<div class="cand click" data-id="${c.id}" tabindex="0"><b>${c.unread ? '<span class="dot"></span>' : ''}${c.name}</b>${statusPill(c)}</div>`).join('')}</div>`;
+    }).join('');
+    $('tr-board').querySelectorAll('.cand.click').forEach(el => el.onclick = () => openCard(+el.dataset.id, 'board'));
+  }
+  function trCard() {
+    const c = convs.find(x => x.id === current); if (!c) return;
+    $('tr-av').textContent = c.name.split(' ').map(s => s[0]).join('');
+    $('tr-pName').textContent = c.name; $('tr-pMeta').textContent = c.job + ' · ' + c.stage;
+    const handled = !c.agent && !c.returned;
+    $('tr-status').innerHTML = `<div class="statusbar">${statusPill(c)}${handled ? '<button class="btn" id="tr-ret">Return to agent</button>' : '<span class="meta">Replies here are sent by the agent. If you write, the conversation becomes yours.</span>'}</div>`;
+    const late = handled && whose(c) === 'them' && c.hours >= 72;
+    $('tr-chat').innerHTML = `<div class="msgs">${c.msgs.map(([k, t]) => `<div class="msg ${k}">${t}<small>${k === 'in' ? 'Candidate' : k === 'agent' ? 'Agent' : 'You'}</small></div>`).join('')}</div>
       ${late ? `<div class="suggest"><span>No reply for ${ago(c.hours)}.</span><span style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn" id="tr-nudge">Send a reminder</button><button class="btn" id="tr-ret2">Return to agent</button></span></div>` : ''}
-      <div class="compose"><input id="tr-txt" placeholder="Write a reply…" aria-label="Reply"><button class="btn primary" id="tr-send">Send</button></div>`;
-    $('tr-ret').onclick = () => giveBack(c);
+      <div class="compose"><input id="tr-txt" placeholder="Write a manual reply…" aria-label="Manual reply"><button class="btn primary" id="tr-send">Send</button></div>`;
+    if (handled) $('tr-ret').onclick = () => giveBack(c);
     if (late) {
       $('tr-ret2').onclick = () => giveBack(c);
       $('tr-nudge').onclick = () => { c.msgs.push(['out', 'Нагадую про моє питання вище, буду вдячна за відповідь.']); c.hours = 0; trAll(); toast('Reminder sent to ' + c.name); };
     }
     $('tr-send').onclick = () => {
       const t = $('tr-txt').value.trim() || 'Дякую, повернуся з відповіддю сьогодні.';
-      c.msgs.push(['out', t]); c.hours = 0; c.unread = false; tab = 'them'; trAll(); toast(c.name + ' moved to “Waiting for candidate”.');
+      const wasAgent = c.agent || c.returned; c.agent = false; c.returned = false;
+      c.msgs.push(['out', t]); c.hours = 0; c.unread = false; trAll();
+      toast(wasAgent ? c.name + ' is now your conversation: Waiting for candidate.' : c.name + ' moved to “Waiting for candidate”.');
     };
   }
-  function giveBack(c) { c.returned = true; current = null; trAll(); toast(c.name + ' returned to the agent. The agent continues on its own schedule.'); }
-  function openConv(id) { current = id; const c = convs.find(x => x.id === id); if (c) c.unread = false; trAll(); }
-  function trBoard() {
-    $('tr-board').innerHTML = ['In dialogue', 'CV received', 'Interview', 'Hired'].map(col => {
-      const cs = convs.filter(c => c.job === PM && c.stage === col);
-      return `<div class="col"><div class="label"><span>${col}</span><span>${cs.length}</span></div>${cs.map(c => {
-        const lab = c.returned ? '' : whose(c) === 'me' ? `<span class="pill ${c.hours >= 24 ? 'late' : 'me'}">Waiting for your reply · ${ago(c.hours)}</span>` : `<span class="pill them">You wrote · ${ago(c.hours)}${c.hours < 1 ? '' : ' ago'}</span>`;
-        return `<div class="cand"><b>${c.name}</b>${lab}</div>`; }).join('')}</div>`;
-    }).join('');
-  }
+  function giveBack(c) { c.returned = true; c.unread = false; trAll(); toast(c.name + ' returned to the agent. It leaves Your conversations.'); }
+  function openCard(id, src) { current = id; from = src; const c = convs.find(x => x.id === id); if (c) c.unread = false; go('card'); trAll(); }
   function trDigest() {
-    const me = live().filter(c => whose(c) === 'me').sort((a, b) => b.hours - a.hours);
-    const silent = live().filter(c => whose(c) === 'them' && c.hours >= 72);
-    $('tr-digest').innerHTML = `<div class="label">Tener · 28 Oct</div><h3>Good morning! ${me.length} candidates are waiting for your reply</h3>
+    const me = mine().filter(c => whose(c) === 'me').sort((a, b) => b.hours - a.hours);
+    const silent = mine().filter(c => whose(c) === 'them' && c.hours >= 72);
+    $('tr-digest').innerHTML = `<div class="meta">From: Tener · To: recruiter@acme.example · 28 Oct, 9:00</div><h3>${me.length} candidates are waiting for your reply</h3>
       <ul>${me.map(c => `<li><b>${c.name}</b>, ${c.job}: waits ${ago(c.hours)}</li>`).join('') || '<li>Nobody</li>'}</ul>
       <div class="label">No reply for 3+ days</div><ul>${silent.map(c => `<li>${c.name}, ${c.job}: ${ago(c.hours)}</li>`).join('') || '<li>Nobody</li>'}</ul>
-      <button class="btn primary" id="tr-go">Open My conversations</button>`;
-    $('tr-go').onclick = () => go('inbox');
+      <span class="fakebtn">Open Control Room</span>`;
   }
   function trPop() {
-    const items = live().filter(c => c.unread);
+    const items = mine().filter(c => c.unread);
     $('tr-pop').innerHTML = items.length ? items.map(c => `<div class="it" data-id="${c.id}"><b>${c.name}</b> replied · ${c.job}<div class="meta">${c.msgs[c.msgs.length - 1][1].slice(0, 70)}</div></div>`).join('') : '<div class="it">No new replies</div>';
-    $('tr-pop').querySelectorAll('[data-id]').forEach(i => i.onclick = () => { $('tr-pop').hidden = true; tab = 'me'; go('inbox'); openConv(+i.dataset.id); });
+    $('tr-pop').querySelectorAll('[data-id]').forEach(i => i.onclick = () => { $('tr-pop').hidden = true; openCard(+i.dataset.id, 'control'); });
   }
-  function trAll() { trList(); trChat(); trBoard(); trDigest(); trPop(); }
+  function trAll() { trList(); trBoard(); trCard(); trDigest(); trPop(); }
   function go(v) {
-    ['inbox', 'board', 'digest'].forEach(x => { $('tr-v-' + x).hidden = x !== v; });
-    document.querySelectorAll('#tr-app .side a[data-view]').forEach(a => a.classList.toggle('on', a.dataset.view === v));
+    ['control', 'board', 'card'].forEach(x => { $('tr-v-' + x).hidden = x !== v; });
+    const nav = v === 'card' ? from : v;
+    document.querySelectorAll('#tr-app .side a[data-view]').forEach(a => a.classList.toggle('on', a.dataset.view === nav));
   }
   document.querySelectorAll('#tr-app .side a[data-view]').forEach(a => a.onclick = () => go(a.dataset.view));
-  document.querySelectorAll('#tr-v-inbox .seg button').forEach(b => b.onclick = () => { tab = b.dataset.tab; trList(); });
+  document.querySelectorAll('#tr-seg button').forEach(b => b.onclick = () => { tab = b.dataset.tab; trList(); });
+  $('tr-back').onclick = () => go(from);
+  $('tr-filter').onclick = () => { onlyMine = !onlyMine; trBoard(); };
   $('tr-bell').onclick = () => { $('tr-pop').hidden = !$('tr-pop').hidden; };
-  $('tr-job').onchange = e => { jobF = e.target.value; trList(); };
   $('tr-sim').onclick = () => {
-    const c = live().find(x => whose(x) === 'them' && replies[x.id]);
+    const c = mine().find(x => whose(x) === 'them' && replies[x.id]);
     if (!c) { toast('Everyone has replied in this demo.'); return; }
-    c.msgs.push(['in', replies[c.id]]); c.hours = 0; c.unread = true; delete replies[c.id]; trAll();
+    c.msgs.push(['in', replies[c.id]]); c.hours = 0; c.unread = true; delete replies[c.id];
+    $('tr-kReplies').textContent = String(+$('tr-kReplies').textContent + 1); trAll();
     toast(c.name + ' replied · ' + c.job);
   };
   trAll();
