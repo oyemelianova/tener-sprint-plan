@@ -550,11 +550,12 @@
 
   const ini = n => n.split(' ').map(s => s[0]).join('').slice(0, 2).toUpperCase();
   const COLS = [['sourced', 'Sourced', 'var(--slate-400)'], ['connect_sent', 'Connect Sent', 'var(--sky-300)'], ['responded', 'Responded', 'var(--sky-400)'],
+    ['cv_received', 'CV Received', 'var(--purple-600)'], ['must_have_approved', 'Must Have Approved', 'var(--indigo-500)'],
     ['interview_pending', 'Pending Interview', 'var(--purple-600)'], ['interview_completed', 'Interview Completed', 'var(--green-600)']];
 
   // ---------- CV export ----------
-  const cvBoard = { sourced: [['Olena Shevchuk', 64]], connect_sent: [['Andrii Kovalenko', 71]], responded: [['Nadiia Lysenko', 88, '24.10'], ['Oksana Bondar', 82, '26.10']], interview_pending: [['Roman Tkachuk', 90, '22.10']], interview_completed: [] };
-  const counts0 = { sourced: 41, connect_sent: 31, responded: 20, interview_pending: 3, interview_completed: 1 };
+  const cvBoard = { sourced: [['Olena Shevchuk', 64]], connect_sent: [['Andrii Kovalenko', 71]], responded: [['Taras Melnyk', 78]], cv_received: [['Oksana Bondar', 82, '26.10']], must_have_approved: [['Nadiia Lysenko', 88, '24.10']], interview_pending: [['Roman Tkachuk', 90, '22.10']], interview_completed: [] };
+  const counts0 = { sourced: 41, connect_sent: 31, responded: 20, cv_received: 9, must_have_approved: 5, interview_pending: 3, interview_completed: 1 };
   $('cv-kanban').innerHTML = COLS.map(([k, l, c]) => `<div class="kcol"><div class="kcol-h"><i style="background:${c}"></i><span>${l}</span><em>${counts0[k]}</em></div><div class="kcol-b">${
     cvBoard[k].length ? cvBoard[k].map(([n, s, d], i) => `<div class="kc"><div class="top"><span class="av">${ini(n)}</span><div><div class="nm">${n}</div><div class="id">C-${3100 + s * 7 + i}</div></div><span class="score">${s}</span></div>${d ? `<div class="dates"><span>CV received</span><span>${d}</span></div>` : ''}<div class="foot"><span class="badge">${l}</span></div></div>`).join('') : '<div class="kempty">No candidates</div>'}</div></div>`).join('');
 
@@ -603,8 +604,6 @@
   };
 
   // ---------- Favorites and Needs attention ----------
-  // columns as on the prod board
-  const TR_COLS = [...COLS.slice(0, 3), ['cv_received', 'CV Received', 'var(--purple-600)'], ['must_have_approved', 'Must Have Approved', 'var(--indigo-500)'], ...COLS.slice(3)];
   const PM = 'Senior Paid Media Specialist', CTO = 'Co-Founder & CTO';
   const jobIds = { [PM]: 84, [CTO]: 85 };
   const NUDGES = 4;
@@ -697,7 +696,7 @@
     const inJob = cands.filter(c => c.job === title);
     const nF = inJob.filter(c => c.fav).length, nS = inJob.filter(c => c.fav === 'final').length;
     $('tr-boardTabs').innerHTML = tabs('board', [['all', 'All'], ['fav', `★ Favorites (${nF})`], ['final', `Final shortlist (${nS})`]], boardTab);
-    $('tr-kanban').innerHTML = TR_COLS.map(([k, l, col]) => {
+    $('tr-kanban').innerHTML = COLS.map(([k, l, col]) => {
       const cs = inJob.filter(c => c.col === k && (boardTab === 'all' || (boardTab === 'fav' ? c.fav : c.fav === 'final')));
       return `<div class="kcol"><div class="kcol-h"><i style="background:${col}"></i><span>${l}</span><em>${cs.length}</em></div><div class="kcol-b">${
         cs.length ? cs.map(c => `<div class="kc" data-open="${c.id}"><div class="top"><span class="av">${ini(c.name)}</span><div><div class="nm">${c.unread ? '<span class="dot"></span>' : ''}${c.name}</div><div class="id">C-${3100 + c.id * 17}</div></div><span class="score">${c.score}</span></div>
@@ -710,7 +709,7 @@
     $('tr-pStar').textContent = c.fav ? STAR_ON + ' In favorites' : STAR_OFF + ' Add to favorites';
     $('tr-pFinal').hidden = !c.fav; $('tr-pFinal').textContent = c.fav === 'final' ? 'Back to interested' : 'Move to final shortlist';
     $('tr-av').textContent = ini(c.name); $('tr-rName').textContent = c.name; $('tr-rHead').textContent = c.job === PM ? 'Paid media specialist · Kyiv' : 'Engineering lead · Lisbon';
-    $('tr-rScore').textContent = c.score; $('tr-rUpd').textContent = agoTxt(c.hours); $('tr-rStage').textContent = TR_COLS.find(x => x[0] === c.col)[1];
+    $('tr-rScore').textContent = c.score; $('tr-rUpd').textContent = agoTxt(c.hours); $('tr-rStage').textContent = COLS.find(x => x[0] === c.col)[1];
     const bar = c.attn ? `Needs attention: ${c.reason}. After your reply the agent continues the conversation and follow-ups on its own.`
       : c.fav ? (waiting(c) ? `In favorites · waiting ${dur(c.hours)}${c.nudges ? `, the agent reminded ${c.nudges} of ${NUDGES}` : ''}. The agent reminds every 2 days, up to ${NUDGES} times; the reply will come to Needs attention and your bell.`
         : `In favorites. Every message from ${c.name.split(' ')[0]} comes to Needs attention with ★ and to your bell, even when the agent has already replied.`) : '';
