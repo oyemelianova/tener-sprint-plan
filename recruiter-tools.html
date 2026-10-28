@@ -398,8 +398,8 @@
     <li><b>Колокольчик</b> в верхней панели показывает все новые сообщения кандидатов, а не только избранных, чтобы рекрутер видел и новых людей, которых ещё не отметил. Избранные стоят сверху со звёздочкой, а переключатель «All / ★ Favorites» в выпадающем списке оставляет только их. Под каждым сообщением видно, что с ним происходит: «Needs your reply», если агент ответить не может, или «The agent has already answered». Нажатие открывает карточку кандидата на «Conversation history», и сообщение считается прочитанным.</li>
     <li><b>Доска вакансии.</b> Переключатель «All / ★ Favorites / Final shortlist» над доской. У избранных на карточке виден статус переписки:
       <ul>
-        <li>«New reply», если кандидат написал, а рекрутер ещё не открывал переписку;</li>
-        <li>«Replied», если ответ прочитан;</li>
+        <li>«New reply», если последнее сообщение от кандидата и ему ещё никто не ответил;</li>
+        <li>«Replied», если на сообщение кандидата уже ответили, рекрутер или агент;</li>
         <li>«Waiting 2 days», если последнее сообщение было от рекрутера или агента; рядом видно, сколько напоминаний агент уже отправил, например «agent reminded 1 of 4».</li>
       </ul>
       Время ожидания окрашено по зонам из палитры Tener: до суток серым, от суток до двух жёлтым, от двух суток и дольше красным, потому что к этому сроку агент уже отправляет напоминание. Те же зоны действуют для времени в строках «Needs attention», где они показывают, сколько сообщение ждёт рекрутера. Время пишется словами, например «3 h ago» или «1 day ago», а не «1D», чтобы его нельзя было спутать с числом.</li>
@@ -621,7 +621,7 @@
       msgs: [['agent', 'Thanks Daniel. Could you share when you could start?'], ['in', 'Mid December. Before we go further, can I speak with the founders directly?']] },
     { id: 4, name: 'Maksym Hrytsenko', job: PM, col: 'must_have_approved', score: 71, hours: 30, fav: 'interested', nudges: 0,
       msgs: [['agent', 'Дякую за CV, Максиме.'], ['mine', 'Максиме, чи працювали ви з атрибуцією в HubSpot? І який мінімальний термін виходу?']] },
-    { id: 5, name: 'Nadiia Lysenko', job: PM, col: 'interview_pending', score: 88, hours: 20, fav: 'final',
+    { id: 5, name: 'Nadiia Lysenko', job: PM, col: 'interview_pending', score: 88, hours: 20, fav: 'final', unread: true,
       msgs: [['mine', 'Надіє, чи готові до співбесіди з клієнтом цього тижня?'], ['in', 'Так, будь-який день після 14:00.']] },
     { id: 6, name: 'Yulia Kravets', job: PM, col: 'cv_received', score: 64, hours: 52, fav: 'interested', nudges: 1,
       msgs: [['mine', 'Юліє, чи працювали ви з метриками CPL, CPQL, MQL або SQL?'], ['agent', 'Юліє, нагадую про питання вище, буду вдячна за коротку відповідь.']] },
@@ -657,7 +657,8 @@
 
   function statusChip(c) {
     if (!c.msgs.length) return '<span class="tchip them">Not contacted</span>';
-    if (c.unread) return '<span class="tchip new">New reply</span>';
+    // status follows who wrote last, not whether the recruiter has opened the conversation
+    if (lastMsg(c)[0] === 'in') return '<span class="tchip new">New reply</span>';
     if (waiting(c)) return `<span class="tchip ${zone(c.hours) || 'them'}">Waiting ${dur(c.hours)}</span>` + (c.nudges ? `<span class="xs t-300">agent reminded ${c.nudges} of ${NUDGES}</span>` : '');
     return '<span class="tchip them">Replied</span>';
   }
