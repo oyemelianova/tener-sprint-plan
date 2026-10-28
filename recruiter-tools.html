@@ -396,6 +396,7 @@
       Повторное нажатие на звёздочку снимает отметку. Кандидат отмечается в рамках вакансии.</li>
     <li><b>«Needs attention».</b> В блок попадает всё, на что агент не может ответить сам, как и сейчас, и вдобавок каждое непрочитанное сообщение избранного кандидата, даже если агент на него уже ответил. Избранные стоят сверху, выделены звёздочкой и цветом, а в подписи указано «Reply from a favorite · the agent has already answered». Переключатель «All / ★ Favorites» в шапке блока оставляет только избранных. Сообщение избранного уходит из блока, когда рекрутер открыл переписку или удалил строку.</li>
     <li><b>Колокольчик</b> в верхней панели показывает все новые сообщения кандидатов, а не только избранных, чтобы рекрутер видел и новых людей, которых ещё не отметил. Избранные стоят сверху со звёздочкой, а переключатель «All / ★ Favorites» в выпадающем списке оставляет только их. Под каждым сообщением видно, что с ним происходит: «Needs your reply», если агент ответить не может, или «The agent has already answered». Нажатие открывает карточку кандидата на «Conversation history», и сообщение считается прочитанным.</li>
+    <li><b>Колонки доски.</b> Сейчас на доске вакансии пять колонок: Sourced, Connect Sent, Responded, Pending Interview и Interview Completed. Этапы «Must Have Approved» и «CV Received» на бэкенде есть, но фронтенд их скрывает (<code>KANBAN_EXCLUDED_KEYS</code> в <code>job-detail.utils.ts</code>), поэтому кандидаты, прошедшие must-have и приславшие CV, лежат вне доски. Выводим обе колонки между Responded и Pending Interview, в порядке этапов на бэкенде. Именно в них рекрутер выбирает, кого отметить звёздочкой.</li>
     <li><b>Доска вакансии.</b> Переключатель «All / ★ Favorites / Final shortlist» над доской. У избранных на карточке виден статус переписки:
       <ul>
         <li>«New reply», если кандидат написал, а рекрутер ещё не открывал переписку;</li>
@@ -427,6 +428,7 @@
     <li>Галочка «Add to favorites and track the reply» под полем ручного ответа.</li>
     <li><code>ControlRoomAttentionCard</code>: избранные сверху со звёздочкой, переключатель «All / ★ Favorites», кандидат, вакансия, цитата, «Open conversation», <code>danger-soft</code>. Подпись «You» в переписке.</li>
     <li>Колокольчик в верхней панели со всеми новыми сообщениями и переключателем «All / ★ Favorites».</li>
+    <li>Колонки «Must Have Approved» и «CV Received» на доске: убрать их из <code>KANBAN_EXCLUDED_KEYS</code>, добавить подписи и цвета точек.</li>
     <li>Переключатель «All / ★ Favorites / Final shortlist» и статусы переписки на доске вакансии.</li>
     <li>«Move to final shortlist» и «Remind now» в карточке кандидата.</li>
   </ol>
@@ -441,6 +443,7 @@
 
   <h2>Критерии приёмки</h2>
   <ol>
+    <li>На доске вакансии есть колонки «Must Have Approved» и «CV Received» между Responded и Pending Interview, и кандидаты этих этапов видны на доске.</li>
     <li>Рекрутер отмечает кандидата звёздочкой на доске, в карточке или в «Needs attention», и звёздочка появляется во всех трёх местах.</li>
     <li>Ручное сообщение с включённой галочкой добавляет кандидата в избранные.</li>
     <li>Любое входящее сообщение избранного кандидата, в том числе такое, на которое агент уже ответил, появляется наверху «Needs attention» со звёздочкой и на колокольчике.</li>
@@ -603,6 +606,8 @@
   };
 
   // ---------- Favorites and Needs attention ----------
+  // the backend pipeline keeps must_have_approved and cv_received; the prod board hides them, here they are shown
+  const TR_COLS = [...COLS.slice(0, 3), ['must_have_approved', 'Must Have Approved', 'var(--indigo-500)'], ['cv_received', 'CV Received', 'var(--purple-600)'], ...COLS.slice(3)];
   const PM = 'Senior Paid Media Specialist', CTO = 'Co-Founder & CTO';
   const jobIds = { [PM]: 84, [CTO]: 85 };
   const NUDGES = 4;
@@ -611,18 +616,18 @@
       reason: 'Employer question the agent cannot answer',
       msgs: [['agent', 'Це стратегічна in-house роль: формувати paid media стратегію та оцінювати роботу агенції.'],
         ['in', 'Звучить цікаво, готовий поговорити. Підкажіть, як оформлюється співпраця в Україні: ФОП чи штат?']] },
-    { id: 2, name: 'Oksana Bondar', job: PM, col: 'responded', score: 82, hours: 3, fav: 'interested', unread: true,
+    { id: 2, name: 'Oksana Bondar', job: PM, col: 'cv_received', score: 82, hours: 3, fav: 'interested', unread: true,
       msgs: [['mine', 'Оксано, дякую за CV. Скільки з вашого досвіду припадає на B2B SaaS і який місячний бюджет ви вели?'],
         ['in', 'Майже весь досвід у B2B SaaS, останні два роки вела 40–60 тис. EUR на місяць у Google та LinkedIn Ads.'],
         ['agent', 'Дякую, Оксано! Передаю рекрутеру, він повернеться з наступними кроками.']] },
     { id: 3, name: 'Daniel Ortiz', job: CTO, col: 'responded', score: 74, hours: 26, attn: true,
       reason: 'Candidate asks to talk to a person',
       msgs: [['agent', 'Thanks Daniel. Could you share when you could start?'], ['in', 'Mid December. Before we go further, can I speak with the founders directly?']] },
-    { id: 4, name: 'Maksym Hrytsenko', job: PM, col: 'responded', score: 71, hours: 30, fav: 'interested', nudges: 0,
+    { id: 4, name: 'Maksym Hrytsenko', job: PM, col: 'must_have_approved', score: 71, hours: 30, fav: 'interested', nudges: 0,
       msgs: [['agent', 'Дякую за CV, Максиме.'], ['mine', 'Максиме, чи працювали ви з атрибуцією в HubSpot? І який мінімальний термін виходу?']] },
     { id: 5, name: 'Nadiia Lysenko', job: PM, col: 'interview_pending', score: 88, hours: 20, fav: 'final',
       msgs: [['mine', 'Надіє, чи готові до співбесіди з клієнтом цього тижня?'], ['in', 'Так, будь-який день після 14:00.']] },
-    { id: 6, name: 'Yulia Kravets', job: PM, col: 'responded', score: 64, hours: 52, fav: 'interested', nudges: 1,
+    { id: 6, name: 'Yulia Kravets', job: PM, col: 'cv_received', score: 64, hours: 52, fav: 'interested', nudges: 1,
       msgs: [['mine', 'Юліє, чи працювали ви з метриками CPL, CPQL, MQL або SQL?'], ['agent', 'Юліє, нагадую про питання вище, буду вдячна за коротку відповідь.']] },
     { id: 7, name: 'Roman Tkachuk', job: PM, col: 'interview_pending', score: 90, hours: 1, unread: true,
       msgs: [['agent', 'Романе, надсилаю посилання на інтервʼю.'], ['in', 'Дякую, четвер мені підходить.'], ['agent', 'Чудово, Романе, підтверджую четвер.']] },
@@ -695,7 +700,7 @@
     const inJob = cands.filter(c => c.job === title);
     const nF = inJob.filter(c => c.fav).length, nS = inJob.filter(c => c.fav === 'final').length;
     $('tr-boardTabs').innerHTML = tabs('board', [['all', 'All'], ['fav', `★ Favorites (${nF})`], ['final', `Final shortlist (${nS})`]], boardTab);
-    $('tr-kanban').innerHTML = COLS.map(([k, l, col]) => {
+    $('tr-kanban').innerHTML = TR_COLS.map(([k, l, col]) => {
       const cs = inJob.filter(c => c.col === k && (boardTab === 'all' || (boardTab === 'fav' ? c.fav : c.fav === 'final')));
       return `<div class="kcol"><div class="kcol-h"><i style="background:${col}"></i><span>${l}</span><em>${cs.length}</em></div><div class="kcol-b">${
         cs.length ? cs.map(c => `<div class="kc" data-open="${c.id}"><div class="top"><span class="av">${ini(c.name)}</span><div><div class="nm">${c.unread ? '<span class="dot"></span>' : ''}${c.name}</div><div class="id">C-${3100 + c.id * 17}</div></div><span class="score">${c.score}</span></div>
@@ -708,7 +713,7 @@
     $('tr-pStar').textContent = c.fav ? STAR_ON + ' In favorites' : STAR_OFF + ' Add to favorites';
     $('tr-pFinal').hidden = !c.fav; $('tr-pFinal').textContent = c.fav === 'final' ? 'Back to interested' : 'Move to final shortlist';
     $('tr-av').textContent = ini(c.name); $('tr-rName').textContent = c.name; $('tr-rHead').textContent = c.job === PM ? 'Paid media specialist · Kyiv' : 'Engineering lead · Lisbon';
-    $('tr-rScore').textContent = c.score; $('tr-rUpd').textContent = agoTxt(c.hours); $('tr-rStage').textContent = COLS.find(x => x[0] === c.col)[1];
+    $('tr-rScore').textContent = c.score; $('tr-rUpd').textContent = agoTxt(c.hours); $('tr-rStage').textContent = TR_COLS.find(x => x[0] === c.col)[1];
     const bar = c.attn ? `Needs attention: ${c.reason}. After your reply the agent continues the conversation and follow-ups on its own.`
       : c.fav ? (waiting(c) ? `In favorites · waiting ${dur(c.hours)}${c.nudges ? `, the agent reminded ${c.nudges} of ${NUDGES}` : ''}. The agent reminds every 2 days, up to ${NUDGES} times; the reply will come to Needs attention and your bell.`
         : `In favorites. Every message from ${c.name.split(' ')[0]} comes to Needs attention with ★ and to your bell, even when the agent has already replied.`) : '';
