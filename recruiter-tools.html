@@ -1,9 +1,4 @@
-<!doctype html>
-<html lang="ru">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>CV Export and Reply Tracking</title>
+<title>CV Export and Favorites</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,7 +32,6 @@
     --scrim: rgba(0, 0, 0, .6); --shadow: rgba(0, 0, 0, .35); --toast-bg: #f1f1f5; --toast-fg: #16161a; --hover-border: #0f766e; --adminv-border: #134e4a; color-scheme: dark; }
 
   * { box-sizing: border-box; }
-  body { margin: 0; } [hidden] { display: none !important; }
   body { background: var(--bg); color: var(--ink-500); font: 14px/1.5 var(--font-sans); }
   body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--card); }
   button, input, select, textarea { font: inherit; color: inherit; }
@@ -156,9 +150,13 @@
   .kc .foot { margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border); display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
   .badge { display: inline-flex; align-items: center; gap: 5px; border-radius: 999px; padding: 1px 7px; font-family: var(--font-mono); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .03em; background: var(--sky-bg); color: var(--sky-600); }
   .badge::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
-  .tchip { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: .03em; border-radius: 4px; padding: 1px 6px; }
+  .tchip { font-size: 11px; line-height: 16px; border-radius: 4px; padding: 1px 6px; white-space: nowrap; }
   .tchip.me { background: var(--amber-100); color: var(--amber-800); }
   .tchip.late { background: var(--red-100); color: var(--red-600); }
+  .tchip.soon { background: var(--amber-100); color: var(--amber-800); }
+  .age { display: inline-block; font-size: 11px; line-height: 16px; border-radius: 4px; padding: 1px 6px; margin-left: 8px; vertical-align: middle; background: var(--muted); color: var(--ink-400); white-space: nowrap; }
+  .age.soon { background: var(--amber-100); color: var(--amber-800); }
+  .age.late { background: var(--red-100); color: var(--red-600); }
   .tchip.them { background: var(--muted); color: var(--ink-400); }
   .tchip.new { background: var(--teal-100); color: var(--teal-700); }
   .fchip { border: 1px solid var(--border); background: var(--card); border-radius: 8px; padding: 3px 10px; font-size: 11px; text-transform: uppercase; letter-spacing: .04em; cursor: pointer; color: var(--ink-400); }
@@ -236,7 +234,25 @@
   .btn.icon { padding: 7px 9px; }
   .btn.icon svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; }
   .att-btns { display: flex; flex-shrink: 0; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
-  .att .quote { margin-top: 6px; font-size: 13px; color: var(--ink-500); background: var(--card); border: 1px solid var(--amber-100); border-radius: 6px; padding: 6px 10px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .att .quote { margin-top: 6px; font-size: 13px; color: var(--ink-500); background: var(--card); border: 1px solid var(--amber-100); border-radius: 6px; padding: 6px 10px; }
+  .att .quote .ql { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .star { border: 0; background: transparent; cursor: pointer; font-size: 18px; line-height: 1; color: var(--ink-200); padding: 2px 4px; border-radius: 4px; flex-shrink: 0; }
+  .star:hover { background: var(--surface); color: var(--amber-600); }
+  .star.on { color: var(--amber-600); }
+  .kc .star { margin-left: auto; }
+  .kc .star:not(.on) { opacity: .35; } .kc:hover .star, .kc .star:focus-visible { opacity: 1; }
+  .att > .star { width: 28px; height: 28px; padding: 0; }
+  .att.fav { border-color: var(--teal-100); background: var(--teal-50); }
+  .att.fav .quote { border-color: var(--teal-100); }
+  .att .tchip { margin-left: 8px; vertical-align: middle; }
+  .pop .tabs { padding: 8px 12px; border-bottom: 1px solid var(--border); }
+  .pop .star { font-size: 13px; padding: 0 2px 0 0; cursor: default; }
+  .pop .who2 { font-size: 11px; color: var(--ink-300); margin-top: 2px; }
+  .trk { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--ink-400); cursor: pointer; }
+  .trk input { accent-color: var(--teal-600); }
+  .att .sm-score { display: inline-grid; height: 22px; min-width: 36px; font-size: 12px; vertical-align: middle; margin-left: 8px; }
+  .fstat { margin-top: 6px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .doc ul { padding-left: 20px; margin: 4px 0; display: grid; gap: 2px; }
   @media (max-width: 700px) { .att { flex-wrap: wrap; } .att-btns { width: 100%; justify-content: flex-start; padding-left: 40px; } }
   @media (max-width: 900px) {
     .app { grid-template-columns: 1fr; }
@@ -249,13 +265,11 @@
   }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
-</head>
-<body>
 
 <div class="bar">
   <div class="seg" role="tablist" aria-label="Задача">
     <button id="f-cv" class="on" data-feature="cv">Выгрузка CV за период</button>
-    <button id="f-tracking" data-feature="tracking">Ответы кандидатов в Needs attention</button>
+    <button id="f-tracking" data-feature="tracking">Избранные кандидаты и ответы</button>
   </div>
   <div class="seg" role="tablist" aria-label="Раздел">
     <button id="m-doc" class="on" data-mode="doc">Логика</button>
@@ -360,53 +374,83 @@
 <!-- ============ TRACKING: LOGIC ============ -->
 <section id="tr-doc" class="doc" hidden>
   <div class="overline">Задача · бэкенд Влад, фронтенд Вадим</div>
-  <h1>Ответы кандидатов в Needs attention</h1>
-  <p>Рекрутер должен сразу видеть, какой кандидат написал и что именно, по какой вакансии, и одним нажатием открывать переписку, а о новых сообщениях узнавать без поиска по доскам.</p>
+  <h1>Избранные кандидаты и их ответы</h1>
+  <p>Рекрутер отмечает звёздочкой кандидатов, которые ему интересны, и дальше не теряет их ответы: каждое сообщение избранного встаёт наверх «Needs attention», даже если агент уже ответил сам, а на доске вакансии видно, кто из избранных ответил и от кого ответа пока нет. Колокольчик показывает все новые сообщения кандидатов, и избранные в нём выделены.</p>
 
-  <h2>Как это работает сейчас</h2>
-  <p>Если агент не может ответить кандидату сам, переписка попадает в блок «Needs attention» в Control Room. Рекрутер отвечает вручную в карточке кандидата, в разделе «Conversation history». После отправки ручного ответа переписка выходит из «Needs attention», агент дальше ведёт её сам, а напоминания продолжаются автоматически, отсчёт идёт от сообщения рекрутера. Ничего нажимать или возвращать агенту не нужно.</p>
-  <p>Проблема в том, что элемент в «Needs attention» показывает только вакансию и короткое описание, а кнопка «Open» ведёт на страницу вакансии. Чтобы понять, кто написал и что, рекрутеру нужно искать кандидата на доске и открывать его карточку.</p>
+  <h2>Как рекрутер работает сейчас</h2>
+  <p>Утром рекрутер выгружает CV, которые пришли за вчера, проверяет их и отбирает кандидатов с оценкой выше 50–60%. Этим кандидатам он задаёт уточняющие вопросы в переписке и ждёт ответов, а тех, кто ответил подходяще, переносит в чистовой шорт-лист и передаёт отделу продаж для общения с клиентом. Отметить кандидата в Tener сейчас нельзя: колонка «Must have approved» на доску не выводится, кандидатов много, и рекрутер не помнит, кому он уже написал и кто ему ответил.</p>
 
-  <h2>Что меняем</h2>
-  <p>Блок «Needs attention» остаётся тем же блоком, мы добавляем в его элементы три вещи.</p>
+  <h2>Что происходит после ручного сообщения рекрутера</h2>
+  <p>Когда рекрутер пишет кандидату вручную, агент не останавливается: переписка выходит из «Needs attention», агент продолжает её сам, а если кандидат молчит, напоминает ему каждые 2 дня, не больше 4 раз на этапе. Когда кандидат отвечает, агент читает ответ и, если может, отвечает сам, например благодарит и задаёт следующий вопрос. В «Needs attention» переписка попадает снова, только если агент не может ответить. Поэтому ответ на вопрос рекрутера сейчас легко пропустить: агент его уже обработал, и рекрутеру ничего не приходит. Избранные закрывают именно это: любое сообщение избранного кандидата становится для рекрутера непрочитанным, даже если агент на него уже ответил.</p>
+
+  <h2>Что делаем</h2>
+  <p>Отдельного списка избранных нет. Избранный кандидат остаётся там же, где рекрутер работает и сейчас, то есть в «Needs attention», на доске вакансии и в карточке, и везде отмечен звёздочкой. Так рекрутер не переключается между двумя похожими списками и не пропускает новых кандидатов, которых ещё не успел отметить.</p>
   <ol>
-    <li><b>Кандидат и вакансия.</b> Заголовок элемента: имя кандидата и вакансия, к которой относится переписка.</li>
-    <li><b>Текст сообщения кандидата.</b> Под заголовком причина, по которой агент передал переписку, и последнее сообщение кандидата цитатой, длинное сообщение обрезается до двух строк.</li>
-    <li><b>Кнопка «Open conversation».</b> Открывает карточку кандидата сразу на разделе «Conversation history». Кнопка «Open» на вакансию и удаление элемента остаются как есть.</li>
+    <li><b>Как рекрутер отмечает кандидата.</b> Отметка ставится там, где рекрутер принимает решение о кандидате:
+      <ul>
+        <li>звёздочка на карточке на доске вакансии: у неотмеченных она бледная и проявляется при наведении, у избранных горит постоянно;</li>
+        <li>кнопка «Add to favorites» в шапке карточки кандидата;</li>
+        <li>звёздочка в строке «Needs attention», чтобы отметить кандидата прямо из пришедшего сообщения;</li>
+        <li>галочка «Add to favorites and track the reply» под полем ручного ответа, включённая по умолчанию. Рекрутер отмечает именно тех, кому задал вопрос, поэтому отправка ручного сообщения сама добавляет кандидата в избранные, если галочку не снять.</li>
+      </ul>
+      Повторное нажатие на звёздочку снимает отметку. Кандидат отмечается в рамках вакансии.</li>
+    <li><b>«Needs attention».</b> В блок попадает всё, на что агент не может ответить сам, как и сейчас, и вдобавок каждое непрочитанное сообщение избранного кандидата, даже если агент на него уже ответил. Избранные стоят сверху, выделены звёздочкой и цветом, а в подписи указано «Reply from a favorite · the agent has already answered». Переключатель «All / ★ Favorites» в шапке блока оставляет только избранных. Сообщение избранного уходит из блока, когда рекрутер открыл переписку или удалил строку.</li>
+    <li><b>Колокольчик</b> в верхней панели показывает все новые сообщения кандидатов, а не только избранных, чтобы рекрутер видел и новых людей, которых ещё не отметил. Избранные стоят сверху со звёздочкой, а переключатель «All / ★ Favorites» в выпадающем списке оставляет только их. Под каждым сообщением видно, что с ним происходит: «Needs your reply», если агент ответить не может, или «The agent has already answered». Нажатие открывает карточку кандидата на «Conversation history», и сообщение считается прочитанным.</li>
+    <li><b>Доска вакансии.</b> Переключатель «All / ★ Favorites / Final shortlist» над доской. У избранных на карточке виден статус переписки:
+      <ul>
+        <li>«New reply», если кандидат написал, а рекрутер ещё не открывал переписку;</li>
+        <li>«Replied», если ответ прочитан;</li>
+        <li>«Waiting 2 days», если последнее сообщение было от рекрутера или агента; рядом видно, сколько напоминаний агент уже отправил, например «agent reminded 1 of 4».</li>
+      </ul>
+      Время ожидания окрашено по зонам из палитры Tener: до суток серым, от суток до двух жёлтым, от двух суток и дольше красным, потому что к этому сроку агент уже отправляет напоминание. Те же зоны действуют для времени в строках «Needs attention», где они показывают, сколько сообщение ждёт рекрутера. Время пишется словами, например «3 h ago» или «1 day ago», а не «1D», чтобы его нельзя было спутать с числом.</li>
+    <li><b>Карточка кандидата.</b> В шапке кнопки «In favorites» и «Move to final shortlist». Над перепиской избранного видно, сколько он молчит и сколько напоминаний отправлено, и кнопка «Remind now»: агент отправляет напоминание сразу, соблюдая рабочие часы кандидата и лимиты отправки, а счётчик напоминаний растёт на одно.</li>
+    <li><b>Final shortlist</b> это чистовой список для передачи клиенту. Кандидат переносится в него кнопкой в карточке, на доске и в «Needs attention» он помечен «Final shortlist».</li>
+    <li><b>Утреннее письмо</b>: какие избранные ответили и кто из них молчит больше 2 дней.</li>
   </ol>
-  <p>Рекрутер отвечает в карточке так же, как сейчас. После отправки элемент исчезает из «Needs attention», агент продолжает переписку сам.</p>
-  <p>В переписке сообщения рекрутера стоит подписывать «You», а не «Reed AI · Talent Scout»: сейчас все исходящие сообщения подписаны одинаково, и непонятно, где писал рекрутер. Признак ручного сообщения на бэкенде уже есть (<code>meta.manual</code>).</p>
 
-  <h2>Уведомления</h2>
-  <ol>
-    <li><b>Колокольчик</b> в верхней панели рядом с датой: число новых элементов в «Needs attention» и их список. Нажатие на элемент открывает переписку. Это новый элемент интерфейса, сейчас в панели только дата.</li>
-    <li><b>Письмо или Slack</b> по выбору в настройках: сразу при новом элементе или утренней сводкой со списком «Needs attention».</li>
-  </ol>
+  <h2>Needs attention</h2>
+  <p>В блоке остаются улучшения из прошлой версии: имя кандидата, вакансия, цитата его сообщения, кнопка «Open conversation» и подпись «You» у ручных сообщений рекрутера. Кнопка удаления в варианте <code>danger-soft</code>.</p>
 
   <h2>Бэкенд</h2>
   <ol>
-    <li>В ответ <code>/api/dashboard/alerts</code> для элемента переписки добавить имя кандидата, <code>candidate_id</code>, название вакансии, текст последнего сообщения кандидата и ссылку на карточку кандидата.</li>
-    <li>Отдавать у сообщений признак ручного ответа рекрутера, чтобы фронт подписал их «You».</li>
-    <li>Уведомления: событие о новом элементе в «Needs attention» и утренняя сводка.</li>
+    <li>Хранение избранных: вакансия, кандидат, список (<code>interested</code> или <code>final</code>), кто и когда добавил. Отметить, снять, перенести между списками. Отправка ручного сообщения с флагом «track» добавляет кандидата в <code>interested</code>.</li>
+    <li>В <code>/api/dashboard/alerts</code> отдавать, кроме нынешних элементов, непрочитанные сообщения избранных кандидатов с признаком <code>favorite</code> и признаком того, ответил ли уже агент. Для элемента переписки отдавать имя кандидата, <code>candidate_id</code>, вакансию и текст последнего сообщения. Признак ручного сообщения (<code>meta.manual</code>) уже есть.</li>
+    <li>Для карточек на доске: признак избранного, признак непрочитанного, время с последнего исходящего сообщения, число отправленных напоминаний и сколько их положено на этапе.</li>
+    <li>Отметка о прочтении переписки: её ставит открытие «Conversation history».</li>
+    <li>«Remind now»: поставить ближайшее напоминание в очередь сейчас, в тех же правилах, что и автоматическое.</li>
+    <li>Событие для колокольчика на каждое входящее сообщение любого кандидата с признаком <code>favorite</code> и утреннее письмо по избранным.</li>
   </ol>
 
   <h2>Фронтенд</h2>
   <ol>
-    <li><code>ControlRoomAttentionCard</code>: заголовок «кандидат · вакансия», причина, цитата сообщения, кнопка «Open conversation» рядом с «Open».</li>
-    <li>Карточка кандидата открывается с прокруткой к «Conversation history».</li>
-    <li>В переписке ручные сообщения подписаны «You».</li>
-    <li>Колокольчик в верхней панели.</li>
+    <li>Звёздочка на карточке кандидата на доске, в таблице, в шапке карточки кандидата и в строке «Needs attention».</li>
+    <li>Галочка «Add to favorites and track the reply» под полем ручного ответа.</li>
+    <li><code>ControlRoomAttentionCard</code>: избранные сверху со звёздочкой, переключатель «All / ★ Favorites», кандидат, вакансия, цитата, «Open conversation», <code>danger-soft</code>. Подпись «You» в переписке.</li>
+    <li>Колокольчик в верхней панели со всеми новыми сообщениями и переключателем «All / ★ Favorites».</li>
+    <li>Переключатель «All / ★ Favorites / Final shortlist» и статусы переписки на доске вакансии.</li>
+    <li>«Move to final shortlist» и «Remind now» в карточке кандидата.</li>
+  </ol>
+
+  <h2>Что решить</h2>
+  <ol>
+    <li>Избранные общие для всех рекрутеров организации или у каждого рекрутера свои.</li>
+    <li>Должен ли агент сам отвечать избранным кандидатам или для избранных он только напоминает, а отвечает рекрутер.</li>
+    <li>Нужна ли выгрузка CV только по «Final shortlist» для передачи отделу продаж.</li>
+    <li>Включать ли галочку «Add to favorites and track the reply» по умолчанию или оставить её выключенной.</li>
   </ol>
 
   <h2>Критерии приёмки</h2>
   <ol>
-    <li>В каждом элементе «Needs attention» по переписке видно имя кандидата, вакансию и текст его последнего сообщения.</li>
-    <li>«Open conversation» открывает карточку этого кандидата на разделе «Conversation history» по нужной вакансии.</li>
-    <li>После ручного ответа элемент исчезает из «Needs attention», а агент продолжает переписку и напоминания сам.</li>
-    <li>Ручные сообщения в переписке подписаны «You».</li>
-    <li>Новый элемент в «Needs attention» увеличивает число на колокольчике.</li>
+    <li>Рекрутер отмечает кандидата звёздочкой на доске, в карточке или в «Needs attention», и звёздочка появляется во всех трёх местах.</li>
+    <li>Ручное сообщение с включённой галочкой добавляет кандидата в избранные.</li>
+    <li>Любое входящее сообщение избранного кандидата, в том числе такое, на которое агент уже ответил, появляется наверху «Needs attention» со звёздочкой и на колокольчике.</li>
+    <li>Сообщение обычного кандидата, на которое агент ответил сам, появляется только на колокольчике; если агент ответить не может, оно появляется и в «Needs attention».</li>
+    <li>Открытие переписки снимает непрочитанное и в «Needs attention», и на колокольчике.</li>
+    <li>«Remind now» отправляет напоминание, счётчик напоминаний растёт.</li>
+    <li>«Move to final shortlist» переносит кандидата в «Final shortlist», после обновления страницы он остаётся там.</li>
+    <li>Переключатели «★ Favorites» на доске, в «Needs attention» и на колокольчике показывают только избранных.</li>
   </ol>
-  <div class="note"><span>Прототип: Control Room с обновлённым блоком «Needs attention», карточка кандидата, колокольчик. Кнопка «Simulate candidate message» добавляет новый элемент.</span><button class="btn primary sm" data-goto>Открыть прототип</button></div>
+  <div class="note"><span>Прототип: Control Room с «Needs attention», где избранные стоят сверху со звёздочкой, колокольчик со всеми новыми сообщениями, доска вакансии со звёздочками и переключателем, карточка кандидата с галочкой «track the reply». Кнопка «Simulate reply» по очереди показывает ответ избранного, на который агент уже ответил, сообщение обычного кандидата, на которое агент ответить не может, и сообщение, на которое агент ответил сам.</span><button class="btn primary sm" data-goto>Открыть прототип</button></div>
 </section>
 
 <!-- ============ TRACKING: PROTOTYPE ============ -->
@@ -415,7 +459,7 @@
     <aside class="side" data-nav="Control Room"></aside>
     <div class="shell">
       <div class="topbar">
-        <button class="bell" id="tr-bell" aria-label="Notifications"><svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><i id="tr-bellN"></i></button>
+        <button class="bell" id="tr-bell" aria-label="New messages"><svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><i id="tr-bellN"></i></button>
         <span class="date">Tue, 28 Oct 2026</span>
         <div class="pop" id="tr-pop" hidden></div>
       </div>
@@ -430,7 +474,7 @@
           </div>
           <div class="card">
             <div class="att-head"><span class="ttl">Needs attention</span><span class="t-300 sm" id="tr-cnt"></span>
-              <div class="actions" style="margin-left:auto"><button class="btn danger sm">Delete all</button></div></div>
+              <div class="actions" style="margin-left:auto"><div class="vtoggle" id="tr-attTabs"></div><button class="btn danger sm">Delete all</button></div></div>
             <div class="att-list" id="tr-list"></div>
           </div>
         </div>
@@ -439,22 +483,22 @@
           <div class="subhead"><div><h1 id="tr-jobTitle"></h1><div class="t-300 sm" style="margin-top:6px">Acme Cloud</div><span class="status">Active</span></div>
             <div class="actions"><button class="btn outline compact">Scoring criteria</button><button class="btn outline compact">Import candidates</button></div></div>
           <div class="card"><div class="card-head"><div><span class="ttl">Candidates</span><span class="sub">current stage counts · not today’s events</span></div>
-            <div class="right"><button class="btn outline compact">Export available CVs</button><div class="vtoggle"><button class="on">Kanban</button><button>Table</button></div></div></div>
-            <div class="card-body t-300 sm">Страница вакансии, как сейчас. Сюда ведёт кнопка «Open».</div></div>
+            <div class="right"><div class="vtoggle" id="tr-boardTabs"></div><button class="btn outline compact">Export available CVs</button><div class="vtoggle"><button class="on">Kanban</button><button>Table</button></div></div></div>
+            <div class="card-body"><div class="kanban" id="tr-kanban"></div></div></div>
         </div>
         <div id="tr-v-card" hidden>
           <div class="ph"><div class="l"><button class="backarrow" id="tr-back" aria-label="Back">←</button><div><h1 id="tr-pName"></h1><div class="t-400 sm" id="tr-pJob"></div></div></div>
-            <div class="actions"><span class="adminv">Admin view</span><button class="btn secondary sm">Export data</button></div></div>
+            <div class="actions"><button class="btn outline sm" id="tr-pStar"></button><button class="btn outline sm" id="tr-pFinal" hidden></button><span class="adminv">Admin view</span><button class="btn secondary sm">Export data</button></div></div>
           <div class="pgrid">
             <div class="rail"><div class="bigav" id="tr-av"></div><div class="nm" id="tr-rName"></div><div class="t-300 xs" id="tr-rHead" style="margin-top:6px"></div>
-              <dl><dt>Status updated</dt><dd id="tr-rUpd"></dd><dt>Stage</dt><dd id="tr-rStage"></dd></dl></div>
+              <dl><dt>Score</dt><dd id="tr-rScore"></dd><dt>Status updated</dt><dd id="tr-rUpd"></dd><dt>Stage</dt><dd id="tr-rStage"></dd></dl></div>
             <div style="min-width:0">
               <div class="psec"><h3>Interview</h3><div class="t-300 sm">Interview not started</div></div>
               <div class="psec" id="tr-convsec"><h3>Conversation history</h3><div id="tr-conv"></div></div>
             </div>
           </div>
         </div>
-        <div class="demo">Демо: <button class="btn outline sm" id="tr-sim">Simulate candidate message</button> агент передаёт рекрутеру новое сообщение кандидата.</div>
+        <div class="demo">Демо: <button class="btn outline sm" id="tr-sim">Simulate reply</button> по очереди пишут кандидаты: сначала избранные, которых рекрутер ждёт, потом обычные. Ответ избранного встаёт наверх Needs attention со звёздочкой, даже если агент уже ответил сам; обычный кандидат попадает в Needs attention, только если агент не может ответить, а на колокольчике видны все.</div>
       </div>
     </div>
   </div>
@@ -558,112 +602,201 @@
     toast(`${n} CVs exported · ${name}`);
   };
 
-  // ---------- Needs attention with candidate messages ----------
+  // ---------- Favorites and Needs attention ----------
   const PM = 'Senior Paid Media Specialist', CTO = 'Co-Founder & CTO';
   const jobIds = { [PM]: 84, [CTO]: 85 };
-  const convs = [
-    { id: 1, name: 'Taras Melnyk', job: PM, stage: 'Responded', attn: true, isNew: true, hours: 2,
+  const NUDGES = 4;
+  const cands = [
+    { id: 1, name: 'Taras Melnyk', job: PM, col: 'responded', score: 78, hours: 2, attn: true, unread: true,
       reason: 'Employer question the agent cannot answer',
       msgs: [['agent', 'Це стратегічна in-house роль: формувати paid media стратегію та оцінювати роботу агенції.'],
         ['in', 'Звучить цікаво, готовий поговорити. Підкажіть, як оформлюється співпраця в Україні: ФОП чи штат?']] },
-    { id: 2, name: 'Oksana Bondar', job: PM, stage: 'Responded', attn: true, isNew: true, hours: 3,
-      reason: 'Pay expectation above the budget',
-      msgs: [['agent', 'Дякую за CV. Які у Вас очікування щодо компенсації?'], ['in', 'Від 3 500 EUR на місяць, це сума net.']] },
-    { id: 3, name: 'Daniel Ortiz', job: CTO, stage: 'Responded', attn: true, isNew: false, hours: 26,
+    { id: 2, name: 'Oksana Bondar', job: PM, col: 'responded', score: 82, hours: 3, fav: 'interested', unread: true,
+      msgs: [['mine', 'Оксано, дякую за CV. Скільки з вашого досвіду припадає на B2B SaaS і який місячний бюджет ви вели?'],
+        ['in', 'Майже весь досвід у B2B SaaS, останні два роки вела 40–60 тис. EUR на місяць у Google та LinkedIn Ads.'],
+        ['agent', 'Дякую, Оксано! Передаю рекрутеру, він повернеться з наступними кроками.']] },
+    { id: 3, name: 'Daniel Ortiz', job: CTO, col: 'responded', score: 74, hours: 26, attn: true,
       reason: 'Candidate asks to talk to a person',
       msgs: [['agent', 'Thanks Daniel. Could you share when you could start?'], ['in', 'Mid December. Before we go further, can I speak with the founders directly?']] },
-    { id: 4, name: 'Maksym Hrytsenko', job: PM, stage: 'Responded', attn: false, hours: 30,
-      reason: 'Candidate asks for KPIs the job does not list',
-      msgs: [['agent', 'Дякую, передаю hiring team.'], ['in', 'Можете надіслати детальні обовʼязки та KPI?'], ['mine', 'Основні обовʼязки: paid media стратегія, контроль агенції, бюджет. KPI надішлю окремо.'], ['agent', 'Дякую за терпіння, KPI вже в описі вакансії.']] },
+    { id: 4, name: 'Maksym Hrytsenko', job: PM, col: 'responded', score: 71, hours: 30, fav: 'interested', nudges: 0,
+      msgs: [['agent', 'Дякую за CV, Максиме.'], ['mine', 'Максиме, чи працювали ви з атрибуцією в HubSpot? І який мінімальний термін виходу?']] },
+    { id: 5, name: 'Nadiia Lysenko', job: PM, col: 'interview_pending', score: 88, hours: 20, fav: 'final',
+      msgs: [['mine', 'Надіє, чи готові до співбесіди з клієнтом цього тижня?'], ['in', 'Так, будь-який день після 14:00.']] },
+    { id: 6, name: 'Yulia Kravets', job: PM, col: 'responded', score: 64, hours: 52, fav: 'interested', nudges: 1,
+      msgs: [['mine', 'Юліє, чи працювали ви з метриками CPL, CPQL, MQL або SQL?'], ['agent', 'Юліє, нагадую про питання вище, буду вдячна за коротку відповідь.']] },
+    { id: 7, name: 'Roman Tkachuk', job: PM, col: 'interview_pending', score: 90, hours: 1, unread: true,
+      msgs: [['agent', 'Романе, надсилаю посилання на інтервʼю.'], ['in', 'Дякую, четвер мені підходить.'], ['agent', 'Чудово, Романе, підтверджую четвер.']] },
+    { id: 8, name: 'Andrii Kovalenko', job: PM, col: 'connect_sent', score: 71, hours: 70, msgs: [['agent', 'Hi Andrii, I am reaching out about a Senior Paid Media role.']] },
+    { id: 9, name: 'Olena Shevchuk', job: PM, col: 'sourced', score: 64, hours: 90, msgs: [] },
   ];
-  const incoming = [{ id: 4, text: 'Дякую. А який розмір команди і кому я буду звітувати?', reason: 'Employer question the agent cannot answer' }];
-  let current = null, from = 'control';
-  const last = c => c.msgs[c.msgs.length - 1];
+  const replies = {
+    4: ['Так, два роки налаштовувала атрибуцію в HubSpot. Вийти можу за 2 тижні.', 'Дякую, Максиме! Передаю рекрутеру.'],
+    6: ['Так, щотижня дивилась CPQL і SQL, за ними розподіляла бюджет між каналами.', 'Дякую, Юліє, це дуже корисно.'],
+  };
+  const incoming = [
+    { id: 1, text: 'І ще: чи є можливість працювати частково віддалено?', reason: 'Employer question the agent cannot answer' },
+    { id: 8, text: 'Sounds interesting, please send me the details.', agent: 'Great, Andrii! Here is the role overview and the next steps.' },
+  ];
+  let current = null, back = 'control', attTab = 'all', bellTab = 'all', boardTab = 'all';
   const lastIn = c => [...c.msgs].reverse().find(m => m[0] === 'in');
-  const agoTxt = hh => hh < 1 ? 'just now' : (hh < 24 ? hh + 'h' : Math.floor(hh / 24) + 'd') + ' ago';
-  const open = () => convs.filter(c => c.attn);
+  const lastMsg = c => c.msgs[c.msgs.length - 1];
+  const lastIdx = (c, k) => c.msgs.map(m => m[0]).lastIndexOf(k);
+  const waiting = c => c.msgs.length > 0 && (lastIdx(c, 'mine') >= 0 ? lastIdx(c, 'in') < lastIdx(c, 'mine') : lastIdx(c, 'in') < 0);
+  const agoTxt = hh => hh < 1 ? 'just now' : dur(hh) + ' ago';
+  // colour zones for waiting time: up to a day neutral, 1 to 2 days amber, 2 days and more red
+  const zone = hh => hh >= 48 ? 'late' : hh >= 24 ? 'soon' : '';
+  const age = hh => `<span class="age ${zone(hh)}">${agoTxt(hh)}</span>`;
+  const dur = hh => hh < 24 ? Math.max(hh, 1) + ' h' : Math.floor(hh / 24) + (hh < 48 ? ' day' : ' days');
+  const favs = () => cands.filter(c => c.fav);
+  const STAR_ON = '★', STAR_OFF = '☆';
+  const favFirst = (a, b) => (b.fav ? 1 : 0) - (a.fav ? 1 : 0) || a.hours - b.hours;
+  const tabs = (key, list, on) => list.map(([v, l]) => `<button data-${key}="${v}" class="${v === on ? 'on' : ''}">${l}</button>`).join('');
+  const starBtn = c => `<button class="star${c.fav ? ' on' : ''}" data-star="${c.id}" aria-label="${c.fav ? 'Remove from favorites' : 'Add to favorites'}">${c.fav ? STAR_ON : STAR_OFF}</button>`;
+  const delIcon = '<svg viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>';
 
+  function statusChip(c) {
+    if (!c.msgs.length) return '<span class="tchip them">Not contacted</span>';
+    if (c.unread) return '<span class="tchip new">New reply</span>';
+    if (waiting(c)) return `<span class="tchip ${zone(c.hours) || 'them'}">Waiting ${dur(c.hours)}</span>` + (c.nudges ? `<span class="xs t-300">agent reminded ${c.nudges} of ${NUDGES}</span>` : '');
+    return '<span class="tchip them">Replied</span>';
+  }
+  // Needs attention: what the agent cannot answer, plus every unread message from a favorite
   function trList() {
-    const items = open().sort((a, b) => a.hours - b.hours);
-    const nNew = items.filter(c => c.isNew).length;
-    $('tr-bellN').textContent = nNew || ''; $('tr-bellN').hidden = !nNew;
-    const total = items.length + 1;
-    $('tr-cnt').textContent = total + ' item' + (total === 1 ? '' : 's');
-    $('tr-list').innerHTML = (items.length ? items.map(c => `<div class="att"><div class="ic">·</div><div class="bd">
-        <div><span class="t">${c.isNew ? '<span class="dot"></span>' : ''}${c.name} · ${c.job}</span><time>${agoTxt(c.hours)}</time></div>
-        <div class="m">${c.reason}</div>
-        <div class="quote">«${lastIn(c)[1]}»</div></div>
-        <div class="att-btns"><button class="btn danger md icon" aria-label="Remove attention item" data-del="${c.id}"><svg viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg></button>
+    const all = cands.filter(c => c.attn || (c.fav && c.unread)).sort(favFirst);
+    const nFav = all.filter(c => c.fav).length;
+    const items = attTab === 'fav' ? all.filter(c => c.fav) : all;
+    $('tr-attTabs').innerHTML = tabs('att', [['all', `All (${all.length + 1})`], ['fav', `★ Favorites (${nFav})`]], attTab);
+    $('tr-cnt').textContent = (all.length + 1) + ' items' + (nFav ? ' · ' + nFav + ' from favorites' : '');
+    $('tr-list').innerHTML = items.map(c => {
+      const why = c.attn ? c.reason : 'Reply from a favorite' + (lastMsg(c)[0] === 'agent' ? ' · the agent has already answered' : '');
+      return `<div class="att${c.fav ? ' fav' : ''}">${starBtn(c)}<div class="bd">
+        <div><span class="t">${c.unread ? '<span class="dot"></span>' : ''}${c.name} · ${c.job}</span>${c.fav === 'final' ? '<span class="tchip me" title="Ready to hand over to the client">Final shortlist</span>' : ''}${age(c.hours)}</div>
+        <div class="m">${why}</div>
+        <div class="quote"><span class="ql">«${lastIn(c)[1]}»</span></div></div>
+        <div class="att-btns"><button class="btn danger md icon" aria-label="Remove attention item" data-del="${c.id}">${delIcon}</button>
         <button class="btn outline comfortable" data-job="${c.id}">Open</button>
-        <button class="btn primary comfortable" data-open="${c.id}">Open conversation</button></div></div>`).join('')
-      : '<div class="empty">No attention items.</div>')
-      + '<div class="att other"><div class="ic">·</div><div class="bd"><div><span class="t">Co-Founder &amp; CTO</span><time>5h ago</time></div><div class="m">Sourcing found no new candidates in the last 2 days.</div></div><div class="att-btns"><button class="btn danger md icon" aria-label="Remove attention item"><svg viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg></button><button class="btn outline comfortable" data-jobname="Co-Founder &amp; CTO">Open</button></div></div>';
+        <button class="btn primary comfortable" data-open="${c.id}">Open conversation</button></div></div>`;
+    }).join('')
+      + (attTab === 'all' ? `<div class="att other"><div class="ic">·</div><div class="bd"><div><span class="t">Co-Founder &amp; CTO</span><span class="age">5 h ago</span></div><div class="m">Sourcing found no new candidates in the last 2 days.</div></div><div class="att-btns"><button class="btn danger md icon" aria-label="Remove attention item">${delIcon}</button><button class="btn outline comfortable" data-jobname="Co-Founder &amp; CTO">Open</button></div></div>`
+        : (items.length ? '' : '<div class="empty">No new replies from favorites.</div>'));
+  }
+  // Bell: every unread candidate message, favorites on top
+  function trBell() {
+    const all = cands.filter(c => c.unread && lastIn(c)).sort(favFirst);
+    const items = bellTab === 'fav' ? all.filter(c => c.fav) : all;
+    $('tr-bellN').textContent = all.length || ''; $('tr-bellN').hidden = !all.length;
+    $('tr-pop').innerHTML = '<div class="ph2">New messages</div>'
+      + `<div class="tabs"><div class="vtoggle">${tabs('bell', [['all', `All (${all.length})`], ['fav', `★ Favorites (${all.filter(c => c.fav).length})`]], bellTab)}</div></div>`
+      + (items.length ? items.map(c => `<div class="it" data-open="${c.id}">${c.fav ? '<span class="star on">★</span>' : ''}<b>${c.name}</b> · ${c.job}<div class="t-300 xs">${lastIn(c)[1].slice(0, 80)}</div>
+          <div class="who2">${c.attn ? 'Needs your reply' : lastMsg(c)[0] === 'agent' ? 'The agent has already answered' : 'Waiting for the agent'}</div></div>`).join('') : '<div class="it t-300">No new messages</div>');
+  }
+  function trBoard() {
+    const title = $('tr-jobTitle').textContent || PM;
+    const inJob = cands.filter(c => c.job === title);
+    const nF = inJob.filter(c => c.fav).length, nS = inJob.filter(c => c.fav === 'final').length;
+    $('tr-boardTabs').innerHTML = tabs('board', [['all', 'All'], ['fav', `★ Favorites (${nF})`], ['final', `Final shortlist (${nS})`]], boardTab);
+    $('tr-kanban').innerHTML = COLS.map(([k, l, col]) => {
+      const cs = inJob.filter(c => c.col === k && (boardTab === 'all' || (boardTab === 'fav' ? c.fav : c.fav === 'final')));
+      return `<div class="kcol"><div class="kcol-h"><i style="background:${col}"></i><span>${l}</span><em>${cs.length}</em></div><div class="kcol-b">${
+        cs.length ? cs.map(c => `<div class="kc" data-open="${c.id}"><div class="top"><span class="av">${ini(c.name)}</span><div><div class="nm">${c.unread ? '<span class="dot"></span>' : ''}${c.name}</div><div class="id">C-${3100 + c.id * 17}</div></div><span class="score">${c.score}</span></div>
+          <div class="foot"><span class="badge">${l}</span>${c.fav === 'final' ? '<span class="tchip me" title="Ready to hand over to the client">Final shortlist</span>' : ''}${c.fav ? statusChip(c) : ''}${starBtn(c)}</div></div>`).join('') : '<div class="kempty">No candidates</div>'}</div></div>`;
+    }).join('');
   }
   function trCard() {
-    const c = convs.find(x => x.id === current); if (!c) return;
+    const c = cands.find(x => x.id === current); if (!c) return;
     $('tr-pName').textContent = c.name; $('tr-pJob').textContent = c.job + ' · Acme Cloud';
+    $('tr-pStar').textContent = c.fav ? STAR_ON + ' In favorites' : STAR_OFF + ' Add to favorites';
+    $('tr-pFinal').hidden = !c.fav; $('tr-pFinal').textContent = c.fav === 'final' ? 'Back to interested' : 'Move to final shortlist';
     $('tr-av').textContent = ini(c.name); $('tr-rName').textContent = c.name; $('tr-rHead').textContent = c.job === PM ? 'Paid media specialist · Kyiv' : 'Engineering lead · Lisbon';
-    $('tr-rUpd').textContent = agoTxt(c.hours); $('tr-rStage').textContent = c.stage;
+    $('tr-rScore').textContent = c.score; $('tr-rUpd').textContent = agoTxt(c.hours); $('tr-rStage').textContent = COLS.find(x => x[0] === c.col)[1];
+    const bar = c.attn ? `Needs attention: ${c.reason}. After your reply the agent continues the conversation and follow-ups on its own.`
+      : c.fav ? (waiting(c) ? `In favorites · waiting ${dur(c.hours)}${c.nudges ? `, the agent reminded ${c.nudges} of ${NUDGES}` : ''}. The agent reminds every 2 days, up to ${NUDGES} times; the reply will come to Needs attention and your bell.`
+        : `In favorites. Every message from ${c.name.split(' ')[0]} comes to Needs attention with ★ and to your bell, even when the agent has already replied.`) : '';
+    const remind = c.fav && !c.attn && waiting(c) ? `<button class="btn outline sm" data-remind="${c.id}"${(c.nudges || 0) >= NUDGES ? ' disabled' : ''}>Remind now</button>` : '';
     $('tr-conv').innerHTML = `<div class="sm">Conversation #${9800 + c.id} · ${c.attn ? 'needs attention' : 'active'}</div>
-      ${c.attn ? `<div class="tbar"><span class="txt">Needs attention: ${c.reason}. After your reply the agent continues the conversation and follow-ups on its own.</span></div>` : ''}
+      ${bar ? `<div class="tbar"><span class="txt">${bar}</span>${remind}</div>` : ''}
       <div class="chan"><span class="in">in</span><span>LinkedIn · Outreach &amp; Coordination</span><hr></div>
       <div class="msgs" id="tr-msgs">${c.msgs.map(([k, t]) => {
         const cls = k === 'in' ? '' : k === 'agent' ? 'out' : 'mine';
         const who = k === 'in' ? c.name : k === 'agent' ? 'Reed AI · Talent Scout' : 'You';
         const ii = k === 'in' ? ini(c.name) : k === 'agent' ? 'RD' : 'YOU';
         return `<div class="bub ${cls}"><div class="col"><div class="who">${who} · <span>28 Oct</span></div><div class="tx">${t}</div></div><div class="ini">${ii}</div></div>`;
-      }).join('')}</div>
+      }).join('') || '<div class="t-300 sm">No messages yet.</div>'}</div>
       <div class="reply"><textarea id="tr-txt" rows="3" placeholder="Write a manual LinkedIn reply…" aria-label="Manual reply"></textarea>
-        <div class="row"><span class="mono t-300" style="font-size:10px">Ctrl/⌘ + Enter to send</span><button class="btn primary sm" data-act="send">Send message</button></div></div>`;
+        <div class="row">${c.fav ? '<span class="mono t-300" style="font-size:10px">Ctrl/⌘ + Enter to send</span>' : '<label class="trk"><input type="checkbox" id="tr-trk" checked> ★ Add to favorites and track the reply</label>'}<button class="btn primary sm" data-act="send">Send message</button></div></div>`;
     const m = $('tr-msgs'); m.scrollTop = m.scrollHeight;
   }
-  function send() {
-    const c = convs.find(x => x.id === current); if (!c) return;
-    const t = $('tr-txt').value.trim() || 'Дякую за питання! Відповім детально сьогодні.';
-    c.msgs.push(['mine', t]); c.attn = false; c.isNew = false; c.hours = 0; trAll();
-    toast('Message sent · removed from Needs attention, the agent continues');
-  }
   function trDigest() {
-    const items = open();
-    $('tr-digest').innerHTML = `<div class="t-300 xs">From: Tener · To: recruiter@acme.example · 28 Oct, 9:00</div><h3>${items.length} conversations need your attention</h3>
-      <ul>${items.map(c => `<li><b>${c.name}</b>, ${c.job}: «${lastIn(c)[1].slice(0, 80)}${lastIn(c)[1].length > 80 ? '…' : ''}»</li>`).join('') || '<li>Nothing needs attention</li>'}</ul>
+    const rep = favs().filter(c => c.unread), wait = favs().filter(c => !c.unread && waiting(c) && c.hours >= 48);
+    $('tr-digest').innerHTML = `<div class="t-300 xs">From: Tener · To: recruiter@acme.example · 28 Oct, 9:00</div><h3>${rep.length} of your favorites replied</h3>
+      <ul>${rep.map(c => `<li><b>${c.name}</b>, ${c.job}: «${lastIn(c)[1].slice(0, 80)}${lastIn(c)[1].length > 80 ? '…' : ''}»</li>`).join('') || '<li>No new replies</li>'}</ul>
+      <div class="overline">No reply for 2+ days</div><ul>${wait.map(c => `<li>${c.name}, ${c.job}: ${dur(c.hours)}${c.nudges ? `, agent reminded ${c.nudges} of ${NUDGES}` : ''}</li>`).join('') || '<li>Nobody</li>'}</ul>
       <span class="btn primary sm">Open Control Room</span>`;
   }
-  function trPop() {
-    const items = open().filter(c => c.isNew);
-    $('tr-pop').innerHTML = '<div class="ph2">Notifications</div>' + (items.length ? items.map(c => `<div class="it" data-open="${c.id}"><b>${c.name}</b> · ${c.job}<div class="t-300 xs">${lastIn(c)[1].slice(0, 70)}</div></div>`).join('') : '<div class="it t-300">No new items</div>');
-  }
-  function trAll() { trList(); trCard(); trDigest(); trPop(); }
+  function trAll() { trList(); trBell(); trBoard(); trCard(); trDigest(); }
   function go(v) {
     ['control', 'job', 'card'].forEach(x => { $('tr-v-' + x).hidden = x !== v; });
-    const nav = v === 'job' ? 'Jobs' : 'Control Room';
+    const nav = v === 'job' || (v === 'card' && back === 'job') ? 'Jobs' : 'Control Room';
     document.querySelectorAll('#tr-app .side a').forEach(a => a.classList.toggle('on', a.dataset.link === nav));
   }
   function openCard(id) {
-    current = id; const c = convs.find(x => x.id === id); if (c) c.isNew = false;
+    back = $('tr-v-job').hidden ? 'control' : 'job';
+    current = id; const c = cands.find(x => x.id === id); c.unread = false;
     go('card'); trAll(); $('tr-convsec').scrollIntoView({ block: 'start', behavior: 'smooth' });
   }
-  function openJob(title) { $('tr-jobTitle').textContent = title; $('tr-jobId').textContent = jobIds[title] || ''; go('job'); }
+  function openJob(title) { $('tr-jobTitle').textContent = title; $('tr-jobId').textContent = jobIds[title] || ''; go('job'); trBoard(); }
+  function toggleFav(c) {
+    if (c.fav) { c.fav = null; toast(c.name + ' removed from favorites'); }
+    else { c.fav = 'interested'; c.nudges = c.nudges || 0; toast(c.name + ' added to favorites · replies will come to Needs attention'); }
+    trAll();
+  }
+  function send() {
+    const c = cands.find(x => x.id === current); if (!c) return;
+    const t = $('tr-txt').value.trim() || 'Дякую! Ще одне питання: який мінімальний термін виходу?';
+    const track = !c.fav && $('tr-trk') && $('tr-trk').checked;
+    if (track) { c.fav = 'interested'; }
+    c.msgs.push(['mine', t]); c.attn = false; c.unread = false; c.hours = 0; c.nudges = 0; trAll();
+    toast(c.fav ? (track ? 'Message sent · added to favorites, the reply will come to Needs attention' : 'Message sent · waiting for the candidate, the agent will remind if needed') : 'Message sent · the agent continues the conversation');
+  }
   $('tr-app').addEventListener('click', e => {
     const nav = e.target.closest('.side a'); if (nav) { if (nav.dataset.link === 'Control Room') go('control'); if (nav.dataset.link === 'Jobs') openJob(PM); return; }
+    const st = e.target.closest('[data-star]'); if (st) { e.stopPropagation(); toggleFav(cands.find(x => x.id === +st.dataset.star)); return; }
+    const at = e.target.closest('[data-att]'); if (at) { attTab = at.dataset.att; trList(); return; }
+    const bt = e.target.closest('[data-bell]'); if (bt) { bellTab = bt.dataset.bell; trBell(); return; }
+    const bd = e.target.closest('[data-board]'); if (bd) { boardTab = bd.dataset.board; trBoard(); return; }
+    const rm = e.target.closest('[data-remind]'); if (rm) {
+      const c = cands.find(x => x.id === +rm.dataset.remind);
+      c.nudges = (c.nudges || 0) + 1; c.msgs.push(['agent', `${c.name.split(' ')[0]}, нагадую про питання вище. Буду вдячна за відповідь, коли буде хвилинка.`]); c.hours = 0;
+      trAll(); toast(`Reminder sent to ${c.name} · ${c.nudges} of ${NUDGES}`); return; }
     const op = e.target.closest('[data-open]'); if (op) { $('tr-pop').hidden = true; openCard(+op.dataset.open); return; }
-    const jb = e.target.closest('[data-job]'); if (jb) { openJob(convs.find(x => x.id === +jb.dataset.job).job); return; }
+    const jb = e.target.closest('[data-job]'); if (jb) { openJob(cands.find(x => x.id === +jb.dataset.job).job); return; }
     const jn = e.target.closest('[data-jobname]'); if (jn) { openJob(jn.dataset.jobname.replace('&amp;', '&')); return; }
-    const del = e.target.closest('[data-del]'); if (del) { const c = convs.find(x => x.id === +del.dataset.del); c.attn = false; trAll(); toast('Attention item removed'); return; }
+    const del = e.target.closest('[data-del]'); if (del) { const c = cands.find(x => x.id === +del.dataset.del); c.attn = false; if (c.fav) c.unread = false; trAll(); toast('Attention item removed'); return; }
     const a = e.target.closest('[data-act="send"]'); if (a) { send(); return; }
   });
   $('tr-app').addEventListener('keydown', e => { if (e.target.id === 'tr-txt' && e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); send(); } });
-  $('tr-back').onclick = () => go('control');
+  $('tr-pStar').onclick = () => toggleFav(cands.find(x => x.id === current));
+  $('tr-pFinal').onclick = () => {
+    const c = cands.find(x => x.id === current); c.fav = c.fav === 'final' ? 'interested' : 'final';
+    trAll(); toast(c.name + (c.fav === 'final' ? ' moved to Final shortlist' : ' moved back to Interested'));
+  };
+  $('tr-back').onclick = () => { if (back === 'job') openJob(cands.find(x => x.id === current).job); else go('control'); };
   $('tr-bell').onclick = e => { e.stopPropagation(); $('tr-pop').hidden = !$('tr-pop').hidden; };
   $('tr-sim').onclick = () => {
+    const c = favs().find(x => waiting(x) && replies[x.id]);
+    if (c) {
+      const [txt, agent] = replies[c.id]; delete replies[c.id];
+      c.msgs.push(['in', txt], ['agent', agent]); c.unread = true; c.hours = 0; trAll();
+      toast(`${c.name} replied · the agent answered, the reply is on top of Needs attention with ★`); return;
+    }
     const n = incoming.shift();
-    if (!n) { toast('No more demo messages.'); return; }
-    const c = convs.find(x => x.id === n.id);
-    c.msgs.push(['in', n.text]); c.reason = n.reason; c.attn = true; c.isNew = true; c.hours = 0; trAll();
-    toast('New in Needs attention · ' + c.name);
+    if (n) {
+      const x = cands.find(y => y.id === n.id); x.msgs.push(['in', n.text]); x.unread = true; x.hours = 0;
+      if (n.agent) { x.msgs.push(['agent', n.agent]); trAll(); toast(x.name + ' replied · the agent answered, so it is only on the bell'); return; }
+      x.reason = n.reason; x.attn = true; trAll(); toast(x.name + ' is not a favorite · the agent cannot answer, so Needs attention and the bell'); return;
+    }
+    toast('No more demo messages.');
   };
   trAll();
 })();
 </script>
-</body>
-</html>
