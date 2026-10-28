@@ -230,7 +230,8 @@
   .digest ul { padding-left: 18px; margin: 6px 0 12px; font-size: 13px; }
   .toast { position: fixed; right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); background: var(--toast-bg); color: var(--toast-fg); border-radius: 8px; padding: 10px 14px; z-index: 60; font-size: 13px; max-width: min(380px, calc(100vw - 32px)); }
 
-  .btn.danger { background: var(--red-600); color: #fff; }
+  .btn.danger { background: var(--card); color: var(--red-600); border: 1.5px solid var(--red-600); font-weight: 600; }
+  .btn.danger:hover { background: var(--red-100); }
   .btn.comfortable { padding: 6px 16px; font-size: 14px; }
   .btn.icon { padding: 7px 9px; }
   .btn.icon svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; }
