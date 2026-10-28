@@ -394,7 +394,7 @@
         <li>галочка «Add to favorites and track the reply» под полем ручного ответа, включённая по умолчанию. Рекрутер отмечает именно тех, кому задал вопрос, поэтому отправка ручного сообщения сама добавляет кандидата в избранные, если галочку не снять.</li>
       </ul>
       Повторное нажатие на звёздочку снимает отметку. Кандидат отмечается в рамках вакансии.</li>
-    <li><b>«Needs attention».</b> В блок попадает всё, на что агент не может ответить сам, как и сейчас, и вдобавок каждое непрочитанное сообщение избранного кандидата, даже если агент на него уже ответил. Избранные стоят сверху, выделены звёздочкой и цветом, а в подписи указано «Reply from a favorite · the agent has already answered». Переключатель «All / ★ Favorites» в шапке блока оставляет только избранных. Сообщение избранного уходит из блока, когда рекрутер открыл переписку или удалил строку.</li>
+    <li><b>«Needs attention».</b> В блок попадает всё, на что агент не может ответить сам, как и сейчас, и вдобавок каждое непрочитанное сообщение избранного кандидата, даже если агент на него уже ответил. Избранные стоят сверху, выделены звёздочкой и цветом, рядом с именем стоит тот же статус переписки, что и на доске («New reply» или «Replied»), а в подписи указано «Reply from a favorite · the agent has already answered». Переключатель «All / ★ Favorites» в шапке блока оставляет только избранных. Сообщение избранного уходит из блока, когда рекрутер открыл переписку или удалил строку.</li>
     <li><b>Колокольчик</b> в верхней панели показывает все новые сообщения кандидатов, а не только избранных, чтобы рекрутер видел и новых людей, которых ещё не отметил. Избранные стоят сверху со звёздочкой, а переключатель «All / ★ Favorites» в выпадающем списке оставляет только их. Под каждым сообщением видно, что с ним происходит: «Needs your reply», если агент ответить не может, или «The agent has already answered». Нажатие открывает карточку кандидата на «Conversation history», и сообщение считается прочитанным.</li>
     <li><b>Доска вакансии.</b> Переключатель «All / ★ Favorites / Final shortlist» над доской. У избранных на карточке виден статус переписки:
       <ul>
@@ -672,7 +672,7 @@
     $('tr-list').innerHTML = items.map(c => {
       const why = c.attn ? c.reason : 'Reply from a favorite' + (lastMsg(c)[0] === 'agent' ? ' · the agent has already answered' : '');
       return `<div class="att${c.fav ? ' fav' : ''}">${starBtn(c)}<div class="bd">
-        <div><span class="t">${c.unread ? '<span class="dot"></span>' : ''}${c.name} · ${c.job}</span>${c.fav === 'final' ? '<span class="tchip me" title="Ready to hand over to the client">Final shortlist</span>' : ''}${age(c.hours)}</div>
+        <div><span class="t">${c.unread ? '<span class="dot"></span>' : ''}${c.name} · ${c.job}</span>${c.fav ? statusChip(c) : ''}${c.fav === 'final' ? '<span class="tchip me" title="Ready to hand over to the client">Final shortlist</span>' : ''}${age(c.hours)}</div>
         <div class="m">${why}</div>
         <div class="quote"><span class="ql">«${lastIn(c)[1]}»</span></div></div>
         <div class="att-btns"><button class="btn danger md icon" aria-label="Remove attention item" data-del="${c.id}">${delIcon}</button>
