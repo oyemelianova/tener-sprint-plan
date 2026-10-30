@@ -1,0 +1,791 @@
+<title>CV Export and Favorites</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap">
+<style>
+  /* Layout: page bar with two features x (Логика | Прототип). Prototype screens copy Tener frontend markup and Tailwind tokens. */
+  :root {
+    --bg: #fafaf8; --surface: #f6f5f1; --card: #ffffff; --muted: #e5e7eb; --divider: #d1d5db; --track: #e5e7eb; --border: #e6e3da;
+    --ink-500: #16161a; --ink-400: #3d3d45; --ink-300: #6b6b74; --ink-200: #9a9aa1;
+    --teal-600: #0d9488; --teal-700: #00786f; --teal-100: #cbfbf1; --teal-50: #f0fdfa; --teal-200: rgba(153, 246, 228, .5); --teal-300: #5eead4;
+    --amber-50: #fffbeb; --amber-100: #fef3c7; --amber-200: #fde68a; --amber-600: #d97706; --amber-800: #92400e;
+    --red-50: #fef2f2; --red-200: #fecaca; --red-700: #b91c1c; --red-100: #fee2e2; --red-600: #dc2626; --indigo-500: #6366f1; --indigo-600: #4f46e5; --sky-600: #0284c7; --sky-bg: rgba(56, 189, 248, .12);
+    --slate-400: #94a3b8; --sky-300: #7dd3fc; --sky-400: #38bdf8; --purple-600: rgba(147, 51, 234, .8); --green-600: #16a34a; --linkedin: #1d4ed8;
+    --scrim: rgba(0, 0, 0, .5); --shadow: rgba(0, 0, 0, .08); --toast-bg: #16161a; --toast-fg: #ffffff; --hover-border: #2dd4bf; --adminv-border: #99f6e4;
+    --font-sans: "Geist", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+    --bg: #111113; --surface: #1a1a1e; --card: #1f1f23; --muted: #27272a; --divider: #3f3f46; --track: #3f3f46; --border: #2e2e33;
+    --ink-500: #f1f1f5; --ink-400: #a1a1aa; --ink-300: #8b8b93; --ink-200: #6b6b73;
+    --teal-700: #5eead4; --teal-100: #134e4a; --teal-50: #0f2a28; --teal-200: rgba(20, 184, 166, .18); --teal-300: #0f766e;
+    --amber-50: #2a210c; --amber-100: #3a2a0a; --amber-200: #5a4310; --amber-600: #f59e0b; --amber-800: #fcd34d;
+    --red-50: #2b1313; --red-200: #5c2020; --red-700: #fca5a5; --red-100: #3b1414; --red-600: #ef4444; --indigo-600: #6366f1; --sky-600: #7dd3fc; --sky-bg: rgba(56, 189, 248, .16);
+    --scrim: rgba(0, 0, 0, .6); --shadow: rgba(0, 0, 0, .35); --toast-bg: #f1f1f5; --toast-fg: #16161a; --hover-border: #0f766e; --adminv-border: #134e4a; color-scheme: dark; } }
+  :root[data-theme="dark"] {
+    --bg: #111113; --surface: #1a1a1e; --card: #1f1f23; --muted: #27272a; --divider: #3f3f46; --track: #3f3f46; --border: #2e2e33;
+    --ink-500: #f1f1f5; --ink-400: #a1a1aa; --ink-300: #8b8b93; --ink-200: #6b6b73;
+    --teal-700: #5eead4; --teal-100: #134e4a; --teal-50: #0f2a28; --teal-200: rgba(20, 184, 166, .18); --teal-300: #0f766e;
+    --amber-50: #2a210c; --amber-100: #3a2a0a; --amber-200: #5a4310; --amber-600: #f59e0b; --amber-800: #fcd34d;
+    --red-50: #2b1313; --red-200: #5c2020; --red-700: #fca5a5; --red-100: #3b1414; --red-600: #ef4444; --indigo-600: #6366f1; --sky-600: #7dd3fc; --sky-bg: rgba(56, 189, 248, .16);
+    --scrim: rgba(0, 0, 0, .6); --shadow: rgba(0, 0, 0, .35); --toast-bg: #f1f1f5; --toast-fg: #16161a; --hover-border: #0f766e; --adminv-border: #134e4a; color-scheme: dark; }
+
+  * { box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink-500); font: 14px/1.5 var(--font-sans); }
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--card); }
+  button, input, select, textarea { font: inherit; color: inherit; }
+  :focus-visible { outline: 2px solid var(--teal-600); outline-offset: 2px; }
+  .mono { font-family: var(--font-mono); }
+  .overline { font-family: var(--font-mono); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-400); }
+  .field-label { font-family: var(--font-mono); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-400); }
+  .t-300 { color: var(--ink-300); } .t-400 { color: var(--ink-400); }
+  .xs { font-size: 12px; } .sm { font-size: 13px; }
+
+  .bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 8; background: var(--card); border-bottom: 1px solid var(--border);
+    padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 10px;
+    display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; }
+  .seg { display: inline-flex; border: 1px solid var(--border); border-radius: 8px; background: var(--card); padding: 2px; gap: 2px; }
+  .seg button { border: 0; background: transparent; border-radius: 6px; padding: 5px 12px; font-size: 13px; cursor: pointer; color: var(--ink-400); }
+  .seg button.on { background: var(--teal-600); color: #fff; font-weight: 600; }
+
+  .doc { max-width: 860px; margin: 0 auto; padding-block: 28px 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  .doc h1 { font-size: 26px; line-height: 1.2; margin: 6px 0 8px; letter-spacing: -.01em; text-wrap: balance; }
+  .doc h2 { font-size: 18px; margin: 28px 0 8px; text-wrap: balance; }
+  .doc p, .doc li { color: var(--ink-400); max-width: 70ch; }
+  .doc ol { padding-left: 20px; display: grid; gap: 4px; }
+  .tablewrap { overflow-x: auto; }
+  .doc table { border-collapse: collapse; width: 100%; margin: 10px 0; background: var(--card); min-width: 520px; }
+  .doc td, .doc th { border: 1px solid var(--border); padding: 8px 10px; text-align: left; vertical-align: top; }
+  .doc th { background: var(--surface); font-weight: 600; }
+  .doc code { font-family: var(--font-mono); background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 0 4px; font-size: 12px; word-break: break-word; }
+  .note { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+
+  /* Tener shell: Sidebar.tsx (w-64, bg-surface, Operate / Platform), Header.tsx (h-14, date on the right) */
+  .proto { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 16px 40px; }
+  .app { display: grid; grid-template-columns: 220px minmax(0, 1fr); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: var(--bg); position: relative; min-height: 640px; }
+  .side { background: var(--surface); border-right: 1px solid var(--border); padding: 16px; display: flex; flex-direction: column; }
+  .side header { display: flex; align-items: center; gap: 8px; padding: 8px; margin-bottom: 8px; }
+  .logo { width: 28px; height: 28px; border-radius: 6px; background: var(--teal-600); color: #fff; display: grid; place-items: center; font-size: 14px; font-weight: 700; }
+  .role { margin-left: auto; font-family: var(--font-mono); font-size: 12px; text-transform: uppercase; color: var(--ink-300); }
+  .side section { border-block: 1px solid var(--divider); padding-block: 24px; display: grid; gap: 24px; flex: 1; align-content: start; }
+  .navg p { margin: 0 0 12px; padding-left: 8px; font-family: var(--font-mono); font-size: 12px; text-transform: uppercase; color: var(--ink-300); }
+  .navg nav { display: grid; gap: 6px; }
+  .navg a { display: flex; align-items: center; gap: 8px; border-radius: 3px; padding: 6px 8px; font-size: 14px; color: var(--ink-500); cursor: pointer; text-decoration: none; }
+  .navg a:hover { background: var(--track); }
+  .navg a.on { background: var(--teal-600); color: #fff; font-weight: 500; }
+  .navg a svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.8; opacity: .7; flex-shrink: 0; }
+  .shell { min-width: 0; display: flex; flex-direction: column; }
+  .topbar { height: 56px; background: var(--card); border-bottom: 1px solid var(--surface); display: flex; align-items: center; justify-content: flex-end; gap: 16px; padding: 0 24px; position: relative; }
+  .date { font-family: var(--font-mono); font-size: 12px; color: var(--ink-300); }
+  .main { padding: 0 24px 24px; min-width: 0; }
+
+  /* Subheader.tsx */
+  .crumbs { margin-top: 20px; font-family: var(--font-mono); font-size: 12px; color: var(--ink-300); }
+  .subhead { margin: 14px 0 18px; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 14px; }
+  .subhead h1 { margin: 0; font-size: 24px; font-weight: 600; }
+  .actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .status { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; border-radius: 999px; padding: 1px 8px; font-family: var(--font-mono); font-size: 10px; font-weight: 600; text-transform: uppercase; background: var(--teal-50); color: var(--teal-700); }
+  .status::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--teal-600); }
+
+  /* uiButtonClassName variants and sizes */
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border-radius: 6px; font-weight: 500; cursor: pointer; border: 1px solid transparent; box-shadow: 0 1px 2px var(--shadow); white-space: nowrap; }
+  .btn.outline { border-color: var(--border); background: var(--card); color: var(--ink-500); }
+  .btn.outline:hover { background: var(--surface); }
+  .btn.secondary { border-color: var(--border); background: var(--surface); color: var(--ink-500); }
+  .btn.primary { background: var(--teal-600); color: #fff; }
+  .btn.primary:hover { filter: brightness(.93); }
+  .btn.compact { padding: 4px 16px; font-size: 14px; }
+  .btn.sm { padding: 4px 12px; font-size: 12px; }
+  .btn.md { padding: 8px 16px; font-size: 14px; }
+  .btn[disabled] { opacity: .5; pointer-events: none; }
+  .x { border: 0; background: transparent; border-radius: 4px; padding: 2px 8px; font-size: 22px; line-height: 1; color: var(--ink-400); cursor: pointer; }
+  .x:hover { background: var(--surface); }
+
+  /* JobDetailSectionCard, KPI strip, Needs attention */
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 1px 2px var(--shadow); margin-bottom: 20px; min-width: 0; }
+  .card-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--border); background: color-mix(in srgb, var(--surface) 40%, var(--card)); }
+  .card-head .ttl { font-size: 18px; font-weight: 600; }
+  .card-head .sub { display: block; font-size: 12px; color: var(--ink-300); margin-top: 2px; }
+  .card-head .right { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+  .card-body { padding: 12px; }
+  .vtoggle { display: inline-flex; border: 1px solid var(--border); border-radius: 8px; background: var(--card); padding: 2px; font-size: 11px; text-transform: uppercase; letter-spacing: .04em; }
+  .vtoggle button { border: 0; background: transparent; border-radius: 6px; padding: 3px 8px; cursor: pointer; color: var(--ink-400); }
+  .vtoggle button.on { background: var(--teal-600); color: #fff; font-weight: 600; }
+  .kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 20px; }
+  .kpi { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; box-shadow: 0 1px 2px var(--shadow); }
+  .kpi b { display: block; font-size: 28px; font-weight: 600; line-height: 1.2; font-variant-numeric: tabular-nums; }
+  .att-head { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+  .att-head .ttl { font-weight: 600; }
+  .att-list { padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+  .att { display: flex; align-items: flex-start; gap: 12px; border-radius: 6px; border: 1px solid var(--amber-100); background: var(--amber-50); padding: 10px 12px; }
+  .att.reply { border-color: var(--teal-100); background: var(--teal-50); }
+  .att.wait { border-color: var(--border); background: var(--surface); }
+  .att .ic { width: 28px; height: 28px; border-radius: 999px; flex-shrink: 0; display: grid; place-items: center; font-size: 10px; font-weight: 600; color: #fff; background: var(--amber-600); font-family: var(--font-mono); }
+  .att.reply .ic { background: var(--teal-600); } .att.wait .ic { background: var(--ink-400); }
+  .att .bd { min-width: 0; flex: 1; }
+  .att .t { font-weight: 500; font-size: 14px; }
+  .att time { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-300); margin-left: 8px; }
+  .att .m { color: var(--ink-300); font-size: 12px; margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .empty { border: 1px solid var(--border); background: var(--surface); border-radius: 6px; padding: 20px 12px; text-align: center; font-size: 13px; color: var(--ink-300); }
+  .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--teal-600); margin-right: 6px; vertical-align: middle; }
+
+  /* JobDetailKanbanBoard + JobDetailCandidateKanbanCard */
+  .kanban { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 4px; }
+  .kcol { min-width: 230px; flex: 1; border: 1px solid var(--border); border-radius: 8px; background: color-mix(in srgb, var(--surface) 80%, transparent); display: flex; flex-direction: column; }
+  .kcol-h { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-bottom: 1px solid var(--border); }
+  .kcol-h i { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+  .kcol-h span { font-size: 13px; font-weight: 500; }
+  .kcol-h em { margin-left: auto; font-style: normal; font-family: var(--font-mono); font-size: 12px; color: var(--ink-400); border: 1px solid var(--border); background: var(--card); border-radius: 12px; min-width: 24px; height: 20px; display: grid; place-items: center; padding: 0 4px; }
+  .kcol-b { padding: 8px; display: flex; flex-direction: column; gap: 8px; min-height: 120px; }
+  .kempty { border: 1px dashed var(--border); border-radius: 6px; padding: 20px 12px; text-align: center; font-size: 12px; color: var(--ink-300); }
+  .kc { display: block; border: 1px solid var(--border); border-radius: 8px; background: var(--card); padding: 10px; box-shadow: 0 1px 2px var(--shadow); cursor: pointer; }
+  .kc:hover { border-color: var(--hover-border); }
+  .kc .top { display: flex; gap: 8px; align-items: flex-start; }
+  .av { width: 28px; height: 28px; border-radius: 999px; background: var(--ink-400); color: #fff; font-family: var(--font-mono); font-size: 10px; font-weight: 600; display: grid; place-items: center; flex-shrink: 0; }
+  .kc .nm { font-weight: 500; font-size: 13px; line-height: 1.2; }
+  .kc .id { font-family: var(--font-mono); font-size: 10px; color: var(--ink-400); margin-top: 2px; }
+  .score { margin-left: auto; height: 28px; min-width: 48px; border-radius: 6px; background: var(--teal-100); color: var(--teal-700); font-family: var(--font-mono); font-weight: 700; font-size: 13px; display: grid; place-items: center; padding: 0 6px; }
+  .kc .dates { margin-top: 8px; font-size: 11px; color: var(--ink-300); display: flex; justify-content: space-between; }
+  .kc .foot { margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border); display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+  .badge { display: inline-flex; align-items: center; gap: 5px; border-radius: 999px; padding: 1px 7px; font-family: var(--font-mono); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .03em; background: var(--sky-bg); color: var(--sky-600); }
+  .badge::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+  .tchip { font-size: 11px; line-height: 16px; border-radius: 4px; padding: 1px 6px; white-space: nowrap; }
+  .tchip.me { background: var(--amber-100); color: var(--amber-800); }
+  .tchip.late { background: var(--red-100); color: var(--red-600); }
+  .tchip.soon { background: var(--amber-100); color: var(--amber-800); }
+  .age { display: inline-block; font-size: 11px; line-height: 16px; border-radius: 4px; padding: 1px 6px; margin-left: 8px; vertical-align: middle; background: var(--muted); color: var(--ink-400); white-space: nowrap; }
+  .age.soon { background: var(--amber-100); color: var(--amber-800); }
+  .age.late { background: var(--red-100); color: var(--red-600); }
+  .tchip.them { background: var(--muted); color: var(--ink-400); }
+  .tchip.new { background: var(--teal-100); color: var(--teal-700); }
+  .fchip { border: 1px solid var(--border); background: var(--card); border-radius: 8px; padding: 3px 10px; font-size: 11px; text-transform: uppercase; letter-spacing: .04em; cursor: pointer; color: var(--ink-400); }
+  .fchip.on { background: var(--teal-600); border-color: var(--teal-600); color: #fff; font-weight: 600; }
+
+  /* CandidateProfilePage, Rail, Conversation history */
+  .ph { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 20px 0; }
+  .ph .l { display: flex; gap: 14px; }
+  .ph h1 { margin: 0; font-size: 24px; font-weight: 600; }
+  .backarrow { border: 0; background: transparent; cursor: pointer; color: var(--ink-400); font-size: 22px; line-height: 1; padding: 0; }
+  .adminv { border: 1px solid var(--adminv-border); background: var(--teal-50); color: var(--teal-700); border-radius: 999px; padding: 3px 12px; font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; }
+  .pgrid { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 16px; align-items: start; }
+  .rail { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 18px 14px; text-align: center; box-shadow: 0 1px 2px var(--shadow); }
+  .rail .bigav { width: 64px; height: 64px; border-radius: 50%; background: var(--indigo-600); color: #fff; font-family: var(--font-mono); font-size: 18px; font-weight: 600; display: grid; place-items: center; margin: 0 auto 12px; }
+  .rail .nm { font-size: 17px; font-weight: 600; }
+  .rail dl { text-align: left; margin: 14px 0 0; display: grid; gap: 2px; font-size: 12px; }
+  .rail dt { color: var(--ink-300); } .rail dd { margin: 0 0 6px; }
+  .psec { background: var(--card); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 1px 2px var(--shadow); padding: 14px 16px; margin-bottom: 14px; min-width: 0; }
+  .psec h3 { margin: 0 0 10px; font-size: 15px; font-weight: 600; }
+  .tbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; border: 1px solid var(--border); background: var(--surface); border-radius: 6px; padding: 8px 10px; margin: 10px 0; }
+  .tbar .txt { font-size: 12px; color: var(--ink-400); }
+  .chan { display: flex; align-items: center; gap: 8px; margin: 10px 0 4px; }
+  .chan .in { width: 16px; height: 16px; border-radius: 3px; background: var(--linkedin); color: #fff; font-size: 9px; display: grid; place-items: center; }
+  .chan span { font-family: var(--font-mono); font-size: 9px; text-transform: uppercase; color: var(--ink-300); }
+  .chan hr { flex: 1; border: 0; border-top: 1px solid var(--divider); margin: 0; }
+  .msgs { max-height: 320px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding: 4px 0 8px 12px; }
+  .bub { display: flex; justify-content: flex-end; }
+  .bub .col { display: flex; flex-direction: column; gap: 4px; align-items: flex-end; max-width: 85%; min-width: 0; }
+  .bub .who { font-family: var(--font-mono); font-size: 10px; color: var(--ink-500); }
+  .bub .who span { color: var(--ink-200); }
+  .bub .tx { border-radius: 12px 4px 12px 12px; padding: 8px 12px; font-size: 12px; border: 1px solid var(--border); background: var(--card); overflow-wrap: anywhere; }
+  .bub.out .tx { background: var(--teal-200); border-color: var(--teal-300); }
+  .bub.mine .tx { background: var(--amber-50); border-color: var(--amber-200); }
+  .bub .ini { width: 28px; height: 28px; min-width: 28px; border-radius: 50%; margin: 4px 0 0 8px; display: grid; place-items: center; font-size: 9px; color: #fff; background: var(--teal-600); }
+  .bub.out .ini { background: var(--indigo-500); } .bub.mine .ini { background: var(--amber-600); }
+  .reply { border-top: 1px solid var(--border); padding-top: 12px; margin-top: 4px; display: grid; gap: 8px; }
+  .reply textarea { width: 100%; border: 1px solid var(--border); background: var(--card); border-radius: 6px; padding: 6px 10px; font-size: 13px; resize: vertical; box-shadow: 0 1px 2px var(--shadow); }
+  .reply .row { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .suggest { border: 1px solid var(--amber-200); background: var(--amber-50); color: var(--amber-800); border-radius: 6px; padding: 8px 10px; font-size: 13px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+
+  /* ModalBackdrop + CandidateProfileExportModal */
+  .backdrop { position: fixed; inset: 0; z-index: 50; display: flex; align-items: center; justify-content: center; background: var(--scrim); backdrop-filter: blur(4px); padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+  .modal { width: 100%; max-width: 448px; max-height: 100%; display: flex; flex-direction: column; overflow: hidden; background: var(--card); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 10px 30px var(--shadow); }
+  .mhead { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding: 18px 20px 14px; border-bottom: 1px solid var(--border); }
+  .mhead h2 { margin: 2px 0 0; font-size: 18px; font-weight: 600; }
+  .mhead p { margin: 4px 0 0; font-size: 13px; color: var(--ink-300); }
+  .mbody { padding: 16px 20px; display: grid; gap: 14px; overflow-y: auto; min-height: 0; }
+  .fld { display: grid; gap: 4px; }
+  .control { width: 100%; border: 1px solid var(--border); background: var(--card); border-radius: 6px; padding: 6px 10px; font-size: 14px; box-shadow: 0 1px 2px var(--shadow); }
+  .dates2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .info { border: 1px solid var(--border); background: var(--surface); border-radius: 6px; padding: 8px 12px; font-size: 13px; color: var(--ink-400); }
+  .info b { color: var(--ink-500); font-variant-numeric: tabular-nums; }
+  .warn { border: 1px solid var(--amber-200); background: var(--amber-50); color: var(--amber-800); border-radius: 6px; padding: 8px 12px; font-size: 13px; }
+  .mfoot { display: flex; justify-content: flex-end; gap: 8px; padding: 12px 20px 16px; }
+
+  .bell { position: relative; border: 0; background: transparent; width: 32px; height: 32px; border-radius: 6px; cursor: pointer; display: grid; place-items: center; }
+  .bell:hover { background: var(--surface); }
+  .bell svg { width: 17px; height: 17px; fill: none; stroke: var(--ink-400); stroke-width: 1.8; }
+  .bell i { position: absolute; top: 0; right: 0; background: var(--red-600); color: #fff; font-style: normal; font-size: 10px; border-radius: 999px; padding: 0 5px; font-weight: 700; }
+  .pop { position: absolute; right: 24px; top: 52px; width: min(340px, calc(100% - 32px)); background: var(--card); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 10px 30px var(--shadow); z-index: 5; overflow: hidden; }
+  .pop .ph2 { padding: 10px 12px; border-bottom: 1px solid var(--border); font-weight: 600; font-size: 13px; }
+  .pop .it { padding: 10px 12px; border-bottom: 1px solid var(--border); font-size: 13px; cursor: pointer; }
+  .pop .it:last-child { border-bottom: 0; }
+  .pop .it:hover { background: var(--surface); }
+  .demo { margin-top: 12px; border: 1px dashed var(--divider); border-radius: 8px; padding: 10px 12px; color: var(--ink-300); font-size: 12.5px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .mail { margin-top: 18px; display: grid; gap: 8px; max-width: 640px; }
+  .digest { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 16px 18px; }
+  .digest h3 { margin: 6px 0; font-size: 16px; }
+  .digest ul { padding-left: 18px; margin: 6px 0 12px; font-size: 13px; }
+  .toast { position: fixed; right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); background: var(--toast-bg); color: var(--toast-fg); border-radius: 8px; padding: 10px 14px; z-index: 60; font-size: 13px; max-width: min(380px, calc(100vw - 32px)); }
+
+  .btn.danger { background: var(--red-50); color: var(--red-700); border: 1px solid var(--red-200); }
+  .btn.danger:hover { background: var(--red-100); }
+  .btn.comfortable { padding: 6px 16px; font-size: 14px; }
+  .btn.icon { padding: 7px 9px; }
+  .btn.icon svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+  .att-btns { display: flex; flex-shrink: 0; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+  .att .quote { margin-top: 6px; font-size: 13px; color: var(--ink-500); background: var(--card); border: 1px solid var(--amber-100); border-radius: 6px; padding: 6px 10px; }
+  .att .quote .ql { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .star { border: 0; background: transparent; cursor: pointer; font-size: 18px; line-height: 1; color: var(--ink-200); padding: 2px 4px; border-radius: 4px; flex-shrink: 0; }
+  .star:hover { background: var(--surface); color: var(--amber-600); }
+  .star.on { color: var(--amber-600); }
+  .kc .star { margin-left: auto; }
+  .kc .star:not(.on) { opacity: .35; } .kc:hover .star, .kc .star:focus-visible { opacity: 1; }
+  .att > .star { width: 28px; height: 28px; padding: 0; }
+  .att.fav { border-color: var(--teal-100); background: var(--teal-50); }
+  .att.fav .quote { border-color: var(--teal-100); }
+  .att .tchip { margin-left: 8px; vertical-align: middle; }
+  .pop .tabs { padding: 8px 12px; border-bottom: 1px solid var(--border); }
+  .pop .star { font-size: 13px; padding: 0 2px 0 0; cursor: default; }
+  .pop .who2 { font-size: 11px; color: var(--ink-300); margin-top: 2px; }
+  .trk { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--ink-400); cursor: pointer; }
+  .trk input { accent-color: var(--teal-600); }
+  .att .sm-score { display: inline-grid; height: 22px; min-width: 36px; font-size: 12px; vertical-align: middle; margin-left: 8px; }
+  .fstat { margin-top: 6px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .doc ul { padding-left: 20px; margin: 4px 0; display: grid; gap: 2px; }
+  @media (max-width: 700px) { .att { flex-wrap: wrap; } .att-btns { width: 100%; justify-content: flex-start; padding-left: 40px; } }
+  @media (max-width: 900px) {
+    .app { grid-template-columns: 1fr; }
+    .side { border-right: 0; border-bottom: 1px solid var(--border); }
+    .side section { grid-template-columns: 1fr 1fr; padding-block: 12px; }
+    .kpis { grid-template-columns: 1fr 1fr; }
+    .pgrid { grid-template-columns: 1fr; }
+    .main { padding: 0 14px 16px; }
+    .topbar { padding: 0 14px; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="bar">
+  <div class="seg" role="tablist" aria-label="Задача">
+    <button id="f-cv" class="on" data-feature="cv">Выгрузка CV за период</button>
+    <button id="f-tracking" data-feature="tracking">Избранные кандидаты и ответы</button>
+  </div>
+  <div class="seg" role="tablist" aria-label="Раздел">
+    <button id="m-doc" class="on" data-mode="doc">Логика</button>
+    <button id="m-proto" data-mode="proto">Прототип</button>
+  </div>
+</div>
+
+<!-- ============ CV EXPORT: LOGIC ============ -->
+<section id="cv-doc" class="doc">
+  <div class="overline">Задача · бэкенд Влад, фронтенд Вадим</div>
+  <h1>Выгрузка CV за выбранный период</h1>
+  <p>Рекрутер выгружает CV кандидатов вакансии не всеми сразу, а за нужный период или только новые с прошлой выгрузки, поэтому ему не нужно вспоминать, какие CV уже скачаны.</p>
+
+  <h2>Как сейчас</h2>
+  <p>На странице вакансии в блоке «Candidates», рядом с переключателем Kanban и Table, есть кнопка «Export available CVs». Она сразу скачивает архив со всеми CV вакансии: файлы CV попадают в архив, CV-ссылки перечисляются в файле <code>cvs_links.txt</code>. Отбора по дате нет, хотя дата получения CV в системе хранится (<code>resume_assets.observed_at</code>).</p>
+
+  <h2>Как должно работать</h2>
+  <p>Кнопка остаётся на том же месте, но теперь открывает окно выгрузки. Окно сделано так же, как уже существующее окно «Export candidate data» в карточке кандидата: заголовок, поле выбора в выпадающем списке, кнопки «Cancel» и «Export». В списке «Period» рекрутер выбирает период.</p>
+  <div class="tablewrap"><table>
+    <tr><th>Вариант</th><th>Что попадает в архив</th></tr>
+    <tr><td>New since last export</td><td>CV, полученные после последней выгрузки этого пользователя по этой вакансии. Вариант по умолчанию, если пользователь уже выгружал CV.</td></tr>
+    <tr><td>Today, Yesterday</td><td>CV, полученные в этот день по часовому поясу пользователя.</td></tr>
+    <tr><td>Last 7 days, Last 30 days, Last 12 months</td><td>CV за период, включая сегодня.</td></tr>
+    <tr><td>Custom range</td><td>С даты по дату, обе даты включительно. Под списком появляются два поля даты.</td></tr>
+    <tr><td>All CVs</td><td>Как сейчас. Вариант по умолчанию при первой выгрузке.</td></tr>
+  </table></div>
+  <p>Рядом с каждым вариантом в списке видно количество CV. Под списком серым блоком написано, сколько CV попадёт в архив, отдельно файлы и ссылки, и когда была прошлая выгрузка. Если за выбранный период CV нет, вместо этого блока жёлтое предупреждение, и кнопка «Export» неактивна. Если кандидат прислал несколько версий CV, в архив попадает последняя из полученных в периоде. Имя архива содержит вакансию и период.</p>
+
+  <h2>Хранение CV и выгрузка по неактивным вакансиям</h2>
+  <p>Сейчас в системе нет срока хранения CV: файлы и записи о них хранятся, пока существует вакансия, и автоматически не удаляются. Выгрузка не зависит от состояния вакансии, поэтому CV можно выгрузить и по вакансии на паузе, и по завершённой, и по архивной, даже если она закрыта пять месяцев назад. Это и закрепляем: выгрузка доступна по вакансии в любом состоянии, пока вакансия есть в системе.</p>
+  <p>Кандидат, которого убрали с вакансии, сейчас тоже попадает в архив, потому что его CV не удаляется. Предлагаем такого кандидата в выгрузку не включать, а в окне выгрузки показывать, что такие CV пропущены.</p>
+  <p>Срок хранения CV нужно согласовать с клиентом отдельно. Если он появится, например 12 месяцев после закрытия вакансии, то после этого срока CV удаляются, а окно выгрузки по такой вакансии сообщает, что CV больше не хранятся.</p>
+
+  <h2>Бэкенд</h2>
+  <ol>
+    <li><code>GET /api/jobs/{job_id}/cvs/download</code> принимает <code>from</code> и <code>to</code> (даты включительно), <code>since_last_export=true</code> и <code>tz</code> для границ дней. Без параметров работает как сейчас.</li>
+    <li>Новый <code>GET /api/jobs/{job_id}/cvs/count</code> с теми же параметрами отдаёт <code>{files, links, last_export_at}</code> без скачивания.</li>
+    <li>Успешная выгрузка запоминает время для пары «пользователь и вакансия».</li>
+    <li>Неверный период возвращает 400 с понятным текстом, пустой результат 404 с текстом про период.</li>
+  </ol>
+
+  <h2>Фронтенд</h2>
+  <ol>
+    <li><code>JobDetailExportCvsButton</code> открывает окно вместо прямого скачивания. Окно собирается из тех же частей, что <code>CandidateProfileExportModal</code>: <code>ModalBackdrop</code>, поле с <code>UI_FIELD_LABEL</code>, кнопки <code>outline</code> и <code>primary</code>.</li>
+    <li>При смене периода окно запрашивает количество и показывает его вместе с датой прошлой выгрузки.</li>
+    <li>«Export» скачивает архив с выбранными параметрами и часовым поясом браузера, после чего окно закрывается с уведомлением, как сейчас.</li>
+  </ol>
+
+  <h2>Критерии приёмки</h2>
+  <ol>
+    <li>Выгрузка за «Today» содержит только CV, полученные сегодня по часовому поясу пользователя.</li>
+    <li>Свой период с 21 по 28 октября включает CV и 21-го, и 28-го числа.</li>
+    <li>Две выгрузки подряд в режиме «New since last export»: вторая показывает 0, и кнопка «Export» неактивна, пока не пришло новое CV.</li>
+    <li>У разных пользователей одной вакансии прошлая выгрузка считается отдельно.</li>
+    <li>Выгрузка «All CVs» совпадает с текущим поведением.</li>
+    <li>Количество в окне совпадает с содержимым архива.</li>
+    <li>CV выгружаются по вакансии на паузе, завершённой и архивной.</li>
+    <li>Кандидаты, убранные с вакансии, в архив не попадают.</li>
+  </ol>
+  <div class="note"><span>Прототип: страница вакансии на демо-данных, 14 CV за три недели, прошлая выгрузка 21 октября, сегодня 28 октября.</span><button class="btn primary sm" data-goto>Открыть прототип</button></div>
+</section>
+
+<!-- ============ CV EXPORT: PROTOTYPE ============ -->
+<section id="cv-proto" class="proto" hidden>
+  <div class="app">
+    <aside class="side" data-nav="Jobs"></aside>
+    <div class="shell">
+      <div class="topbar"><span class="date">Tue, 28 Oct 2026</span></div>
+      <div class="main">
+        <div class="crumbs">Jobs / 84</div>
+        <div class="subhead">
+          <div><h1>Senior Paid Media Specialist</h1><div class="t-300 sm" style="margin-top:6px">Acme Cloud</div><span class="status">Active</span></div>
+          <div class="actions"><button class="btn outline compact">Scoring criteria</button><button class="btn outline compact">Finish</button><button class="btn outline compact">Import candidates</button><button class="btn primary compact">Run sourcing manually</button></div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <div><span class="ttl">Candidates</span><span class="sub">96 · current stage counts · not today’s events</span></div>
+            <div class="right"><button class="btn outline compact" id="cv-open">Export available CVs</button><div class="vtoggle"><button class="on">Kanban</button><button>Table</button></div></div>
+          </div>
+          <div class="card-body"><div class="kanban" id="cv-kanban"></div></div>
+        </div>
+        <div class="demo">Нажмите «Export available CVs» в блоке «Candidates».</div>
+      </div>
+    </div>
+  </div>
+  <div class="backdrop" id="cv-modal" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="cv-title">
+      <div class="mhead"><div><div class="overline">Export</div><h2 id="cv-title">Export CVs</h2><p>Senior Paid Media Specialist · CVs received in the selected period.</p></div><button class="x" id="cv-close" aria-label="Close">×</button></div>
+      <div class="mbody">
+        <div class="fld"><label class="field-label" for="cv-period">Period</label><select class="control" id="cv-period"></select></div>
+        <div class="dates2" id="cv-range" hidden>
+          <div class="fld"><label class="field-label" for="cv-from">From</label><input class="control" type="date" id="cv-from" value="2026-10-21"></div>
+          <div class="fld"><label class="field-label" for="cv-to">To</label><input class="control" type="date" id="cv-to" value="2026-10-28"></div>
+        </div>
+        <div id="cv-count"></div>
+      </div>
+      <div class="mfoot"><button class="btn outline md" id="cv-cancel">Cancel</button><button class="btn primary md" id="cv-download">Export</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TRACKING: LOGIC ============ -->
+<section id="tr-doc" class="doc" hidden>
+  <div class="overline">Задача · бэкенд Влад, фронтенд Вадим</div>
+  <h1>Избранные кандидаты и их ответы</h1>
+  <p>Рекрутер отмечает звёздочкой кандидатов, которые ему интересны, и дальше не теряет их ответы: каждое сообщение избранного встаёт наверх «Needs attention», даже если агент уже ответил сам. Колокольчик показывает все новые сообщения кандидатов, и избранные в нём выделены.</p>
+
+  <h2>Как рекрутер работает сейчас</h2>
+  <p>Утром рекрутер выгружает CV, которые пришли за вчера, проверяет их и отбирает кандидатов с оценкой выше 50–60%. Этим кандидатам он задаёт уточняющие вопросы в переписке и ждёт ответов, а тех, кто ответил подходяще, переносит в чистовой шорт-лист и передаёт отделу продаж для общения с клиентом. Отметить кандидата в Tener сейчас нельзя: кандидатов много, и рекрутер не помнит, кому он уже написал и кто ему ответил.</p>
+
+  <h2>Что происходит после ручного сообщения рекрутера</h2>
+  <p>Когда рекрутер пишет кандидату вручную, агент не останавливается: переписка выходит из «Needs attention», агент продолжает её сам, а если кандидат молчит, напоминает ему каждые 2 дня, не больше 4 раз на этапе. Когда кандидат отвечает, агент читает ответ и, если может, отвечает сам, например благодарит и задаёт следующий вопрос. В «Needs attention» переписка попадает снова, только если агент не может ответить. Поэтому ответ на вопрос рекрутера сейчас легко пропустить: агент его уже обработал, и рекрутеру ничего не приходит. Избранные закрывают именно это: любое сообщение избранного кандидата становится для рекрутера непрочитанным, даже если агент на него уже ответил.</p>
+
+  <h2>Что делаем</h2>
+  <p>Отдельного списка избранных нет. Избранный кандидат остаётся там же, где рекрутер работает и сейчас, то есть в «Needs attention», на доске вакансии и в карточке, и везде отмечен звёздочкой. Так рекрутер не переключается между двумя похожими списками и не пропускает новых кандидатов, которых ещё не успел отметить.</p>
+  <ol>
+    <li><b>Как рекрутер отмечает кандидата.</b> Отметка ставится там, где рекрутер принимает решение о кандидате:
+      <ul>
+        <li>звёздочка на карточке на доске вакансии: у неотмеченных она бледная и проявляется при наведении, у избранных горит постоянно;</li>
+        <li>кнопка «Add to favorites» в шапке карточки кандидата;</li>
+        <li>звёздочка в строке «Needs attention», чтобы отметить кандидата прямо из пришедшего сообщения;</li>
+        <li>галочка «Add to favorites and track the reply» под полем ручного ответа, включённая по умолчанию. Рекрутер отмечает именно тех, кому задал вопрос, поэтому отправка ручного сообщения сама добавляет кандидата в избранные, если галочку не снять.</li>
+      </ul>
+      Повторное нажатие на звёздочку снимает отметку. Кандидат отмечается в рамках вакансии.</li>
+    <li><b>«Needs attention».</b> В блок попадает всё, на что агент не может ответить сам, как и сейчас, и вдобавок каждое непрочитанное сообщение избранного кандидата, даже если агент на него уже ответил. Избранные стоят сверху, выделены звёздочкой и цветом, а в подписи указано «Reply from a favorite · the agent has already answered». Переключатель «All / ★ Favorites» в шапке блока оставляет только избранных. Сообщение избранного уходит из блока, когда рекрутер открыл переписку или удалил строку. Время рядом с именем показывает, сколько сообщение ждёт рекрутера, и окрашено по зонам из палитры Tener: до суток серым, от суток до двух жёлтым, от двух суток и дольше красным. Время пишется словами, например «3 h ago» или «1 day ago», а не «1D», чтобы его нельзя было спутать с числом.</li>
+    <li><b>Колокольчик</b> в верхней панели показывает все новые сообщения кандидатов, а не только избранных, чтобы рекрутер видел и новых людей, которых ещё не отметил. Избранные стоят сверху со звёздочкой, а переключатель «All / ★ Favorites» в выпадающем списке оставляет только их. Под каждым сообщением видно, что с ним происходит: «Needs your reply», если агент ответить не может, или «The agent has already answered». Нажатие открывает карточку кандидата на «Conversation history», и сообщение считается прочитанным.</li>
+    <li><b>Доска вакансии.</b> Переключатель «All / ★ Favorites / Final shortlist» над доской и звёздочка на карточке. Статусы переписки на карточки не выводим, чтобы не перегружать их: кто ответил и сколько кандидат молчит, рекрутер видит в «Needs attention», в карточке кандидата и в утреннем письме.</li>
+    <li><b>Карточка кандидата.</b> В шапке кнопки «In favorites» и «Move to final shortlist». Над перепиской избранного видно, сколько он молчит и сколько напоминаний отправлено, и кнопка «Remind now»: агент отправляет напоминание сразу, соблюдая рабочие часы кандидата и лимиты отправки, а счётчик напоминаний растёт на одно.</li>
+    <li><b>Final shortlist</b> это чистовой список для передачи клиенту. Кандидат переносится в него кнопкой в карточке, на доске и в «Needs attention» он помечен «Final shortlist».</li>
+    <li><b>Утреннее письмо</b>: какие избранные ответили и кто из них молчит больше 2 дней.</li>
+  </ol>
+
+  <h2>Needs attention</h2>
+  <p>В блоке остаются улучшения из прошлой версии: имя кандидата, вакансия, цитата его сообщения, кнопка «Open conversation» и подпись «You» у ручных сообщений рекрутера. Кнопка удаления в варианте <code>danger-soft</code>.</p>
+
+  <h2>Бэкенд</h2>
+  <ol>
+    <li>Хранение избранных: вакансия, кандидат, список (<code>interested</code> или <code>final</code>), кто и когда добавил. Отметить, снять, перенести между списками. Отправка ручного сообщения с флагом «track» добавляет кандидата в <code>interested</code>.</li>
+    <li>В <code>/api/dashboard/alerts</code> отдавать, кроме нынешних элементов, непрочитанные сообщения избранных кандидатов с признаком <code>favorite</code> и признаком того, ответил ли уже агент. Для элемента переписки отдавать имя кандидата, <code>candidate_id</code>, вакансию и текст последнего сообщения. Признак ручного сообщения (<code>meta.manual</code>) уже есть.</li>
+    <li>Для карточек на доске: признак избранного и список (<code>interested</code> или <code>final</code>). Для карточки кандидата: время с последнего исходящего сообщения, число отправленных напоминаний и сколько их положено на этапе.</li>
+    <li>Отметка о прочтении переписки: её ставит открытие «Conversation history».</li>
+    <li>«Remind now»: поставить ближайшее напоминание в очередь сейчас, в тех же правилах, что и автоматическое.</li>
+    <li>Событие для колокольчика на каждое входящее сообщение любого кандидата с признаком <code>favorite</code> и утреннее письмо по избранным.</li>
+  </ol>
+
+  <h2>Фронтенд</h2>
+  <ol>
+    <li>Звёздочка на карточке кандидата на доске, в таблице, в шапке карточки кандидата и в строке «Needs attention».</li>
+    <li>Галочка «Add to favorites and track the reply» под полем ручного ответа.</li>
+    <li><code>ControlRoomAttentionCard</code>: избранные сверху со звёздочкой, переключатель «All / ★ Favorites», кандидат, вакансия, цитата, время с цветовыми зонами, «Open conversation», <code>danger-soft</code>. Подпись «You» в переписке.</li>
+    <li>Колокольчик в верхней панели со всеми новыми сообщениями и переключателем «All / ★ Favorites».</li>
+    <li>Переключатель «All / ★ Favorites / Final shortlist» на доске вакансии.</li>
+    <li>«Move to final shortlist» и «Remind now» в карточке кандидата.</li>
+  </ol>
+
+  <h2>Что решить</h2>
+  <ol>
+    <li>Избранные общие для всех рекрутеров организации или у каждого рекрутера свои.</li>
+    <li>Должен ли агент сам отвечать избранным кандидатам или для избранных он только напоминает, а отвечает рекрутер.</li>
+    <li>Нужна ли выгрузка CV только по «Final shortlist» для передачи отделу продаж.</li>
+    <li>Включать ли галочку «Add to favorites and track the reply» по умолчанию или оставить её выключенной.</li>
+  </ol>
+
+  <h2>Критерии приёмки</h2>
+  <ol>
+    <li>Рекрутер отмечает кандидата звёздочкой на доске, в карточке или в «Needs attention», и звёздочка появляется во всех трёх местах.</li>
+    <li>Ручное сообщение с включённой галочкой добавляет кандидата в избранные.</li>
+    <li>Любое входящее сообщение избранного кандидата, в том числе такое, на которое агент уже ответил, появляется наверху «Needs attention» со звёздочкой и на колокольчике.</li>
+    <li>Сообщение обычного кандидата, на которое агент ответил сам, появляется только на колокольчике; если агент ответить не может, оно появляется и в «Needs attention».</li>
+    <li>Открытие переписки снимает непрочитанное и в «Needs attention», и на колокольчике.</li>
+    <li>«Remind now» отправляет напоминание, счётчик напоминаний растёт.</li>
+    <li>«Move to final shortlist» переносит кандидата в «Final shortlist», после обновления страницы он остаётся там.</li>
+    <li>Переключатели «★ Favorites» на доске, в «Needs attention» и на колокольчике показывают только избранных.</li>
+  </ol>
+  <div class="note"><span>Прототип: Control Room с «Needs attention», где избранные стоят сверху со звёздочкой, колокольчик со всеми новыми сообщениями, доска вакансии со звёздочками и переключателем, карточка кандидата с галочкой «track the reply». Кнопка «Simulate reply» по очереди показывает ответ избранного, на который агент уже ответил, сообщение обычного кандидата, на которое агент ответить не может, и сообщение, на которое агент ответил сам.</span><button class="btn primary sm" data-goto>Открыть прототип</button></div>
+</section>
+
+<!-- ============ TRACKING: PROTOTYPE ============ -->
+<section id="tr-proto" class="proto" hidden>
+  <div class="app" id="tr-app">
+    <aside class="side" data-nav="Control Room"></aside>
+    <div class="shell">
+      <div class="topbar">
+        <button class="bell" id="tr-bell" aria-label="New messages"><svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><i id="tr-bellN"></i></button>
+        <span class="date">Tue, 28 Oct 2026</span>
+        <div class="pop" id="tr-pop" hidden></div>
+      </div>
+      <div class="main">
+        <div id="tr-v-control">
+          <div class="subhead"><div><h1>Control Room</h1></div></div>
+          <div class="kpis">
+            <div class="kpi"><span class="t-300 xs">Active jobs</span><b>3</b></div>
+            <div class="kpi"><span class="t-300 xs">Blocked</span><b style="color:var(--red-600)">0</b></div>
+            <div class="kpi"><span class="t-300 xs">Pending review</span><b style="color:var(--amber-600)">1</b></div>
+            <div class="kpi"><span class="t-300 xs">Candidates in pipeline</span><b>214</b></div>
+          </div>
+          <div class="card">
+            <div class="att-head"><span class="ttl">Needs attention</span><span class="t-300 sm" id="tr-cnt"></span>
+              <div class="actions" style="margin-left:auto"><div class="vtoggle" id="tr-attTabs"></div><button class="btn danger sm">Delete all</button></div></div>
+            <div class="att-list" id="tr-list"></div>
+          </div>
+        </div>
+        <div id="tr-v-job" hidden>
+          <div class="crumbs">Jobs / <span id="tr-jobId"></span></div>
+          <div class="subhead"><div><h1 id="tr-jobTitle"></h1><div class="t-300 sm" style="margin-top:6px">Acme Cloud</div><span class="status">Active</span></div>
+            <div class="actions"><button class="btn outline compact">Scoring criteria</button><button class="btn outline compact">Import candidates</button></div></div>
+          <div class="card"><div class="card-head"><div><span class="ttl">Candidates</span><span class="sub">current stage counts · not today’s events</span></div>
+            <div class="right"><div class="vtoggle" id="tr-boardTabs"></div><button class="btn outline compact">Export available CVs</button><div class="vtoggle"><button class="on">Kanban</button><button>Table</button></div></div></div>
+            <div class="card-body"><div class="kanban" id="tr-kanban"></div></div></div>
+        </div>
+        <div id="tr-v-card" hidden>
+          <div class="ph"><div class="l"><button class="backarrow" id="tr-back" aria-label="Back">←</button><div><h1 id="tr-pName"></h1><div class="t-400 sm" id="tr-pJob"></div></div></div>
+            <div class="actions"><button class="btn outline sm" id="tr-pStar"></button><button class="btn outline sm" id="tr-pFinal" hidden></button><span class="adminv">Admin view</span><button class="btn secondary sm">Export data</button></div></div>
+          <div class="pgrid">
+            <div class="rail"><div class="bigav" id="tr-av"></div><div class="nm" id="tr-rName"></div><div class="t-300 xs" id="tr-rHead" style="margin-top:6px"></div>
+              <dl><dt>Score</dt><dd id="tr-rScore"></dd><dt>Status updated</dt><dd id="tr-rUpd"></dd><dt>Stage</dt><dd id="tr-rStage"></dd></dl></div>
+            <div style="min-width:0">
+              <div class="psec"><h3>Interview</h3><div class="t-300 sm">Interview not started</div></div>
+              <div class="psec" id="tr-convsec"><h3>Conversation history</h3><div id="tr-conv"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="demo">Демо: <button class="btn outline sm" id="tr-sim">Simulate reply</button> по очереди пишут кандидаты: сначала избранные, которых рекрутер ждёт, потом обычные. Ответ избранного встаёт наверх Needs attention со звёздочкой, даже если агент уже ответил сам; обычный кандидат попадает в Needs attention, только если агент не может ответить, а на колокольчике видны все.</div>
+      </div>
+    </div>
+  </div>
+  <div class="mail">
+    <div class="overline">Пример утреннего письма рекрутеру · вне интерфейса Tener</div>
+    <div class="digest" id="tr-digest"></div>
+  </div>
+</section>
+
+<div class="toast" id="toast" hidden></div>
+
+<script>
+(function () {
+  const $ = id => document.getElementById(id);
+  function toast(t) { const el = $('toast'); el.textContent = t; el.hidden = false; clearTimeout(el._t); el._t = setTimeout(() => { el.hidden = true; }, 3500); }
+  const icons = {
+    'Control Room': '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>',
+    'Jobs': '<svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>',
+    'Freya': '<svg viewBox="0 0 24 24"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/></svg>',
+    'Freya intake v2': '<svg viewBox="0 0 24 24"><path d="M14 3H6v18h12V7z"/><path d="M9 15l6-6 2 2-6 6H9z"/></svg>',
+    'Users': '<svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3 3-5 6-5s6 2 6 5"/><path d="M16 4a3 3 0 0 1 0 6M21 20c0-2-1-4-3-5"/></svg>',
+    'Settings': '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/></svg>',
+  };
+  const link = (l, on) => `<a class="${on ? 'on' : ''}" data-link="${l}">${icons[l]}<span>${l}</span></a>`;
+  document.querySelectorAll('.side[data-nav]').forEach(s => {
+    const a = s.dataset.nav;
+    s.innerHTML = `<header><span class="logo">T</span><b>Tener</b><span class="role">admin</span></header><section>
+      <div class="navg"><p>Operate</p><nav>${['Control Room', 'Jobs', 'Freya', 'Freya intake v2'].map(l => link(l, l === a)).join('')}</nav></div>
+      <div class="navg"><p>Platform</p><nav>${['Users', 'Settings'].map(l => link(l, l === a)).join('')}</nav></div></section>`;
+  });
+
+  // ---------- page navigation ----------
+  let feature = 'cv', mode = 'doc';
+  function show() {
+    $('cv-doc').hidden = !(feature === 'cv' && mode === 'doc');
+    $('cv-proto').hidden = !(feature === 'cv' && mode === 'proto');
+    $('tr-doc').hidden = !(feature === 'tracking' && mode === 'doc');
+    $('tr-proto').hidden = !(feature === 'tracking' && mode === 'proto');
+    document.querySelectorAll('[data-feature]').forEach(b => b.classList.toggle('on', b.dataset.feature === feature));
+    document.querySelectorAll('[data-mode]').forEach(b => b.classList.toggle('on', b.dataset.mode === mode));
+    window.scrollTo(0, 0);
+  }
+  document.querySelectorAll('[data-feature]').forEach(b => b.onclick = () => { feature = b.dataset.feature; show(); });
+  document.querySelectorAll('[data-mode]').forEach(b => b.onclick = () => { mode = b.dataset.mode; show(); });
+  document.querySelectorAll('[data-goto]').forEach(b => b.onclick = () => { mode = 'proto'; show(); });
+  const h = (location.hash || '').slice(1);
+  if (h === 'tracking') feature = 'tracking';
+  if (h === 'cv' || h === 'tracking') show();
+
+  const ini = n => n.split(' ').map(s => s[0]).join('').slice(0, 2).toUpperCase();
+  const COLS = [['sourced', 'Sourced', 'var(--slate-400)'], ['connect_sent', 'Connect Sent', 'var(--sky-300)'], ['responded', 'Responded', 'var(--sky-400)'],
+    ['cv_received', 'CV Received', 'var(--purple-600)'], ['must_have_approved', 'Must Have Approved', 'var(--indigo-500)'],
+    ['interview_pending', 'Pending Interview', 'var(--purple-600)'], ['interview_completed', 'Interview Completed', 'var(--green-600)']];
+
+  // ---------- CV export ----------
+  const cvBoard = { sourced: [['Olena Shevchuk', 64]], connect_sent: [['Andrii Kovalenko', 71]], responded: [['Taras Melnyk', 78]], cv_received: [['Oksana Bondar', 82, '26.10']], must_have_approved: [['Nadiia Lysenko', 88, '24.10']], interview_pending: [['Roman Tkachuk', 90, '22.10']], interview_completed: [] };
+  const counts0 = { sourced: 41, connect_sent: 31, responded: 20, cv_received: 9, must_have_approved: 5, interview_pending: 3, interview_completed: 1 };
+  $('cv-kanban').innerHTML = COLS.map(([k, l, c]) => `<div class="kcol"><div class="kcol-h"><i style="background:${c}"></i><span>${l}</span><em>${counts0[k]}</em></div><div class="kcol-b">${
+    cvBoard[k].length ? cvBoard[k].map(([n, s, d], i) => `<div class="kc"><div class="top"><span class="av">${ini(n)}</span><div><div class="nm">${n}</div><div class="id">C-${3100 + s * 7 + i}</div></div><span class="score">${s}</span></div>${d ? `<div class="dates"><span>CV received</span><span>${d}</span></div>` : ''}<div class="foot"><span class="badge">${l}</span></div></div>`).join('') : '<div class="kempty">No candidates</div>'}</div></div>`).join('');
+
+  const TODAY = '2026-10-28';
+  const cvs = [['2026-10-08','file'],['2026-10-10','file'],['2026-10-13','link'],['2026-10-15','file'],['2026-10-17','file'],
+    ['2026-10-20','file'],['2026-10-22','file'],['2026-10-24','file'],['2026-10-24','link'],['2026-10-24','file'],
+    ['2026-10-26','file'],['2026-10-27','file'],['2026-10-28','file'],['2026-10-28','link']];
+  let lastExport = '2026-10-21';
+  const shift = (d, n) => { const x = new Date(d + 'T00:00:00Z'); x.setUTCDate(x.getUTCDate() + n); return x.toISOString().slice(0, 10); };
+  const fmt = d => d.split('-').reverse().join('.');
+  const options = [
+    { id: 'new', label: 'New since last export', range: () => [shift(lastExport, 1), TODAY] },
+    { id: 'today', label: 'Today', range: () => [TODAY, TODAY] },
+    { id: 'yesterday', label: 'Yesterday', range: () => [shift(TODAY, -1), shift(TODAY, -1)] },
+    { id: 'd7', label: 'Last 7 days', range: () => [shift(TODAY, -6), TODAY] },
+    { id: 'd30', label: 'Last 30 days', range: () => [shift(TODAY, -29), TODAY] },
+    { id: 'm12', label: 'Last 12 months', range: () => [shift(TODAY, -364), TODAY] },
+    { id: 'custom', label: 'Custom range', range: () => [$('cv-from').value, $('cv-to').value] },
+    { id: 'all', label: 'All CVs', range: () => ['0000-01-01', '9999-12-31'] },
+  ];
+  function counts(id) {
+    const [a, b] = options.find(o => o.id === id).range();
+    const hit = cvs.filter(([d]) => d >= a && d <= b);
+    return { files: hit.filter(x => x[1] === 'file').length, links: hit.filter(x => x[1] === 'link').length, a, b };
+  }
+  let sel = 'new';
+  function cvRender() {
+    $('cv-period').innerHTML = options.map(o => { const c = counts(o.id); return `<option value="${o.id}"${o.id === sel ? ' selected' : ''}>${o.label}${o.id === 'custom' ? '' : ` (${c.files + c.links})`}</option>`; }).join('');
+    $('cv-range').hidden = sel !== 'custom';
+    const c = counts(sel), n = c.files + c.links;
+    $('cv-count').innerHTML = n === 0
+      ? `<div class="warn">No CVs received in this period. Last export: ${fmt(lastExport)}.</div>`
+      : `<div class="info"><b>${n} CVs</b> will be exported: ${c.files} files, ${c.links} links${sel === 'all' ? '' : `, received ${fmt(c.a)} to ${fmt(c.b)}`}.<br><span class="xs t-300">Last export: ${fmt(lastExport)}</span></div>`;
+    $('cv-download').disabled = n === 0;
+  }
+  $('cv-period').onchange = e => { sel = e.target.value; cvRender(); };
+  $('cv-open').onclick = () => { sel = 'new'; cvRender(); $('cv-modal').hidden = false; };
+  ['cv-close', 'cv-cancel'].forEach(id => $(id).onclick = () => { $('cv-modal').hidden = true; });
+  ['cv-from', 'cv-to'].forEach(id => $(id).onchange = cvRender);
+  $('cv-modal').onclick = e => { if (e.target === $('cv-modal')) $('cv-modal').hidden = true; };
+  $('cv-download').onclick = () => {
+    const c = counts(sel), n = c.files + c.links;
+    const name = sel === 'all' ? 'cv_senior-paid-media.zip' : `cv_senior-paid-media_${c.a}_${c.b}.zip`;
+    lastExport = TODAY; $('cv-modal').hidden = true;
+    toast(`${n} CVs exported · ${name}`);
+  };
+
+  // ---------- Favorites and Needs attention ----------
+  const PM = 'Senior Paid Media Specialist', CTO = 'Co-Founder & CTO';
+  const jobIds = { [PM]: 84, [CTO]: 85 };
+  const NUDGES = 4;
+  const cands = [
+    { id: 1, name: 'Taras Melnyk', job: PM, col: 'responded', score: 78, hours: 2, attn: true, unread: true,
+      reason: 'Employer question the agent cannot answer',
+      msgs: [['agent', 'Це стратегічна in-house роль: формувати paid media стратегію та оцінювати роботу агенції.'],
+        ['in', 'Звучить цікаво, готовий поговорити. Підкажіть, як оформлюється співпраця в Україні: ФОП чи штат?']] },
+    { id: 2, name: 'Oksana Bondar', job: PM, col: 'cv_received', score: 82, hours: 3, fav: 'interested', unread: true,
+      msgs: [['mine', 'Оксано, дякую за CV. Скільки з вашого досвіду припадає на B2B SaaS і який місячний бюджет ви вели?'],
+        ['in', 'Майже весь досвід у B2B SaaS, останні два роки вела 40–60 тис. EUR на місяць у Google та LinkedIn Ads.'],
+        ['agent', 'Дякую, Оксано! Передаю рекрутеру, він повернеться з наступними кроками.']] },
+    { id: 3, name: 'Daniel Ortiz', job: CTO, col: 'responded', score: 74, hours: 26, attn: true,
+      reason: 'Candidate asks to talk to a person',
+      msgs: [['agent', 'Thanks Daniel. Could you share when you could start?'], ['in', 'Mid December. Before we go further, can I speak with the founders directly?']] },
+    { id: 4, name: 'Maksym Hrytsenko', job: PM, col: 'must_have_approved', score: 71, hours: 30, fav: 'interested', nudges: 0,
+      msgs: [['agent', 'Дякую за CV, Максиме.'], ['mine', 'Максиме, чи працювали ви з атрибуцією в HubSpot? І який мінімальний термін виходу?']] },
+    { id: 5, name: 'Nadiia Lysenko', job: PM, col: 'interview_pending', score: 88, hours: 20, fav: 'final', unread: true,
+      msgs: [['mine', 'Надіє, чи готові до співбесіди з клієнтом цього тижня?'], ['in', 'Так, будь-який день після 14:00.']] },
+    { id: 6, name: 'Yulia Kravets', job: PM, col: 'cv_received', score: 64, hours: 52, fav: 'interested', nudges: 1,
+      msgs: [['mine', 'Юліє, чи працювали ви з метриками CPL, CPQL, MQL або SQL?'], ['agent', 'Юліє, нагадую про питання вище, буду вдячна за коротку відповідь.']] },
+    { id: 7, name: 'Roman Tkachuk', job: PM, col: 'interview_pending', score: 90, hours: 1, unread: true,
+      msgs: [['agent', 'Романе, надсилаю посилання на інтервʼю.'], ['in', 'Дякую, четвер мені підходить.'], ['agent', 'Чудово, Романе, підтверджую четвер.']] },
+    { id: 8, name: 'Andrii Kovalenko', job: PM, col: 'connect_sent', score: 71, hours: 70, msgs: [['agent', 'Hi Andrii, I am reaching out about a Senior Paid Media role.']] },
+    { id: 9, name: 'Olena Shevchuk', job: PM, col: 'sourced', score: 64, hours: 90, msgs: [] },
+  ];
+  const replies = {
+    4: ['Так, два роки налаштовувала атрибуцію в HubSpot. Вийти можу за 2 тижні.', 'Дякую, Максиме! Передаю рекрутеру.'],
+    6: ['Так, щотижня дивилась CPQL і SQL, за ними розподіляла бюджет між каналами.', 'Дякую, Юліє, це дуже корисно.'],
+  };
+  const incoming = [
+    { id: 1, text: 'І ще: чи є можливість працювати частково віддалено?', reason: 'Employer question the agent cannot answer' },
+    { id: 8, text: 'Sounds interesting, please send me the details.', agent: 'Great, Andrii! Here is the role overview and the next steps.' },
+  ];
+  let current = null, back = 'control', attTab = 'all', bellTab = 'all', boardTab = 'all';
+  const lastIn = c => [...c.msgs].reverse().find(m => m[0] === 'in');
+  const lastMsg = c => c.msgs[c.msgs.length - 1];
+  const lastIdx = (c, k) => c.msgs.map(m => m[0]).lastIndexOf(k);
+  const waiting = c => c.msgs.length > 0 && (lastIdx(c, 'mine') >= 0 ? lastIdx(c, 'in') < lastIdx(c, 'mine') : lastIdx(c, 'in') < 0);
+  const agoTxt = hh => hh < 1 ? 'just now' : dur(hh) + ' ago';
+  // colour zones for waiting time: up to a day neutral, 1 to 2 days amber, 2 days and more red
+  const zone = hh => hh >= 48 ? 'late' : hh >= 24 ? 'soon' : '';
+  const age = hh => `<span class="age ${zone(hh)}">${agoTxt(hh)}</span>`;
+  const dur = hh => hh < 24 ? Math.max(hh, 1) + ' h' : Math.floor(hh / 24) + (hh < 48 ? ' day' : ' days');
+  const favs = () => cands.filter(c => c.fav);
+  const STAR_ON = '★', STAR_OFF = '☆';
+  const favFirst = (a, b) => (b.fav ? 1 : 0) - (a.fav ? 1 : 0) || a.hours - b.hours;
+  const tabs = (key, list, on) => list.map(([v, l]) => `<button data-${key}="${v}" class="${v === on ? 'on' : ''}">${l}</button>`).join('');
+  const starBtn = c => `<button class="star${c.fav ? ' on' : ''}" data-star="${c.id}" aria-label="${c.fav ? 'Remove from favorites' : 'Add to favorites'}">${c.fav ? STAR_ON : STAR_OFF}</button>`;
+  const delIcon = '<svg viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>';
+
+  // Needs attention: what the agent cannot answer, plus every unread message from a favorite
+  function trList() {
+    const all = cands.filter(c => c.attn || (c.fav && c.unread)).sort(favFirst);
+    const nFav = all.filter(c => c.fav).length;
+    const items = attTab === 'fav' ? all.filter(c => c.fav) : all;
+    $('tr-attTabs').innerHTML = tabs('att', [['all', `All (${all.length + 1})`], ['fav', `★ Favorites (${nFav})`]], attTab);
+    $('tr-cnt').textContent = (all.length + 1) + ' items' + (nFav ? ' · ' + nFav + ' from favorites' : '');
+    $('tr-list').innerHTML = items.map(c => {
+      const why = c.attn ? c.reason : 'Reply from a favorite' + (lastMsg(c)[0] === 'agent' ? ' · the agent has already answered' : '');
+      return `<div class="att${c.fav ? ' fav' : ''}">${starBtn(c)}<div class="bd">
+        <div><span class="t">${c.unread ? '<span class="dot"></span>' : ''}${c.name} · ${c.job}</span>${c.fav === 'final' ? '<span class="tchip me" title="Ready to hand over to the client">Final shortlist</span>' : ''}${age(c.hours)}</div>
+        <div class="m">${why}</div>
+        <div class="quote"><span class="ql">«${lastIn(c)[1]}»</span></div></div>
+        <div class="att-btns"><button class="btn danger md icon" aria-label="Remove attention item" data-del="${c.id}">${delIcon}</button>
+        <button class="btn outline comfortable" data-job="${c.id}">Open</button>
+        <button class="btn primary comfortable" data-open="${c.id}">Open conversation</button></div></div>`;
+    }).join('')
+      + (attTab === 'all' ? `<div class="att other"><div class="ic">·</div><div class="bd"><div><span class="t">Co-Founder &amp; CTO</span><span class="age">5 h ago</span></div><div class="m">Sourcing found no new candidates in the last 2 days.</div></div><div class="att-btns"><button class="btn danger md icon" aria-label="Remove attention item">${delIcon}</button><button class="btn outline comfortable" data-jobname="Co-Founder &amp; CTO">Open</button></div></div>`
+        : (items.length ? '' : '<div class="empty">No new replies from favorites.</div>'));
+  }
+  // Bell: every unread candidate message, favorites on top
+  function trBell() {
+    const all = cands.filter(c => c.unread && lastIn(c)).sort(favFirst);
+    const items = bellTab === 'fav' ? all.filter(c => c.fav) : all;
+    $('tr-bellN').textContent = all.length || ''; $('tr-bellN').hidden = !all.length;
+    $('tr-pop').innerHTML = '<div class="ph2">New messages</div>'
+      + `<div class="tabs"><div class="vtoggle">${tabs('bell', [['all', `All (${all.length})`], ['fav', `★ Favorites (${all.filter(c => c.fav).length})`]], bellTab)}</div></div>`
+      + (items.length ? items.map(c => `<div class="it" data-open="${c.id}">${c.fav ? '<span class="star on">★</span>' : ''}<b>${c.name}</b> · ${c.job}<div class="t-300 xs">${lastIn(c)[1].slice(0, 80)}</div>
+          <div class="who2">${c.attn ? 'Needs your reply' : lastMsg(c)[0] === 'agent' ? 'The agent has already answered' : 'Waiting for the agent'}</div></div>`).join('') : '<div class="it t-300">No new messages</div>');
+  }
+  function trBoard() {
+    const title = $('tr-jobTitle').textContent || PM;
+    const inJob = cands.filter(c => c.job === title);
+    const nF = inJob.filter(c => c.fav).length, nS = inJob.filter(c => c.fav === 'final').length;
+    $('tr-boardTabs').innerHTML = tabs('board', [['all', 'All'], ['fav', `★ Favorites (${nF})`], ['final', `Final shortlist (${nS})`]], boardTab);
+    $('tr-kanban').innerHTML = COLS.map(([k, l, col]) => {
+      const cs = inJob.filter(c => c.col === k && (boardTab === 'all' || (boardTab === 'fav' ? c.fav : c.fav === 'final')));
+      return `<div class="kcol"><div class="kcol-h"><i style="background:${col}"></i><span>${l}</span><em>${cs.length}</em></div><div class="kcol-b">${
+        cs.length ? cs.map(c => `<div class="kc" data-open="${c.id}"><div class="top"><span class="av">${ini(c.name)}</span><div><div class="nm">${c.unread ? '<span class="dot"></span>' : ''}${c.name}</div><div class="id">C-${3100 + c.id * 17}</div></div><span class="score">${c.score}</span></div>
+          <div class="foot"><span class="badge">${l}</span>${c.fav === 'final' ? '<span class="tchip me" title="Ready to hand over to the client">Final shortlist</span>' : ''}${starBtn(c)}</div></div>`).join('') : '<div class="kempty">No candidates</div>'}</div></div>`;
+    }).join('');
+  }
+  function trCard() {
+    const c = cands.find(x => x.id === current); if (!c) return;
+    $('tr-pName').textContent = c.name; $('tr-pJob').textContent = c.job + ' · Acme Cloud';
+    $('tr-pStar').textContent = c.fav ? STAR_ON + ' In favorites' : STAR_OFF + ' Add to favorites';
+    $('tr-pFinal').hidden = !c.fav; $('tr-pFinal').textContent = c.fav === 'final' ? 'Back to interested' : 'Move to final shortlist';
+    $('tr-av').textContent = ini(c.name); $('tr-rName').textContent = c.name; $('tr-rHead').textContent = c.job === PM ? 'Paid media specialist · Kyiv' : 'Engineering lead · Lisbon';
+    $('tr-rScore').textContent = c.score; $('tr-rUpd').textContent = agoTxt(c.hours); $('tr-rStage').textContent = COLS.find(x => x[0] === c.col)[1];
+    const bar = c.attn ? `Needs attention: ${c.reason}. After your reply the agent continues the conversation and follow-ups on its own.`
+      : c.fav ? (waiting(c) ? `In favorites · waiting ${dur(c.hours)}${c.nudges ? `, the agent reminded ${c.nudges} of ${NUDGES}` : ''}. The agent reminds every 2 days, up to ${NUDGES} times; the reply will come to Needs attention and your bell.`
+        : `In favorites. Every message from ${c.name.split(' ')[0]} comes to Needs attention with ★ and to your bell, even when the agent has already replied.`) : '';
+    const remind = c.fav && !c.attn && waiting(c) ? `<button class="btn outline sm" data-remind="${c.id}"${(c.nudges || 0) >= NUDGES ? ' disabled' : ''}>Remind now</button>` : '';
+    $('tr-conv').innerHTML = `<div class="sm">Conversation #${9800 + c.id} · ${c.attn ? 'needs attention' : 'active'}</div>
+      ${bar ? `<div class="tbar"><span class="txt">${bar}</span>${remind}</div>` : ''}
+      <div class="chan"><span class="in">in</span><span>LinkedIn · Outreach &amp; Coordination</span><hr></div>
+      <div class="msgs" id="tr-msgs">${c.msgs.map(([k, t]) => {
+        const cls = k === 'in' ? '' : k === 'agent' ? 'out' : 'mine';
+        const who = k === 'in' ? c.name : k === 'agent' ? 'Reed AI · Talent Scout' : 'You';
+        const ii = k === 'in' ? ini(c.name) : k === 'agent' ? 'RD' : 'YOU';
+        return `<div class="bub ${cls}"><div class="col"><div class="who">${who} · <span>28 Oct</span></div><div class="tx">${t}</div></div><div class="ini">${ii}</div></div>`;
+      }).join('') || '<div class="t-300 sm">No messages yet.</div>'}</div>
+      <div class="reply"><textarea id="tr-txt" rows="3" placeholder="Write a manual LinkedIn reply…" aria-label="Manual reply"></textarea>
+        <div class="row">${c.fav ? '<span class="mono t-300" style="font-size:10px">Ctrl/⌘ + Enter to send</span>' : '<label class="trk"><input type="checkbox" id="tr-trk" checked> ★ Add to favorites and track the reply</label>'}<button class="btn primary sm" data-act="send">Send message</button></div></div>`;
+    const m = $('tr-msgs'); m.scrollTop = m.scrollHeight;
+  }
+  function trDigest() {
+    const rep = favs().filter(c => c.unread), wait = favs().filter(c => !c.unread && waiting(c) && c.hours >= 48);
+    $('tr-digest').innerHTML = `<div class="t-300 xs">From: Tener · To: recruiter@acme.example · 28 Oct, 9:00</div><h3>${rep.length} of your favorites replied</h3>
+      <ul>${rep.map(c => `<li><b>${c.name}</b>, ${c.job}: «${lastIn(c)[1].slice(0, 80)}${lastIn(c)[1].length > 80 ? '…' : ''}»</li>`).join('') || '<li>No new replies</li>'}</ul>
+      <div class="overline">No reply for 2+ days</div><ul>${wait.map(c => `<li>${c.name}, ${c.job}: ${dur(c.hours)}${c.nudges ? `, agent reminded ${c.nudges} of ${NUDGES}` : ''}</li>`).join('') || '<li>Nobody</li>'}</ul>
+      <span class="btn primary sm">Open Control Room</span>`;
+  }
+  function trAll() { trList(); trBell(); trBoard(); trCard(); trDigest(); }
+  function go(v) {
+    ['control', 'job', 'card'].forEach(x => { $('tr-v-' + x).hidden = x !== v; });
+    const nav = v === 'job' || (v === 'card' && back === 'job') ? 'Jobs' : 'Control Room';
+    document.querySelectorAll('#tr-app .side a').forEach(a => a.classList.toggle('on', a.dataset.link === nav));
+  }
+  function openCard(id) {
+    back = $('tr-v-job').hidden ? 'control' : 'job';
+    current = id; const c = cands.find(x => x.id === id); c.unread = false;
+    go('card'); trAll(); $('tr-convsec').scrollIntoView({ block: 'start', behavior: 'smooth' });
+  }
+  function openJob(title) { $('tr-jobTitle').textContent = title; $('tr-jobId').textContent = jobIds[title] || ''; go('job'); trBoard(); }
+  function toggleFav(c) {
+    if (c.fav) { c.fav = null; toast(c.name + ' removed from favorites'); }
+    else { c.fav = 'interested'; c.nudges = c.nudges || 0; toast(c.name + ' added to favorites · replies will come to Needs attention'); }
+    trAll();
+  }
+  function send() {
+    const c = cands.find(x => x.id === current); if (!c) return;
+    const t = $('tr-txt').value.trim() || 'Дякую! Ще одне питання: який мінімальний термін виходу?';
+    const track = !c.fav && $('tr-trk') && $('tr-trk').checked;
+    if (track) { c.fav = 'interested'; }
+    c.msgs.push(['mine', t]); c.attn = false; c.unread = false; c.hours = 0; c.nudges = 0; trAll();
+    toast(c.fav ? (track ? 'Message sent · added to favorites, the reply will come to Needs attention' : 'Message sent · waiting for the candidate, the agent will remind if needed') : 'Message sent · the agent continues the conversation');
+  }
+  $('tr-app').addEventListener('click', e => {
+    const nav = e.target.closest('.side a'); if (nav) { if (nav.dataset.link === 'Control Room') go('control'); if (nav.dataset.link === 'Jobs') openJob(PM); return; }
+    const st = e.target.closest('[data-star]'); if (st) { e.stopPropagation(); toggleFav(cands.find(x => x.id === +st.dataset.star)); return; }
+    const at = e.target.closest('[data-att]'); if (at) { attTab = at.dataset.att; trList(); return; }
+    const bt = e.target.closest('[data-bell]'); if (bt) { bellTab = bt.dataset.bell; trBell(); return; }
+    const bd = e.target.closest('[data-board]'); if (bd) { boardTab = bd.dataset.board; trBoard(); return; }
+    const rm = e.target.closest('[data-remind]'); if (rm) {
+      const c = cands.find(x => x.id === +rm.dataset.remind);
+      c.nudges = (c.nudges || 0) + 1; c.msgs.push(['agent', `${c.name.split(' ')[0]}, нагадую про питання вище. Буду вдячна за відповідь, коли буде хвилинка.`]); c.hours = 0;
+      trAll(); toast(`Reminder sent to ${c.name} · ${c.nudges} of ${NUDGES}`); return; }
+    const op = e.target.closest('[data-open]'); if (op) { $('tr-pop').hidden = true; openCard(+op.dataset.open); return; }
+    const jb = e.target.closest('[data-job]'); if (jb) { openJob(cands.find(x => x.id === +jb.dataset.job).job); return; }
+    const jn = e.target.closest('[data-jobname]'); if (jn) { openJob(jn.dataset.jobname.replace('&amp;', '&')); return; }
+    const del = e.target.closest('[data-del]'); if (del) { const c = cands.find(x => x.id === +del.dataset.del); c.attn = false; if (c.fav) c.unread = false; trAll(); toast('Attention item removed'); return; }
+    const a = e.target.closest('[data-act="send"]'); if (a) { send(); return; }
+  });
+  $('tr-app').addEventListener('keydown', e => { if (e.target.id === 'tr-txt' && e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); send(); } });
+  $('tr-pStar').onclick = () => toggleFav(cands.find(x => x.id === current));
+  $('tr-pFinal').onclick = () => {
+    const c = cands.find(x => x.id === current); c.fav = c.fav === 'final' ? 'interested' : 'final';
+    trAll(); toast(c.name + (c.fav === 'final' ? ' moved to Final shortlist' : ' moved back to Interested'));
+  };
+  $('tr-back').onclick = () => { if (back === 'job') openJob(cands.find(x => x.id === current).job); else go('control'); };
+  $('tr-bell').onclick = e => { e.stopPropagation(); $('tr-pop').hidden = !$('tr-pop').hidden; };
+  $('tr-sim').onclick = () => {
+    const c = favs().find(x => waiting(x) && replies[x.id]);
+    if (c) {
+      const [txt, agent] = replies[c.id]; delete replies[c.id];
+      c.msgs.push(['in', txt], ['agent', agent]); c.unread = true; c.hours = 0; trAll();
+      toast(`${c.name} replied · the agent answered, the reply is on top of Needs attention with ★`); return;
+    }
+    const n = incoming.shift();
+    if (n) {
+      const x = cands.find(y => y.id === n.id); x.msgs.push(['in', n.text]); x.unread = true; x.hours = 0;
+      if (n.agent) { x.msgs.push(['agent', n.agent]); trAll(); toast(x.name + ' replied · the agent answered, so it is only on the bell'); return; }
+      x.reason = n.reason; x.attn = true; trAll(); toast(x.name + ' is not a favorite · the agent cannot answer, so Needs attention and the bell'); return;
+    }
+    toast('No more demo messages.');
+  };
+  trAll();
+})();
+</script>
