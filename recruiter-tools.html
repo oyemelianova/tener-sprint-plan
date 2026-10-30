@@ -394,15 +394,9 @@
         <li>галочка «Add to favorites and track the reply» под полем ручного ответа, включённая по умолчанию. Рекрутер отмечает именно тех, кому задал вопрос, поэтому отправка ручного сообщения сама добавляет кандидата в избранные, если галочку не снять.</li>
       </ul>
       Повторное нажатие на звёздочку снимает отметку. Кандидат отмечается в рамках вакансии.</li>
-    <li><b>«Needs attention».</b> В блок попадает всё, на что агент не может ответить сам, как и сейчас, и вдобавок каждое непрочитанное сообщение избранного кандидата, даже если агент на него уже ответил. Избранные стоят сверху, выделены звёздочкой и цветом, рядом с именем стоит тот же статус переписки, что и на доске («New reply» или «Replied»), а в подписи указано «Reply from a favorite · the agent has already answered». Переключатель «All / ★ Favorites» в шапке блока оставляет только избранных. Сообщение избранного уходит из блока, когда рекрутер открыл переписку или удалил строку.</li>
+    <li><b>«Needs attention».</b> В блок попадает всё, на что агент не может ответить сам, как и сейчас, и вдобавок каждое непрочитанное сообщение избранного кандидата, даже если агент на него уже ответил. Избранные стоят сверху, выделены звёздочкой и цветом, а в подписи указано «Reply from a favorite · the agent has already answered». Переключатель «All / ★ Favorites» в шапке блока оставляет только избранных. Сообщение избранного уходит из блока, когда рекрутер открыл переписку или удалил строку. Время рядом с именем показывает, сколько сообщение ждёт рекрутера, и окрашено по зонам из палитры Tener: до суток серым, от суток до двух жёлтым, от двух суток и дольше красным. Время пишется словами, например «3 h ago» или «1 day ago», а не «1D», чтобы его нельзя было спутать с числом.</li>
     <li><b>Колокольчик</b> в верхней панели показывает все новые сообщения кандидатов, а не только избранных, чтобы рекрутер видел и новых людей, которых ещё не отметил. Избранные стоят сверху со звёздочкой, а переключатель «All / ★ Favorites» в выпадающем списке оставляет только их. Под каждым сообщением видно, что с ним происходит: «Needs your reply», если агент ответить не может, или «The agent has already answered». Нажатие открывает карточку кандидата на «Conversation history», и сообщение считается прочитанным.</li>
-    <li><b>Доска вакансии.</b> Переключатель «All / ★ Favorites / Final shortlist» над доской. У избранных на карточке виден статус переписки:
-      <ul>
-        <li>«New reply», если последнее сообщение от кандидата и ему ещё никто не ответил;</li>
-        <li>«Replied», если на сообщение кандидата уже ответили, рекрутер или агент;</li>
-        <li>«Waiting 2 days», если последнее сообщение было от рекрутера или агента; рядом видно, сколько напоминаний агент уже отправил, например «agent reminded 1 of 4».</li>
-      </ul>
-      Время ожидания окрашено по зонам из палитры Tener: до суток серым, от суток до двух жёлтым, от двух суток и дольше красным, потому что к этому сроку агент уже отправляет напоминание. Те же зоны действуют для времени в строках «Needs attention», где они показывают, сколько сообщение ждёт рекрутера. Время пишется словами, например «3 h ago» или «1 day ago», а не «1D», чтобы его нельзя было спутать с числом.</li>
+    <li><b>Доска вакансии.</b> Переключатель «All / ★ Favorites / Final shortlist» над доской и звёздочка на карточке. Статусы переписки на карточки не выводим, чтобы не перегружать их: кто ответил и сколько кандидат молчит, рекрутер видит в «Needs attention», в карточке кандидата и в утреннем письме.</li>
     <li><b>Карточка кандидата.</b> В шапке кнопки «In favorites» и «Move to final shortlist». Над перепиской избранного видно, сколько он молчит и сколько напоминаний отправлено, и кнопка «Remind now»: агент отправляет напоминание сразу, соблюдая рабочие часы кандидата и лимиты отправки, а счётчик напоминаний растёт на одно.</li>
     <li><b>Final shortlist</b> это чистовой список для передачи клиенту. Кандидат переносится в него кнопкой в карточке, на доске и в «Needs attention» он помечен «Final shortlist».</li>
     <li><b>Утреннее письмо</b>: какие избранные ответили и кто из них молчит больше 2 дней.</li>
@@ -427,7 +421,7 @@
     <li>Галочка «Add to favorites and track the reply» под полем ручного ответа.</li>
     <li><code>ControlRoomAttentionCard</code>: избранные сверху со звёздочкой, переключатель «All / ★ Favorites», кандидат, вакансия, цитата, «Open conversation», <code>danger-soft</code>. Подпись «You» в переписке.</li>
     <li>Колокольчик в верхней панели со всеми новыми сообщениями и переключателем «All / ★ Favorites».</li>
-    <li>Переключатель «All / ★ Favorites / Final shortlist» и статусы переписки на доске вакансии.</li>
+    <li>Переключатель «All / ★ Favorites / Final shortlist» на доске вакансии.</li>
     <li>«Move to final shortlist» и «Remind now» в карточке кандидата.</li>
   </ol>
 
@@ -655,13 +649,6 @@
   const starBtn = c => `<button class="star${c.fav ? ' on' : ''}" data-star="${c.id}" aria-label="${c.fav ? 'Remove from favorites' : 'Add to favorites'}">${c.fav ? STAR_ON : STAR_OFF}</button>`;
   const delIcon = '<svg viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>';
 
-  function statusChip(c) {
-    if (!c.msgs.length) return '<span class="tchip them">Not contacted</span>';
-    // status follows who wrote last, not whether the recruiter has opened the conversation
-    if (lastMsg(c)[0] === 'in') return '<span class="tchip new">New reply</span>';
-    if (waiting(c)) return `<span class="tchip ${zone(c.hours) || 'them'}">Waiting ${dur(c.hours)}</span>` + (c.nudges ? `<span class="xs t-300">agent reminded ${c.nudges} of ${NUDGES}</span>` : '');
-    return '<span class="tchip them">Replied</span>';
-  }
   // Needs attention: what the agent cannot answer, plus every unread message from a favorite
   function trList() {
     const all = cands.filter(c => c.attn || (c.fav && c.unread)).sort(favFirst);
@@ -672,7 +659,7 @@
     $('tr-list').innerHTML = items.map(c => {
       const why = c.attn ? c.reason : 'Reply from a favorite' + (lastMsg(c)[0] === 'agent' ? ' · the agent has already answered' : '');
       return `<div class="att${c.fav ? ' fav' : ''}">${starBtn(c)}<div class="bd">
-        <div><span class="t">${c.unread ? '<span class="dot"></span>' : ''}${c.name} · ${c.job}</span>${c.fav ? statusChip(c) : ''}${c.fav === 'final' ? '<span class="tchip me" title="Ready to hand over to the client">Final shortlist</span>' : ''}${age(c.hours)}</div>
+        <div><span class="t">${c.unread ? '<span class="dot"></span>' : ''}${c.name} · ${c.job}</span>${c.fav === 'final' ? '<span class="tchip me" title="Ready to hand over to the client">Final shortlist</span>' : ''}${age(c.hours)}</div>
         <div class="m">${why}</div>
         <div class="quote"><span class="ql">«${lastIn(c)[1]}»</span></div></div>
         <div class="att-btns"><button class="btn danger md icon" aria-label="Remove attention item" data-del="${c.id}">${delIcon}</button>
@@ -701,7 +688,7 @@
       const cs = inJob.filter(c => c.col === k && (boardTab === 'all' || (boardTab === 'fav' ? c.fav : c.fav === 'final')));
       return `<div class="kcol"><div class="kcol-h"><i style="background:${col}"></i><span>${l}</span><em>${cs.length}</em></div><div class="kcol-b">${
         cs.length ? cs.map(c => `<div class="kc" data-open="${c.id}"><div class="top"><span class="av">${ini(c.name)}</span><div><div class="nm">${c.unread ? '<span class="dot"></span>' : ''}${c.name}</div><div class="id">C-${3100 + c.id * 17}</div></div><span class="score">${c.score}</span></div>
-          <div class="foot"><span class="badge">${l}</span>${c.fav === 'final' ? '<span class="tchip me" title="Ready to hand over to the client">Final shortlist</span>' : ''}${c.fav ? statusChip(c) : ''}${starBtn(c)}</div></div>`).join('') : '<div class="kempty">No candidates</div>'}</div></div>`;
+          <div class="foot"><span class="badge">${l}</span>${c.fav === 'final' ? '<span class="tchip me" title="Ready to hand over to the client">Final shortlist</span>' : ''}${starBtn(c)}</div></div>`).join('') : '<div class="kempty">No candidates</div>'}</div></div>`;
     }).join('');
   }
   function trCard() {
